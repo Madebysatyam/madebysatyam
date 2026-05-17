@@ -1,5 +1,7 @@
 ## Hi there 👋
 
+Portfolio site — built with HTML, Tailwind CSS.
+
 <!--
 **Madebysatyam/madebysatyam** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
