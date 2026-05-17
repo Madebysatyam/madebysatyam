@@ -4,43 +4,43 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* Surfaces */
-  --color-bg: rgb(24, 24, 24); /* space-grey-900 */
-  --color-bg-elevated: rgb(51, 51, 51); /* space-grey-800 */
+  /* Surfaces — page on 1000, elevation steps upward */
+  --color-bg: rgb(0, 0, 0); /* space-grey-1000 */
+  --color-bg-elevated: rgb(24, 24, 24); /* space-grey-900 */
   --color-bg-subtle: rgb(0, 0, 0); /* space-grey-1000 */
-  --color-surface: rgb(51, 51, 51); /* space-grey-800 */
-  --color-surface-hover: rgb(76, 76, 76); /* space-grey-700 */
+  --color-surface: rgb(24, 24, 24); /* space-grey-900 */
+  --color-surface-hover: rgb(51, 51, 51); /* space-grey-800 */
 
-  /* Text */
+  /* Text — lighter greys on black */
   --color-text: rgb(204, 204, 204); /* space-grey-200 */
   --color-text-muted: rgb(153, 153, 153); /* space-grey-400 */
-  --color-text-subtle: rgb(127, 127, 127); /* space-grey-500 */
-  --color-text-inverse: rgb(24, 24, 24); /* space-grey-900 */
+  --color-text-subtle: rgb(103, 103, 103); /* space-grey-600 */
+  --color-text-inverse: rgb(0, 0, 0); /* space-grey-1000 */
 
-  /* Borders */
-  --color-border: rgb(76, 76, 76); /* space-grey-700 */
-  --color-border-subtle: rgb(51, 51, 51); /* space-grey-800 */
-  --color-border-strong: rgb(103, 103, 103); /* space-grey-600 */
+  /* Borders — visible on 1000 / 900 */
+  --color-border: rgb(51, 51, 51); /* space-grey-800 */
+  --color-border-subtle: rgb(24, 24, 24); /* space-grey-900 */
+  --color-border-strong: rgb(76, 76, 76); /* space-grey-700 */
 
   /* Interactive (grey-only, no primary hue) */
   --color-link: rgb(230, 230, 230); /* space-grey-100 */
   --color-link-hover: rgb(255, 255, 255);
   --color-focus: rgb(178, 178, 178); /* space-grey-300 */
 
-  /* Legacy alias */
   --color-ink: var(--color-text);
 }
 
 [data-theme="light"] {
   color-scheme: light;
 
+  /* Surfaces — inverted scale, 100 as canvas */
   --color-bg: rgb(230, 230, 230); /* space-grey-100 */
   --color-bg-elevated: rgb(255, 255, 255);
   --color-bg-subtle: rgb(204, 204, 204); /* space-grey-200 */
   --color-surface: rgb(255, 255, 255);
   --color-surface-hover: rgb(230, 230, 230); /* space-grey-100 */
 
-  --color-text: rgb(24, 24, 24); /* space-grey-900 */
+  --color-text: rgb(0, 0, 0); /* space-grey-1000 */
   --color-text-muted: rgb(76, 76, 76); /* space-grey-700 */
   --color-text-subtle: rgb(103, 103, 103); /* space-grey-600 */
   --color-text-inverse: rgb(230, 230, 230); /* space-grey-100 */
@@ -49,7 +49,7 @@
   --color-border-subtle: rgb(204, 204, 204); /* space-grey-200 */
   --color-border-strong: rgb(127, 127, 127); /* space-grey-500 */
 
-  --color-link: rgb(51, 51, 51); /* space-grey-800 */
+  --color-link: rgb(24, 24, 24); /* space-grey-900 */
   --color-link-hover: rgb(0, 0, 0); /* space-grey-1000 */
   --color-focus: rgb(76, 76, 76); /* space-grey-700 */
 
@@ -66,7 +66,7 @@
     --color-surface: rgb(255, 255, 255);
     --color-surface-hover: rgb(230, 230, 230);
 
-    --color-text: rgb(24, 24, 24);
+    --color-text: rgb(0, 0, 0);
     --color-text-muted: rgb(76, 76, 76);
     --color-text-subtle: rgb(103, 103, 103);
     --color-text-inverse: rgb(230, 230, 230);
@@ -75,7 +75,7 @@
     --color-border-subtle: rgb(204, 204, 204);
     --color-border-strong: rgb(127, 127, 127);
 
-    --color-link: rgb(51, 51, 51);
+    --color-link: rgb(24, 24, 24);
     --color-link-hover: rgb(0, 0, 0);
     --color-focus: rgb(76, 76, 76);
 

@@ -184,6 +184,14 @@ module.exports = {
       padding: {
         gutter: "var(--grid-margin)",
       },
+      borderRadius: {
+        none: "var(--radius-none)",
+        sm: "var(--radius-sm)",
+        DEFAULT: "var(--radius-md)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+        full: "var(--radius-full)",
+      },
     },
   },
   plugins: [],

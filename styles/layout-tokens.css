@@ -25,6 +25,13 @@
   --content-max: 90rem; /* 1440px — matches design xl canvas */
   --content-narrow: 48rem; /* 768px — reading column */
   --content-wide: 72rem; /* 1152px */
+
+  /* Corner radius — terminal: sharp corners only */
+  --radius-none: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-full: 0;
 }
 
 @media (min-width: 810px) {
