@@ -1,0 +1,4 @@
+/* Shared UI components — import from global.css */
+
+@import "../components/navbar/navbar.css";
+@import "../components/theme-toggle/theme-toggle.css";

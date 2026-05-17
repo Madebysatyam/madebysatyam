@@ -1,0 +1,87 @@
+<!--
+  Navbar — paste inside <body> after opening tag (includes skip link).
+
+  Requires:
+  - styles/global.css (imports components.css)
+  - components/navbar/navbar.css (via styles/components.css)
+  - components/navbar/nav-terminal.js
+  - components/navbar/nav-menu.js
+-->
+<a class="skip-link text-style-label-small" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner grid-12">
+    <a class="site-brand" href="/" aria-label="Madebysatyam home">
+      <img
+        class="site-brand__logo site-brand__logo--dark"
+        src="assets/logo.svg"
+        alt=""
+        width="166"
+        height="56"
+        decoding="async"
+      />
+      <img
+        class="site-brand__logo site-brand__logo--light"
+        src="assets/logo-light.svg"
+        alt=""
+        width="166"
+        height="56"
+        decoding="async"
+      />
+    </a>
+    <button
+      type="button"
+      class="site-nav__toggle"
+      aria-expanded="false"
+      aria-controls="site-nav-panel"
+      aria-label="Open menu"
+    >
+      <span class="site-nav__toggle-icon" aria-hidden="true">
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+        <span class="site-nav__toggle-line"></span>
+      </span>
+    </button>
+    <nav class="site-nav" id="site-nav-panel" aria-label="Primary">
+      <ul class="site-nav__list">
+        <li>
+          <a
+            class="site-nav__link site-nav__link--projects text-style-label-medium"
+            href="#work"
+            data-terminal-label="Projects"
+            ><span class="site-nav__terminal-text">Projects</span
+            ><span class="site-nav__cursor" aria-hidden="true"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            class="site-nav__link site-nav__link--playground text-style-label-medium"
+            href="#playground"
+            data-terminal-label="Playground"
+            ><span class="site-nav__terminal-text">Playground</span
+            ><span class="site-nav__cursor" aria-hidden="true"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            class="site-nav__link site-nav__link--about text-style-label-medium"
+            href="#about"
+            data-terminal-label="About"
+            ><span class="site-nav__terminal-text">About</span
+            ><span class="site-nav__cursor" aria-hidden="true"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            class="site-nav__link site-nav__link--contact text-style-label-medium"
+            href="#contact"
+            data-terminal-label="Contact"
+            ><span class="site-nav__terminal-text">Contact</span
+            ><span class="site-nav__cursor" aria-hidden="true"></span
+          ></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="site-nav__backdrop" hidden aria-hidden="true"></div>
+</header>

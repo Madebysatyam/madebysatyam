@@ -15,7 +15,7 @@ module.exports = {
     "./index.html",
     "./pages/**/*.html",
     "./components/**/*.html",
-    "./scripts/**/*.js",
+    "./components/**/*.js",
   ],
   theme: {
     extend: {
