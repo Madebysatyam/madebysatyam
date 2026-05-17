@@ -1,0 +1,35 @@
+---
+description: Global styling system — tokens, Tailwind, and shared CSS for the portfolio
+globs: styles/**/*.css,**/*.html,tailwind.config.js,postcss.config.js
+alwaysApply: false
+---
+
+# Global Styling System
+
+Workstream for site-wide design tokens, Tailwind setup, and `styles/global.css`.
+
+## Scope
+
+- **Global only**: typography scale, color palette, spacing, radii, shadows, base resets, and shared utility patterns live in `styles/global.css` and `tailwind.config.js`.
+- **Page-specific**: layout and section styling belong in `styles/homepage.css`, `styles/projects.css`, etc. — import or extend globals, do not duplicate tokens.
+
+## Stack
+
+- HTML pages link `styles/global.css`.
+- Base tokens and reset work immediately; run Tailwind after Node/npm is available:
+  - `npm install`
+  - `npm run build:css` (or `npm run watch:css` while developing)
+
+## Conventions
+
+- Define design tokens as CSS custom properties on `:root` in `global.css`, then map them in `tailwind.config.js` `theme.extend` where useful.
+- Prefer semantic token names (`--color-text-primary`, `--font-display`) over raw values in components and page CSS.
+- Keep `components/` markup free of inline styles; use Tailwind classes backed by the token system.
+
+## Files
+
+| File | Role |
+|------|------|
+| `styles/global.css` | Tailwind layers + `:root` tokens + base element styles |
+| `tailwind.config.js` | Content paths, theme extensions tied to tokens |
+| `styles/*.css` (other) | Page-level overrides only |

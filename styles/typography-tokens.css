@@ -1,0 +1,89 @@
+/* Typography tokens — JSON structure, accessibility-tweaked sizes */
+:root {
+  --type-display-large-size: 2.84rem;
+  --type-display-large-leading: 1.22;
+  --type-heading-1-size: 2.5rem;
+  --type-heading-1-leading: 1.2;
+  --type-label-large-size: 1.13rem;
+  --type-label-large-leading: 1.15;
+  --type-display-medium-size: 1.91rem;
+  --type-display-medium-leading: 1.44;
+  --type-heading-2-size: 2.25rem;
+  --type-heading-2-leading: 1.2;
+  --type-label-medium-size: 1rem;
+  --type-label-medium-leading: 1.15;
+  --type-display-small-size: 1.76rem;
+  --type-display-small-leading: 1.42;
+  --type-heading-3-size: 2rem;
+  --type-heading-3-leading: 1.2;
+  --type-label-small-size: 0.88rem;
+  --type-label-small-leading: 1.15;
+  --type-heading-4-size: 1.75rem;
+  --type-heading-4-leading: 1.2;
+  --type-label-x-small-size: 0.75rem;
+  --type-label-x-small-leading: 1.15;
+  --type-heading-5-size: 1.5rem;
+  --type-heading-5-leading: 1.2;
+  --type-heading-6-size: 1.25rem;
+  --type-heading-6-leading: 1.2;
+  --type-paragraph-x-small-size: 0.75rem;
+  --type-paragraph-x-small-leading: 1.4;
+  --type-paragraph-small-size: 0.88rem;
+  --type-paragraph-small-leading: 1.4;
+  --type-paragraph-medium-size: 1rem;
+  --type-paragraph-medium-leading: 1.4;
+  --type-paragraph-large-size: 1.13rem;
+  --type-paragraph-large-leading: 1.4;
+}
+
+@media (min-width: 810px) {
+  :root {
+    --type-display-large-size: 2.84rem;
+    --type-heading-1-size: 1.8rem;
+    --type-label-large-size: 1rem;
+    --type-heading-2-size: 1.44rem;
+    --type-label-medium-size: 0.875rem;
+    --type-display-small-size: 1.76rem;
+    --type-heading-3-size: 1.28rem;
+    --type-label-small-size: 0.813rem;
+    --type-heading-4-size: 1.12rem;
+    --type-label-x-small-size: 0.75rem;
+    --type-heading-5-size: 1rem;
+    --type-heading-6-size: 0.875rem;
+    --type-paragraph-x-small-size: 0.75rem;
+    --type-paragraph-small-size: 0.813rem;
+    --type-paragraph-medium-size: 0.875rem;
+    --type-paragraph-large-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --type-display-large-size: 4.8rem;
+    --type-heading-1-size: 2rem;
+    --type-display-medium-size: 2.625rem;
+    --type-display-small-size: 2.2rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --type-display-large-size: 6rem;
+    --type-label-large-size: 1rem;
+    --type-display-medium-size: 3.25rem;
+    --type-heading-2-size: 1.8rem;
+    --type-label-medium-size: 0.875rem;
+    --type-display-small-size: 2.75rem;
+    --type-heading-3-size: 1.6rem;
+    --type-label-small-size: 0.813rem;
+    --type-heading-4-size: 1.4rem;
+    --type-label-x-small-size: 0.75rem;
+    --type-heading-5-size: 1.2rem;
+    --type-heading-6-size: 1rem;
+    --type-paragraph-x-small-size: 0.75rem;
+    --type-paragraph-small-size: 0.813rem;
+    --type-paragraph-medium-size: 0.875rem;
+    --type-paragraph-large-size: 1rem;
+  }
+}
+

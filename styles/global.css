@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import "./color-tokens.css";
+@import "./layout-tokens.css";
+@import "./typography-tokens.css";
+
+@tailwind base;
+@tailwind components;
+@import "./text-styles.css";
+@import "./grid.css";
+@tailwind utilities;
+
+/* -------------------------------------------------------------------------- */
+/* Fonts — Madebysatyam_Styles.json families                                  */
+/* -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "OT Brut";
+  src: url("../fonts/OT2049-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HEX Franklin v0.2";
+  src: url("../fonts/HEX-Franklin-v02-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HEX Franklin v0.2 Condensed";
+  src: url("../fonts/HEX-Franklin-v02-Condensed-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Design tokens — single source of truth for the portfolio                   */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  /* Typography — font families from Madebysatyam_Styles.json */
+  --font-display: "OT Brut", sans-serif;
+  --font-heading: "HEX Franklin v0.2 Condensed", sans-serif;
+  --font-body: "HEX Franklin v0.2", sans-serif;
+  --font-label: "Space Mono", monospace;
+  --font-sans: var(--font-body);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base — minimal reset + defaults (works before Tailwind build)              */
+/* -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  @apply font-sans antialiased;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}

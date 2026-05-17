@@ -1,0 +1,174 @@
+{
+  "display-large": {
+    "sizes": {
+      "base": "2.84rem",
+      "md": "2.84rem",
+      "lg": "4.8rem",
+      "xl": "6rem"
+    },
+    "lineHeight": "1.22",
+    "path": "/Display/Display Large",
+    "spacing": 0
+  },
+  "heading-1": {
+    "sizes": {
+      "base": "2.5rem",
+      "lg": "2rem",
+      "md": "1.8rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 1",
+    "spacing": 0
+  },
+  "label-large": {
+    "sizes": {
+      "base": "1.13rem",
+      "xl": "1rem",
+      "md": "1rem"
+    },
+    "lineHeight": "1.15",
+    "path": "/Label/Label Large",
+    "spacing": 0
+  },
+  "display-medium": {
+    "sizes": {
+      "base": "1.91rem",
+      "lg": "2.625rem",
+      "xl": "3.25rem"
+    },
+    "lineHeight": "1.44",
+    "path": "/Display/Display Medium",
+    "spacing": 40
+  },
+  "heading-2": {
+    "sizes": {
+      "base": "2.25rem",
+      "xl": "1.8rem",
+      "md": "1.44rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 2",
+    "spacing": 40
+  },
+  "label-medium": {
+    "sizes": {
+      "base": "1rem",
+      "xl": "0.875rem",
+      "md": "0.875rem"
+    },
+    "lineHeight": "1.15",
+    "path": "/Label/Label Medium",
+    "spacing": 40
+  },
+  "display-small": {
+    "sizes": {
+      "base": "1.76rem",
+      "md": "1.76rem",
+      "lg": "2.2rem",
+      "xl": "2.75rem"
+    },
+    "lineHeight": "1.42",
+    "path": "/Display/Display Small",
+    "spacing": 40
+  },
+  "heading-3": {
+    "sizes": {
+      "base": "2rem",
+      "xl": "1.6rem",
+      "md": "1.28rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 3",
+    "spacing": 40
+  },
+  "label-small": {
+    "sizes": {
+      "base": "0.88rem",
+      "xl": "0.813rem",
+      "md": "0.813rem"
+    },
+    "lineHeight": "1.15",
+    "path": "/Label/Label Small",
+    "spacing": 40
+  },
+  "heading-4": {
+    "sizes": {
+      "base": "1.75rem",
+      "xl": "1.4rem",
+      "md": "1.12rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 4",
+    "spacing": 40
+  },
+  "label-x-small": {
+    "sizes": {
+      "base": "0.75rem",
+      "xl": "0.75rem",
+      "md": "0.75rem"
+    },
+    "lineHeight": "1.15",
+    "path": "/Label/Label X Small",
+    "spacing": 40
+  },
+  "heading-5": {
+    "sizes": {
+      "base": "1.5rem",
+      "xl": "1.2rem",
+      "md": "1rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 5",
+    "spacing": 40
+  },
+  "heading-6": {
+    "sizes": {
+      "base": "1.25rem",
+      "xl": "1rem",
+      "md": "0.875rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading 6",
+    "spacing": 40
+  },
+  "paragraph-x-small": {
+    "sizes": {
+      "base": "0.75rem",
+      "xl": "0.75rem",
+      "md": "0.75rem"
+    },
+    "lineHeight": "1.4",
+    "path": "/Paragraph/Paragraph X Small",
+    "spacing": 20
+  },
+  "paragraph-small": {
+    "sizes": {
+      "base": "0.88rem",
+      "xl": "0.813rem",
+      "md": "0.813rem"
+    },
+    "lineHeight": "1.4",
+    "path": "/Paragraph/Paragraph Small",
+    "spacing": 20
+  },
+  "paragraph-medium": {
+    "sizes": {
+      "base": "1rem",
+      "xl": "0.875rem",
+      "md": "0.875rem"
+    },
+    "lineHeight": "1.4",
+    "path": "/Paragraph/Paragraph Medium",
+    "spacing": 20
+  },
+  "paragraph-large": {
+    "sizes": {
+      "base": "1.13rem",
+      "xl": "1rem",
+      "md": "1rem"
+    },
+    "lineHeight": "1.4",
+    "path": "/Paragraph/Paragraph Large",
+    "spacing": 20
+  }
+}
