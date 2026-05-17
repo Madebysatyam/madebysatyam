@@ -2,12 +2,12 @@
 @import "./color-tokens.css";
 @import "./layout-tokens.css";
 @import "./typography-tokens.css";
-
-@tailwind base;
-@tailwind components;
 @import "./text-styles.css";
 @import "./grid.css";
 @import "./components.css";
+
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 /* -------------------------------------------------------------------------- */

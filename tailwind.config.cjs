@@ -11,12 +11,7 @@ const fontSize = Object.fromEntries(
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./pages/**/*.html",
-    "./components/**/*.html",
-    "./components/**/*.js",
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       screens: {

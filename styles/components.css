@@ -1,4 +1,4 @@
-/* Shared UI components — import from global.css */
+/* Shared UI component styles — imported from global.css */
 
-@import "../components/navbar/navbar.css";
-@import "../components/theme-toggle/theme-toggle.css";
+@import "./components/navbar.css";
+@import "./components/theme-toggle.css";

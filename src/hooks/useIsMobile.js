@@ -1,0 +1,21 @@
+import { useEffect, useState } from "react";
+
+const MOBILE_QUERY = "(max-width: 809px)";
+
+export default function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(MOBILE_QUERY).matches
+      : false
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia(MOBILE_QUERY);
+    const onChange = (event) => setIsMobile(event.matches);
+
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  return isMobile;
+}

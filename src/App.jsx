@@ -1,0 +1,30 @@
+import { motion, useReducedMotion } from "framer-motion";
+import Navbar from "./components/Navbar.jsx";
+import ThemeToggle from "./components/ThemeToggle.jsx";
+import AboutSection from "./sections/AboutSection.jsx";
+import ContactSection from "./sections/ContactSection.jsx";
+import HeroSection from "./sections/HeroSection.jsx";
+import PlaygroundSection from "./sections/PlaygroundSection.jsx";
+import SiteFooter from "./sections/SiteFooter.jsx";
+import WorkSection from "./sections/WorkSection.jsx";
+
+export default function App() {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div className="page-home" initial={false}>
+      <Navbar />
+
+      <main id="main">
+        <HeroSection reduced={reduced} />
+        <WorkSection reduced={reduced} />
+        <PlaygroundSection reduced={reduced} />
+        <AboutSection />
+        <ContactSection reduced={reduced} />
+      </main>
+
+      <SiteFooter reduced={reduced} />
+      <ThemeToggle />
+    </motion.div>
+  );
+}

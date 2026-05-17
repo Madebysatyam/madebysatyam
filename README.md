@@ -1,18 +1,33 @@
-## Hi there 👋
+# Madebysatyam
 
-Portfolio site — built with HTML, Tailwind CSS.
+Portfolio site — React, Vite, Tailwind CSS, Framer Motion.
 
-<!--
-**Madebysatyam/madebysatyam** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+## Commands
 
-Here are some ideas to get you started:
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build
+npm run preview
+```
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## Structure
+
+```
+src/                 React app
+  main.jsx           Entry, theme bootstrap, LazyMotion
+  App.jsx            Homepage shell
+  components/        Navbar, NavLink, ThemeToggle, Reveal
+  sections/          Homepage sections
+  context/           Theme state + switch sound
+  motion/            Shared animation presets
+  hooks/             useIsMobile
+
+styles/              Design tokens + layout
+  global.css         CSS entry (imported from main.jsx)
+  components/        Navbar + theme toggle styles
+  homepage.css       Page layout
+
+global_styling_system.md   Locked design spec
+assets/                    Logos, fonts
+```
