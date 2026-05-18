@@ -1,7 +1,6 @@
-/* Locked color system — Space Grey base, terminal aesthetic, no primary brand color */
+/* Locked color system — Space Grey base, terminal aesthetic, dark mode only */
 
-:root,
-[data-theme="dark"] {
+:root {
   color-scheme: dark;
 
   /* Surfaces — page on 1000, elevation steps upward */
@@ -28,57 +27,4 @@
   --color-focus: rgb(178, 178, 178); /* space-grey-300 */
 
   --color-ink: var(--color-text);
-}
-
-[data-theme="light"] {
-  color-scheme: light;
-
-  /* Surfaces — inverted scale, 100 as canvas */
-  --color-bg: rgb(230, 230, 230); /* space-grey-100 */
-  --color-bg-elevated: rgb(255, 255, 255);
-  --color-bg-subtle: rgb(204, 204, 204); /* space-grey-200 */
-  --color-surface: rgb(255, 255, 255);
-  --color-surface-hover: rgb(230, 230, 230); /* space-grey-100 */
-
-  --color-text: rgb(0, 0, 0); /* space-grey-1000 */
-  --color-text-muted: rgb(76, 76, 76); /* space-grey-700 */
-  --color-text-subtle: rgb(103, 103, 103); /* space-grey-600 */
-  --color-text-inverse: rgb(230, 230, 230); /* space-grey-100 */
-
-  --color-border: rgb(178, 178, 178); /* space-grey-300 */
-  --color-border-subtle: rgb(204, 204, 204); /* space-grey-200 */
-  --color-border-strong: rgb(127, 127, 127); /* space-grey-500 */
-
-  --color-link: rgb(24, 24, 24); /* space-grey-900 */
-  --color-link-hover: rgb(0, 0, 0); /* space-grey-1000 */
-  --color-focus: rgb(76, 76, 76); /* space-grey-700 */
-
-  --color-ink: var(--color-text);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) {
-    color-scheme: light;
-
-    --color-bg: rgb(230, 230, 230);
-    --color-bg-elevated: rgb(255, 255, 255);
-    --color-bg-subtle: rgb(204, 204, 204);
-    --color-surface: rgb(255, 255, 255);
-    --color-surface-hover: rgb(230, 230, 230);
-
-    --color-text: rgb(0, 0, 0);
-    --color-text-muted: rgb(76, 76, 76);
-    --color-text-subtle: rgb(103, 103, 103);
-    --color-text-inverse: rgb(230, 230, 230);
-
-    --color-border: rgb(178, 178, 178);
-    --color-border-subtle: rgb(204, 204, 204);
-    --color-border-strong: rgb(127, 127, 127);
-
-    --color-link: rgb(24, 24, 24);
-    --color-link-hover: rgb(0, 0, 0);
-    --color-focus: rgb(76, 76, 76);
-
-    --color-ink: var(--color-text);
-  }
 }

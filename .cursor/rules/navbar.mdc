@@ -1,0 +1,57 @@
+---
+description: Site navbar — single component, fixed behaviour on every page
+alwaysApply: true
+---
+
+# Navbar (site-wide)
+
+The primary navigation is **one shared component** used on every page. Behaviour and markup must stay consistent everywhere.
+
+## Source of truth
+
+| File | Role |
+|------|------|
+| `src/components/Navbar/` | Component module (`Navbar.jsx`, `NavLinksList.jsx`, `navLinks.js`, `useNavbarScroll.js`) |
+| `src/components/NavLink.jsx` | Terminal-style link + typing interaction |
+| `styles/components/navbar.css` | Layout, compact notch, mobile drawer |
+| `src/motion/presets.js` | `navbarMorphTransition`, `navbarBrandMotion`, `navbarShellMotion`, mobile nav variants |
+
+## Mounting
+
+- Import only from `src/components/Navbar` (barrel).
+- Render **once** in `App.jsx` above `<main>` — never duplicate `<Navbar />` or reimplement header markup inside page sections.
+- New routes/pages must not add their own header, logo row, or nav list.
+
+## Locked behaviour
+
+### Desktop (≥ 810px)
+
+- Default: full-width header — logo left, inline nav links right.
+- Scroll down past ~96px: morphs to a **centred compact notch** (logo + links), eased layout + subtle logo blur.
+- Scroll up or near top: returns to full header.
+- No hamburger on desktop.
+
+### Mobile (< 810px)
+
+- **No compact scroll morph** — header stays full width at all scroll positions.
+- Hamburger opens a **full-height drawer** (`site-nav--drawer`) below the header bar, with backdrop.
+- Drawer and backdrop are **siblings of `<header>`** inside `site-header-shell`, not children of the animated header (fixed positioning must not sit inside transformed/filtered ancestors).
+
+### All viewports
+
+- Links defined only in `navLinks.js` (Projects, Playground, About, Contact).
+- `body.is-nav-menu-open` locks scroll when mobile menu is open.
+- Escape closes mobile menu.
+- Respect `prefers-reduced-motion` via existing motion presets.
+
+## Do not
+
+- Add per-page nav markup or alternate headers.
+- Nest mobile `position: fixed` menu panels inside `motion` elements that use `layout`, `filter`, or blur on ancestors.
+- Enable compact scroll state on mobile.
+- Change nav link set in page files — update `navLinks.js` only.
+- Move navbar styles into page CSS (`homepage.css`, etc.) — keep chrome in `styles/components/navbar.css`.
+
+## Changing the navbar
+
+If a task asks to change nav behaviour, links, or chrome: edit the Navbar module and `navbar.css` together, then verify desktop scroll morph and mobile drawer on a long page.

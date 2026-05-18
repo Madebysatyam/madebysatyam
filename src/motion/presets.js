@@ -50,29 +50,43 @@ export function staggerItem(reduced, { y = 12 } = {}) {
   return fadeUp(reduced, { y });
 }
 
-export const themeIconTransition = (reduced) =>
-  reduced
-    ? { duration: 0 }
-    : { duration: DURATION.slow, ease: EASE_OUT };
-
-export const themeIconVariants = (reduced) => ({
-  enter: reduced
-    ? { opacity: 1, scale: 1, rotate: 0 }
-    : { opacity: 0, scale: 0.55, rotate: -72 },
-  center: { opacity: 1, scale: 1, rotate: 0 },
-  exit: reduced
-    ? { opacity: 1, scale: 1, rotate: 0 }
-    : { opacity: 0, scale: 0.55, rotate: 72 },
-});
-
 export const mobileNavPanelVariants = (reduced) => ({
-  desktop: { opacity: 1, y: 0, transition: { duration: 0 } },
+  desktop: { opacity: 1, x: 0, y: 0, transition: { duration: 0 } },
+  hidden: reduced
+    ? { opacity: 0, x: 0, y: 0 }
+    : {
+        opacity: 0,
+        x: 12,
+        y: 0,
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
+  visible: reduced
+    ? { opacity: 1, x: 0, y: 0 }
+    : {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+  exit: reduced
+    ? { opacity: 0, x: 0, y: 0 }
+    : {
+        opacity: 0,
+        x: 12,
+        y: 0,
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
   closed: reduced
-    ? { opacity: 1, y: 0 }
-    : { opacity: 0, y: -12, transition: { duration: DURATION.base, ease: EASE_OUT } },
+    ? { opacity: 1, x: 0, y: 0 }
+    : { opacity: 0, x: 12, y: 0, transition: { duration: DURATION.base, ease: EASE_OUT } },
   open: reduced
-    ? { opacity: 1, y: 0 }
-    : { opacity: 1, y: 0, transition: { duration: DURATION.base, ease: EASE_OUT } },
+    ? { opacity: 1, x: 0, y: 0 }
+    : {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
 });
 
 export const mobileNavListVariants = (reduced) => ({
@@ -90,16 +104,51 @@ export const mobileNavListVariants = (reduced) => ({
 });
 
 export const mobileNavItemVariants = (reduced) => ({
-  desktop: { opacity: 1, x: 0 },
-  closed: reduced ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 },
+  desktop: { opacity: 1, x: 0, y: 0 },
+  closed: reduced ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -14, y: 0 },
   open: reduced
-    ? { opacity: 1, x: 0 }
+    ? { opacity: 1, x: 0, y: 0 }
     : {
         opacity: 1,
         x: 0,
+        y: 0,
         transition: { duration: DURATION.base, ease: EASE_OUT },
       },
 });
+
+export function strokeDraw(reduced, duration = 0.55) {
+  if (reduced) {
+    return {
+      hidden: { pathLength: 1, opacity: 1 },
+      visible: { pathLength: 1, opacity: 1 },
+    };
+  }
+
+  return {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+      transition: { duration, ease: EASE_OUT },
+    },
+  };
+}
+
+export function strokeDrawGroup(reduced, { delay = 0, stagger = 0.012 } = {}) {
+  if (reduced) {
+    return {
+      hidden: {},
+      visible: { transition: { staggerChildren: 0, delayChildren: 0 } },
+    };
+  }
+
+  return {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: stagger, delayChildren: delay },
+    },
+  };
+}
 
 export const backdropVariants = (reduced) => ({
   hidden: { opacity: 0 },
@@ -110,3 +159,162 @@ export const backdropVariants = (reduced) => ({
     ? { opacity: 0 }
     : { opacity: 0, transition: { duration: 0.2, ease: EASE_OUT } },
 });
+
+export const NAVBAR_SHELL_SPRING = {
+  type: "spring",
+  stiffness: 420,
+  damping: 36,
+  mass: 0.9,
+};
+
+export function navbarShellLayoutTransition(reduced) {
+  if (reduced) {
+    return { layout: { duration: 0 } };
+  }
+
+  return { layout: NAVBAR_SHELL_SPRING };
+}
+
+export const navbarBrandVariants = (reduced) => ({
+  visible: reduced
+    ? { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }
+    : {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        transition: { duration: DURATION.slow, ease: EASE_OUT },
+      },
+  hidden: reduced
+    ? { opacity: 0, transition: { duration: 0 } }
+    : {
+        opacity: 0,
+        x: -16,
+        scale: 0.94,
+        filter: "blur(6px)",
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
+});
+
+export const navbarInnerVariants = (reduced) => ({
+  visible: {
+    opacity: 1,
+    height: "auto",
+    transition: { duration: DURATION.base, ease: EASE_OUT },
+  },
+  hidden: reduced
+    ? { opacity: 0, height: 0, transition: { duration: 0 } }
+    : {
+        opacity: 0,
+        height: 0,
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
+});
+
+export const navbarLinksContainerVariants = (reduced) => ({
+  default: {
+    transition: reduced
+      ? { staggerChildren: 0, delayChildren: 0 }
+      : { staggerChildren: 0.04, delayChildren: 0.02 },
+  },
+  compact: {
+    transition: reduced
+      ? { staggerChildren: 0, delayChildren: 0 }
+      : { staggerChildren: 0.05, delayChildren: 0.06 },
+  },
+});
+
+export const navbarHeaderShellVariants = (reduced) => ({
+  default: {
+    y: 0,
+    opacity: 1,
+  },
+  compact: reduced
+    ? { y: 0, opacity: 1 }
+    : {
+        y: 0,
+        opacity: 1,
+        transition: NAVBAR_SHELL_SPRING,
+      },
+});
+
+export const navbarLinkItemVariants = (reduced) => ({
+  default: { opacity: 1, y: 0 },
+  hidden: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 },
+  compact: reduced
+    ? { opacity: 1, y: 0 }
+    : {
+        opacity: 1,
+        y: 0,
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+});
+
+/** Navbar morph — restrained ease, minimal bounce (layout + chrome). */
+export const NAVBAR_MORPH_LAYOUT = {
+  duration: DURATION.slow,
+  ease: EASE_OUT,
+};
+
+export function navbarMorphTransition(reduced) {
+  if (reduced) {
+    return { duration: 0 };
+  }
+
+  return {
+    layout: NAVBAR_MORPH_LAYOUT,
+    default: NAVBAR_MORPH_LAYOUT,
+  };
+}
+
+const NAVBAR_MORPH = {
+  duration: DURATION.slow,
+  ease: EASE_OUT,
+};
+
+/** Logo — blur only; Y locked, no layout shift. */
+export function navbarBrandMotion(reduced) {
+  if (reduced) {
+    return { opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" };
+  }
+
+  return {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    filter: ["blur(0px)", "blur(4px)", "blur(0px)"],
+    transition: {
+      ...NAVBAR_MORPH,
+      times: [0, 0.42, 1],
+    },
+  };
+}
+
+/** Desktop nav row — horizontal settle only (Y locked). */
+export function navbarDesktopNavMotion(reduced) {
+  if (reduced) {
+    return { opacity: 1, x: 0, y: 0 };
+  }
+
+  return {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: NAVBAR_MORPH,
+  };
+}
+
+/** Desktop link items — slight X stagger when notch morphs. */
+export function navbarDesktopLinkMotion(reduced, isCompact) {
+  if (reduced) {
+    return { opacity: 1, x: 0, y: 0 };
+  }
+
+  return {
+    opacity: 1,
+    x: isCompact ? 0 : 0,
+    y: 0,
+    transition: NAVBAR_MORPH,
+  };
+}

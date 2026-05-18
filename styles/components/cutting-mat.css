@@ -1,0 +1,120 @@
+/* CuttingMat — stroke-draw animation and post-complete teal palette */
+
+.cutting-mat__stroke {
+  --cutting-mat-stroke-length: 120;
+  stroke-dasharray: var(--cutting-mat-stroke-length);
+  stroke-dashoffset: var(--cutting-mat-stroke-length);
+  animation: cutting-mat-stroke-draw 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Arcs + radials: dotted, pivoted at bottom-left, lower opacity via strokeOpacity */
+
+.cutting-mat__stroke--dashed {
+  stroke-dasharray: 0.32 0.42 var(--cutting-mat-stroke-length);
+  stroke-dashoffset: var(--cutting-mat-stroke-length);
+}
+
+.cutting-mat__stroke--arc {
+  animation: cutting-mat-stroke-draw 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cutting-mat__stroke--radial {
+  animation: cutting-mat-radial-draw 0.8s cubic-bezier(0.25, 0.1, 0.2, 1) forwards;
+}
+
+@keyframes cutting-mat-stroke-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes cutting-mat-radial-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Fill — black base, teal-900 reveals bottom → top with soft leading edge */
+
+.cutting-mat__fill-base {
+  fill: #000000;
+}
+
+.cutting-mat__fill-teal {
+  --cutting-mat-fill-feather: 22%;
+  fill: rgb(12, 45, 24); /* teal-900 */
+  -webkit-mask-image: linear-gradient(
+    to top,
+    #000 0%,
+    #000 calc(100% - var(--cutting-mat-fill-feather)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    #000 0%,
+    #000 calc(100% - var(--cutting-mat-fill-feather)),
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 0%;
+  mask-size: 100% 0%;
+  -webkit-mask-position: bottom;
+  mask-position: bottom;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__fill-teal {
+  animation: cutting-mat-fill-reveal-up 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cutting-mat-fill-reveal-up {
+  from {
+    -webkit-mask-size: 100% 0%;
+    mask-size: 100% 0%;
+  }
+
+  to {
+    -webkit-mask-size: 100% calc(100% + var(--cutting-mat-fill-feather));
+    mask-size: 100% calc(100% + var(--cutting-mat-fill-feather));
+  }
+}
+
+/* Strokes → tiered teal when mat completes (matches black-bg hierarchy) */
+
+.cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+  transition:
+    stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__stroke--minor {
+  stroke: rgb(28, 89, 53); /* teal-800 */
+  stroke-opacity: 1;
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__stroke--major {
+  stroke: rgb(40, 133, 79); /* teal-700 */
+  stroke-opacity: 1;
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__stroke--frame {
+  stroke: rgb(52, 177, 104); /* teal-600 */
+  stroke-opacity: 1;
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__stroke--chart {
+  stroke: rgb(64, 224, 129); /* teal-500 */
+  stroke-opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cutting-mat__fill-teal {
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    animation: none;
+  }
+
+  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+    transition-duration: 0.01ms;
+  }
+}

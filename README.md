@@ -15,17 +15,18 @@ npm run preview
 
 ```
 src/                 React app
-  main.jsx           Entry, theme bootstrap, LazyMotion
+  main.jsx           Entry, LazyMotion
   App.jsx            Homepage shell
-  components/        Navbar, NavLink, ThemeToggle, Reveal
+  components/        NavLink, Reveal
+    Navbar/          Site-wide header + nav (desktop notch, mobile drawer)
+    CuttingMat/      Animated hero cutting mat (SVG + geometry)
   sections/          Homepage sections
-  context/           Theme state + switch sound
   motion/            Shared animation presets
   hooks/             useIsMobile
 
 styles/              Design tokens + layout
   global.css         CSS entry (imported from main.jsx)
-  components/        Navbar + theme toggle styles
+  components/        Navbar, cutting-mat styles
   homepage.css       Page layout
 
 global_styling_system.md   Locked design spec

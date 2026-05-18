@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import Navbar from "./components/Navbar.jsx";
-import ThemeToggle from "./components/ThemeToggle.jsx";
+import Navbar from "./components/Navbar";
 import AboutSection from "./sections/AboutSection.jsx";
 import ContactSection from "./sections/ContactSection.jsx";
 import HeroSection from "./sections/HeroSection.jsx";
@@ -16,7 +15,7 @@ export default function App() {
       <Navbar />
 
       <main id="main">
-        <HeroSection reduced={reduced} />
+        <HeroSection />
         <WorkSection reduced={reduced} />
         <PlaygroundSection reduced={reduced} />
         <AboutSection />
@@ -24,7 +23,6 @@ export default function App() {
       </main>
 
       <SiteFooter reduced={reduced} />
-      <ThemeToggle />
     </motion.div>
   );
 }
