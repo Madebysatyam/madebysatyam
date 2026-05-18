@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
+import SectionHeader from "../components/SectionHeader";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function PlaygroundSection({ reduced }) {
@@ -10,16 +11,16 @@ export default function PlaygroundSection({ reduced }) {
       id="playground"
       aria-labelledby="playground-heading"
     >
+      <SectionHeader
+        title="Playground"
+        aside="fun"
+        headingId="playground-heading"
+        reduced={reduced}
+      />
       <motion.div
-        className="strip-section__inner grid-12"
+        className="strip-section__body grid-12"
         variants={staggerContainer(reduced, { stagger: 0.06 })}
       >
-        <motion.div className="strip-section__primary" variants={staggerItem(reduced)}>
-          <p className="text-style-label-large">02 / Playground</p>
-          <h2 id="playground-heading" className="text-style-heading-3">
-            Experiments &amp; side projects
-          </h2>
-        </motion.div>
         <motion.div
           className="strip-section__secondary"
           variants={staggerItem(reduced, { y: 14 })}

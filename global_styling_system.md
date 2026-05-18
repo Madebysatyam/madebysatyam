@@ -153,7 +153,7 @@ Full step values are defined in `tailwind.config.js`.
 
 | Role | Family name | File / source | CSS variable | Tailwind |
 |------|-------------|---------------|--------------|----------|
-| Display | OT Brut | `fonts/OT2049-Regular.otf` | `--font-display` | `font-display` |
+| Display | OT Brut | `fonts/OTBrut-Regular.otf` | `--font-display` | `font-display` |
 | Headings | HEX Franklin v0.2 Condensed | `fonts/HEX-Franklin-v02-Condensed-Regular.ttf` | `--font-heading` | `font-heading` |
 | Body | HEX Franklin v0.2 Regular | `fonts/HEX-Franklin-v02-Regular.ttf` | `--font-body` | `font-sans` |
 | Labels | Space Mono | Google Fonts (400, 700, italic) | `--font-label` | `font-label` |

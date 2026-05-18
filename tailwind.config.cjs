@@ -38,6 +38,7 @@ module.exports = {
           DEFAULT: "var(--color-text)",
           muted: "var(--color-text-muted)",
           subtle: "var(--color-text-subtle)",
+          tertiary: "var(--color-text-tertiary)",
           inverse: "var(--color-text-inverse)",
         },
         ink: "var(--color-text)",

@@ -18,7 +18,7 @@ export default function App() {
         <HeroSection />
         <WorkSection reduced={reduced} />
         <PlaygroundSection reduced={reduced} />
-        <AboutSection />
+        <AboutSection reduced={reduced} />
         <ContactSection reduced={reduced} />
       </main>
 

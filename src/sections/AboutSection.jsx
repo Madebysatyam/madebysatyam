@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
+import SectionHeader from "../components/SectionHeader";
 
-export default function AboutSection() {
+export default function AboutSection({ reduced }) {
   return (
     <Reveal
       as={motion.section}
@@ -9,10 +10,7 @@ export default function AboutSection() {
       id="about"
       aria-labelledby="about-heading"
     >
-      <p className="text-style-label-large">03 / About</p>
-      <h2 id="about-heading" className="text-style-heading-2">
-        How I work
-      </h2>
+      <SectionHeader title="About" headingId="about-heading" reduced={reduced} />
       <p className="text-style-paragraph-medium">
         I care about systems that scale, interfaces that stay honest under edge cases,
         and documentation the next designer can actually use. Most of my work sits at

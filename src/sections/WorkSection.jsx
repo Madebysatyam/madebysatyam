@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import Reveal from "../components/Reveal.jsx";
+import SectionHeader from "../components/SectionHeader";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 const WORK_CARDS = ["001", "002", "003", "004"];
@@ -15,30 +15,12 @@ export default function WorkSection({ reduced }) {
       className="work-section container-site"
       aria-labelledby="work-heading"
     >
-      <Reveal className="section-head grid-12">
-        <motion.div
-          className="section-head__primary"
-          variants={staggerContainer(reduced, { stagger: 0.05 })}
-        >
-          <motion.p className="text-style-label-large" variants={staggerItem(reduced, { y: 10 })}>
-            01 / Selected work
-          </motion.p>
-          <motion.h2
-            id="work-heading"
-            className="text-style-heading-2"
-            variants={staggerItem(reduced, { y: 14 })}
-          >
-            Recent projects
-          </motion.h2>
-        </motion.div>
-        <motion.p
-          className="section-head__note text-style-paragraph-medium"
-          variants={staggerItem(reduced, { y: 12 })}
-        >
-          Case studies and visuals ship with each project page. Placeholders below
-          — swap in real work as pages land.
-        </motion.p>
-      </Reveal>
+      <SectionHeader
+        title="Projects"
+        aside="Best of 24–25"
+        headingId="work-heading"
+        reduced={reduced}
+      />
 
       <motion.ul
         ref={workListRef}

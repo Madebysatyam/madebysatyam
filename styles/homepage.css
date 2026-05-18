@@ -42,31 +42,6 @@
   padding-block: var(--space-12);
 }
 
-.section-head {
-  margin-bottom: var(--space-10);
-}
-
-.section-head__primary {
-  grid-column: 1 / -1;
-}
-
-.section-head__note {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--color-text-muted);
-  align-self: end;
-}
-
-@media (min-width: 1200px) {
-  .section-head__primary {
-    grid-column: span 8;
-  }
-
-  .section-head__note {
-    grid-column: span 4;
-  }
-}
-
 /* Work cards */
 
 .work-list {
@@ -133,19 +108,17 @@
   border-block: 1px solid var(--color-border-subtle);
 }
 
-.strip-section__primary,
+.strip-section__body {
+  margin: 0;
+}
+
 .strip-section__secondary {
   grid-column: 1 / -1;
 }
 
 @media (min-width: 1200px) {
-  .strip-section__primary,
   .strip-section__secondary {
-    grid-column: span 6;
-  }
-
-  .strip-section__secondary {
-    align-self: end;
+    grid-column: 7 / -1;
   }
 }
 
@@ -168,14 +141,20 @@
 
 /* Contact */
 
-.contact-section__primary,
+.contact-section__intro,
 .contact-section__channels {
   grid-column: 1 / -1;
 }
 
+.contact-section__intro {
+  margin: 0 0 var(--space-8);
+  color: var(--color-text-muted);
+}
+
 @media (min-width: 1200px) {
-  .contact-section__primary {
+  .contact-section__intro {
     grid-column: span 7;
+    margin-bottom: 0;
   }
 
   .contact-section__channels {
@@ -188,13 +167,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding-top: var(--space-8);
-}
-
-@media (min-width: 1200px) {
-  .contact-section__channels {
-    padding-top: 0;
-  }
 }
 
 .contact-channel {

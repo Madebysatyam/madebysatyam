@@ -1,0 +1,77 @@
+/* Section header — border, eyebrow, display title, optional aside label */
+
+.section-header {
+  margin: 0 0 var(--space-10);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.section-header__eyebrow,
+.section-header__title,
+.section-header__aside {
+  margin: 0;
+}
+
+/* Tertiary meta labels — space-grey-700 (overrides text-style-label-small) */
+.section-header .section-header__eyebrow.text-style-label-small,
+.section-header .section-header__aside.text-style-label-small {
+  color: var(--color-text-tertiary);
+}
+
+.section-header__eyebrow {
+  margin-bottom: var(--space-2);
+}
+
+.section-header__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  align-items: last baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+}
+
+.section-header__title {
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+  color: var(--color-link-hover);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.section-header__aside {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  line-height: 1;
+}
+
+@media (min-width: 810px) {
+  .section-header {
+    padding-top: var(--space-6);
+  }
+
+  .section-header__eyebrow {
+    margin-bottom: var(--space-3);
+  }
+}
+
+@media (max-width: 809px) {
+  .section-header__title-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    align-items: last baseline;
+    gap: var(--space-3);
+  }
+
+  .section-header__title {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .section-header__aside {
+    flex-shrink: 0;
+    align-self: auto;
+  }
+}

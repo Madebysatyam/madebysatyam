@@ -14,6 +14,7 @@
   --color-text: rgb(204, 204, 204); /* space-grey-200 */
   --color-text-muted: rgb(153, 153, 153); /* space-grey-400 */
   --color-text-subtle: rgb(103, 103, 103); /* space-grey-600 */
+  --color-text-tertiary: rgb(76, 76, 76); /* space-grey-700 */
   --color-text-inverse: rgb(0, 0, 0); /* space-grey-1000 */
 
   /* Borders — visible on 1000 / 900 */

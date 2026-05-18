@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
+import SectionHeader from "../components/SectionHeader";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 const CONTACT_CHANNELS = [
@@ -24,23 +25,23 @@ export default function ContactSection({ reduced }) {
       id="contact"
       aria-labelledby="contact-heading"
     >
+      <SectionHeader
+        title="Contact"
+        aside="Open to work"
+        headingId="contact-heading"
+        reduced={reduced}
+      />
       <motion.div
         className="contact-section__inner grid-12"
         variants={staggerContainer(reduced, { stagger: 0.06, delayChildren: 0.06 })}
       >
-        <motion.div
-          className="contact-section__primary"
+        <motion.p
+          className="contact-section__intro text-style-paragraph-large"
           variants={staggerItem(reduced, { y: 12 })}
         >
-          <p className="text-style-label-large">04 / Contact</p>
-          <h2 id="contact-heading" className="text-style-heading-2">
-            Start a conversation
-          </h2>
-          <p className="text-style-paragraph-large">
-            For freelance, full-time, or collaboration — send a note with context,
-            timeline, and what success looks like.
-          </p>
-        </motion.div>
+          For freelance, full-time, or collaboration — send a note with context,
+          timeline, and what success looks like.
+        </motion.p>
         <motion.div
           className="contact-section__channels"
           variants={staggerContainer(reduced, { stagger: 0.05, delayChildren: 0.04 })}
