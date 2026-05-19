@@ -130,6 +130,10 @@
   margin-bottom: var(--space-12);
 }
 
+.hero__body-highlight-break {
+  display: none;
+}
+
 .hero__footer .hero__aside.text-style-label-medium {
   margin-bottom: 0;
 }
@@ -182,6 +186,14 @@
 /* Hero copy — smaller type on mobile only (< 810px) */
 
 @media (max-width: 809px) {
+  .hero__copy {
+    overflow-x: clip;
+  }
+
+  .hero__body-highlight-break {
+    display: block;
+  }
+
   .hero__headline.text-style-display-medium {
     font-size: var(--type-display-small-size);
     line-height: var(--type-display-small-leading);

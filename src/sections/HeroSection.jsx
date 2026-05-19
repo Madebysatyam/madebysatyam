@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import CuttingMat from "../components/CuttingMat";
+import HeroBodyHighlight from "../components/HeroBodyHighlight";
 import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
 import HeroLocationRoute from "../components/HeroLocationRoute";
 import HeroMatStickers from "../components/HeroMatStickers";
@@ -36,7 +37,12 @@ export default function HeroSection() {
             </h1>
             <p className="hero__body text-style-heading-x-large">
               A Senior Product Designer based in the mix between research, pixels and shipped
-              products. I spend my days designing at Pocket FM for a global audience of 200M+.
+              products. I spend my days designing at{" "}
+              <br className="hero__body-highlight-break" aria-hidden="true" />
+              <HeroBodyHighlight>
+                Pocket FM for a global audience of{" "}
+                <span className="hero__body-highlight__tail">200M+.</span>
+              </HeroBodyHighlight>
             </p>
             <div className="hero__footer">
               <p className="hero__aside text-style-label-medium">
