@@ -1,7 +1,10 @@
 import { motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { useLayoutEffect, useRef, useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile.js";
-import { triggerStickerGrabHaptic } from "../../utils/stickerGrabHaptic.js";
+import {
+  isTouchLikePointer,
+  triggerStickerGrabHaptic,
+} from "../../utils/stickerGrabHaptic.js";
 import { getStickerPlacement, MAT_STICKERS } from "./matStickers.js";
 
 /** Width multipliers — mobile unchanged; desktop boosted only at 810px+. */
@@ -20,7 +23,6 @@ function MatSticker({
   containerRef,
   ready,
   sizeRem,
-  hapticsEnabled,
 }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -111,12 +113,12 @@ function MatSticker({
         scale: 1.06,
         zIndex: 20,
       }}
-      onDragStart={() => {
-        if (hapticsEnabled) {
-          triggerStickerGrabHaptic();
+      onPointerDown={(event) => {
+        if (isTouchLikePointer(event.pointerType)) {
+          triggerStickerGrabHaptic(event.pointerType);
         }
-        setIsDragging(true);
       }}
+      onDragStart={() => setIsDragging(true)}
       onDragEnd={() => {
         clampToMat();
         setIsDragging(false);
@@ -177,7 +179,6 @@ export default function HeroMatStickers() {
             containerRef={containerRef}
             ready={ready}
             sizeRem={sticker.sizeRem * sizeScale}
-            hapticsEnabled={isMobile}
           />
         );
       })}
