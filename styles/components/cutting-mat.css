@@ -1,5 +1,10 @@
 /* CuttingMat — stroke-draw animation and post-complete teal palette */
 
+:root {
+  --cutting-mat-fill-base: #000000;
+  --cutting-mat-fill-accent: rgb(12, 45, 24); /* teal-900 */
+}
+
 .cutting-mat__stroke {
   --cutting-mat-stroke-length: 120;
   stroke-dasharray: var(--cutting-mat-stroke-length);
@@ -37,12 +42,12 @@
 /* Fill — black base, teal-900 reveals bottom → top with soft leading edge */
 
 .cutting-mat__fill-base {
-  fill: #000000;
+  fill: var(--cutting-mat-fill-base);
 }
 
 .cutting-mat__fill-teal {
   --cutting-mat-fill-feather: 22%;
-  fill: rgb(12, 45, 24); /* teal-900 */
+  fill: var(--cutting-mat-fill-accent);
   -webkit-mask-image: linear-gradient(
     to top,
     #000 0%,

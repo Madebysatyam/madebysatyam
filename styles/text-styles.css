@@ -53,6 +53,27 @@
     margin-bottom: 2.5rem;
   }
 
+  .text-style-display-x-small {
+    font-family: var(--font-display);
+    font-size: var(--type-display-x-small-size);
+    line-height: var(--type-display-x-small-leading);
+    color: var(--color-text);
+  }
+
+  .text-style-heading-large {
+    font-family: var(--font-heading);
+    font-size: var(--type-heading-large-size);
+    line-height: var(--type-heading-large-leading);
+    color: var(--color-text);
+  }
+
+  .text-style-heading-x-large {
+    font-family: var(--font-heading);
+    font-size: var(--type-heading-x-large-size);
+    line-height: var(--type-heading-x-large-leading);
+    color: var(--color-text);
+  }
+
   .text-style-heading-3 {
     font-family: var(--font-heading);
     font-size: var(--type-heading-3-size);

@@ -19,18 +19,213 @@
   height: 100svh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero__bg {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
-.hero__bg svg {
+.hero__bg-mat {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__bg-mat svg {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Copy group — backdrop + headline + body + label; fades in after mat draw */
+
+.hero__copy {
+  position: relative;
+  width: min(92%, 50rem);
+  padding: var(--space-10) var(--space-8);
+  overflow: visible;
+  pointer-events: auto;
+  opacity: 0;
+  isolation: isolate;
+  animation: hero-copy-fade-in 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.hero__copy-foreground {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  gap: 0;
+}
+
+@keyframes hero-copy-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hero__text-backdrop {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: var(--cutting-mat-fill-accent);
+  transform: translate(-50%, -50%) scale(1.15);
+  filter: blur(72px);
+  pointer-events: none;
+}
+
+.hero__headline,
+.hero__body,
+.hero__footer,
+.hero__location {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+.hero__aside.text-style-label-medium {
+  margin-bottom: 0;
+}
+
+.hero__headline {
+  color: rgb(226, 255, 52);
+  text-transform: uppercase;
+  max-width: 100%;
+}
+
+.hero__headline.text-style-display-medium {
+  margin-bottom: var(--space-8);
+}
+
+.hero__body {
+  color: rgb(217, 248, 231);
+  max-width: 100%;
+}
+
+.hero__body.text-style-heading-x-large {
+  margin-bottom: var(--space-12);
+}
+
+.hero__footer .hero__aside.text-style-label-medium {
+  margin-bottom: 0;
+}
+
+.hero__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: var(--space-4);
+}
+
+.hero__aside {
+  color: rgb(40, 133, 79);
+  max-width: 100%;
+  margin: 0;
+}
+
+.hero__location {
+  display: flex;
+  justify-content: center;
+  color: rgb(40, 133, 79);
+  max-width: 100%;
+  margin: 0;
+}
+
+.hero__location-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  line-height: 1;
+}
+
+.hero__location-prefix,
+.hero__location-code {
+  display: inline-block;
+  letter-spacing: 0.04em;
+  transform: translateY(0.04em);
+}
+
+.hero__location-arc {
+  display: block;
+  width: 2.85em;
+  height: auto;
+  aspect-ratio: 56 / 14;
+  flex-shrink: 0;
+  transform: translateY(-0.06em);
+}
+
+/* Hero copy — smaller type on mobile only (< 810px) */
+
+@media (max-width: 809px) {
+  .hero__headline.text-style-display-medium {
+    font-size: var(--type-display-small-size);
+    line-height: var(--type-display-small-leading);
+  }
+
+  .hero__body.text-style-heading-x-large {
+    font-size: var(--type-heading-large-size);
+    line-height: var(--type-heading-large-leading);
+  }
+
+  .hero__aside.text-style-label-medium,
+  .hero__location.text-style-label-medium {
+    font-size: var(--type-label-small-size);
+    line-height: var(--type-label-small-leading);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__copy {
+    animation: none;
+    opacity: 1;
+  }
+
+  .hero__text-backdrop {
+    filter: blur(32px);
+  }
+}
+
+@media (min-width: 810px) {
+  .hero__copy {
+    width: min(92%, 60rem);
+  }
+
+  .hero__headline {
+    width: auto;
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero__copy {
+    width: min(92%, 64rem);
+  }
 }
 
 /* Section rhythm */
@@ -58,48 +253,6 @@
   .work-card {
     grid-column: span 6;
   }
-}
-
-.work-card__link {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  height: 100%;
-  min-height: 12rem;
-  padding: var(--space-6);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-  text-decoration: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-.work-card__link:hover {
-  background: var(--color-surface-hover);
-  border-color: var(--color-border-strong);
-  color: var(--color-text);
-}
-
-.work-card__index {
-  color: var(--color-text-subtle);
-}
-
-.work-card__title {
-  margin-bottom: 0;
-}
-
-.work-card__desc {
-  flex: 1;
-  margin-bottom: 0;
-  color: var(--color-text-muted);
-}
-
-.work-card__cta {
-  color: var(--color-link);
-}
-
-.work-card__link:hover .work-card__cta {
-  color: var(--color-link-hover);
 }
 
 /* Playground strip */

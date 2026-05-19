@@ -71,6 +71,39 @@
     "path": "/Display/Display Small",
     "spacing": 40
   },
+  "display-x-small": {
+    "sizes": {
+      "base": "1.76rem",
+      "md": "1.76rem",
+      "lg": "2.2rem",
+      "xl": "2.75rem"
+    },
+    "lineHeight": "1.42",
+    "path": "/Display/Display X Small",
+    "spacing": 40
+  },
+  "heading-large": {
+    "sizes": {
+      "base": "1.44rem",
+      "md": "1.25rem",
+      "lg": "1.44rem",
+      "xl": "1.35rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading Large",
+    "spacing": 20
+  },
+  "heading-x-large": {
+    "sizes": {
+      "base": "2rem",
+      "md": "1.28rem",
+      "lg": "1.6rem",
+      "xl": "1.8rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading X Large",
+    "spacing": 20
+  },
   "heading-3": {
     "sizes": {
       "base": "2rem",

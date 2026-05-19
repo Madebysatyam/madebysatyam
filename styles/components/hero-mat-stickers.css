@@ -1,0 +1,93 @@
+/* Hero cutting mat — draggable fridge-magnet stickers (overlay, no layout shift) */
+
+.hero-mat-stickers {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-mat-sticker {
+  position: absolute;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  will-change: transform;
+}
+
+.hero-mat-sticker__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 0 0 transparent);
+  transition: filter 0.2s ease;
+}
+
+.hero-mat-sticker__shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  -webkit-mask-image: var(--sticker-mask);
+  mask-image: var(--sticker-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(255 255 255 / 0.12) 44%,
+    rgb(255 255 255 / 0.55) 50%,
+    rgb(255 255 255 / 0.12) 56%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  background-position: 200% 0;
+}
+
+.hero-mat-sticker.is-dragging {
+  cursor: grabbing;
+}
+
+.hero-mat-sticker.is-dragging .hero-mat-sticker__art {
+  filter:
+    drop-shadow(0 14px 22px rgb(0 0 0 / 0.5))
+    drop-shadow(0 5px 10px rgb(0 0 0 / 0.35));
+}
+
+.hero-mat-sticker.is-dragging .hero-mat-sticker__shimmer {
+  opacity: 1;
+  animation: hero-mat-sticker-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes hero-mat-sticker-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mat-sticker {
+    cursor: default;
+  }
+
+  .hero-mat-sticker.is-dragging .hero-mat-sticker__shimmer {
+    animation: none;
+    opacity: 0;
+  }
+}
