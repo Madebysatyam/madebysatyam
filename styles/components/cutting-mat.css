@@ -112,11 +112,33 @@
   stroke-opacity: 0.55;
 }
 
+/* Mobile Safari — mask-size animation on SVG rects is unreliable; fade fill instead */
+@media (max-width: 809px) {
+  .cutting-mat__fill-teal {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0;
+    transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cutting-mat.is-draw-complete .cutting-mat__fill-teal {
+    animation: none;
+    opacity: 1;
+  }
+
+  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cutting-mat__fill-teal {
+    -webkit-mask-image: none;
+    mask-image: none;
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
     animation: none;
+    opacity: 1;
   }
 
   .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {

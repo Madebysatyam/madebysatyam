@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import CuttingMat from "../components/CuttingMat";
 import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
 import HeroLocationRoute from "../components/HeroLocationRoute";
@@ -8,6 +8,9 @@ const HERO_HEADLINE = "Curious by nature, careful by craft.";
 
 export default function HeroSection() {
   const [isMatComplete, setIsMatComplete] = useState(false);
+  const handleMatDrawComplete = useCallback(() => {
+    setIsMatComplete(true);
+  }, []);
 
   return (
     <section
@@ -16,7 +19,7 @@ export default function HeroSection() {
     >
       <div className="hero__bg">
         <div className="hero__bg-mat" aria-hidden="true">
-          <CuttingMat onDrawComplete={() => setIsMatComplete(true)} />
+          <CuttingMat onDrawComplete={handleMatDrawComplete} />
         </div>
         {isMatComplete ? <HeroMatStickers /> : null}
       </div>

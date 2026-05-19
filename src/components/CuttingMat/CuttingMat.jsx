@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import {
   ARC_RADII,
@@ -83,22 +83,32 @@ export default function CuttingMat({
 }) {
   const reduced = useReducedMotion();
   const [isDrawComplete, setIsDrawComplete] = useState(reduced);
+  const onDrawCompleteRef = useRef(onDrawComplete);
+  const hasCompletedRef = useRef(reduced);
+
+  onDrawCompleteRef.current = onDrawComplete;
 
   useEffect(() => {
-    if (reduced) {
+    const markComplete = () => {
+      if (hasCompletedRef.current) {
+        return;
+      }
+
+      hasCompletedRef.current = true;
       setIsDrawComplete(true);
-      onDrawComplete?.();
+      onDrawCompleteRef.current?.();
+    };
+
+    if (reduced) {
+      markComplete();
       return undefined;
     }
 
     const timeoutMs = drawCompleteDelaySec() * 1000 + 50;
-    const id = window.setTimeout(() => {
-      setIsDrawComplete(true);
-      onDrawComplete?.();
-    }, timeoutMs);
+    const id = window.setTimeout(markComplete, timeoutMs);
 
     return () => window.clearTimeout(id);
-  }, [reduced, onDrawComplete]);
+  }, [reduced]);
 
   const rootClass = [
     "cutting-mat",
