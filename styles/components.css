@@ -7,6 +7,9 @@
 @import "./components/case-study-card.css";
 @import "./components/playground-tile.css";
 @import "./components/note-item.css";
+@import "./components/kind-word.css";
+@import "./components/testimonial-tile.css";
+@import "./components/tooltip.css";
 @import "./components/see-all-button.css";
 @import "./components/hero-headline-flipper.css";
 @import "./components/hero-body-highlight.css";

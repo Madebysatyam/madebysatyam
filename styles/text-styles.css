@@ -60,6 +60,13 @@
     color: var(--color-text);
   }
 
+  .text-style-heading-medium {
+    font-family: var(--font-heading);
+    font-size: var(--type-heading-medium-size);
+    line-height: var(--type-heading-medium-leading);
+    color: var(--color-text);
+  }
+
   .text-style-heading-large {
     font-family: var(--font-heading);
     font-size: var(--type-heading-large-size);

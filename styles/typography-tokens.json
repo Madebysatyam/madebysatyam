@@ -82,6 +82,17 @@
     "path": "/Display/Display X Small",
     "spacing": 40
   },
+  "heading-medium": {
+    "sizes": {
+      "base": "1.28rem",
+      "md": "1.125rem",
+      "lg": "1.28rem",
+      "xl": "1.2rem"
+    },
+    "lineHeight": "1.2",
+    "path": "/Headings/Heading Medium",
+    "spacing": 20
+  },
   "heading-large": {
     "sizes": {
       "base": "1.44rem",

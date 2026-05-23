@@ -1,0 +1,45 @@
+/* Tooltip — rounded bubble, low-contrast fill vs border */
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-1));
+  left: 50%;
+  z-index: 1;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid rgb(51 51 51 / 0.35);
+  border-radius: 6px;
+  background-color: rgb(24 24 24 / 0.88);
+  color: var(--color-text-muted);
+  font-family: var(--font-label);
+  font-size: var(--type-label-x-small-size);
+  line-height: var(--type-label-x-small-leading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+  transition:
+    opacity 0.12s ease,
+    visibility 0.12s ease;
+}
+
+.tooltip:hover .tooltip__bubble,
+.tooltip:focus-visible .tooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip__bubble {
+    transition: none;
+  }
+}

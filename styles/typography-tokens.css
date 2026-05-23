@@ -16,6 +16,8 @@
   --type-display-small-leading: 1.42;
   --type-display-x-small-size: 1.76rem;
   --type-display-x-small-leading: 1.42;
+  --type-heading-medium-size: 1.28rem;
+  --type-heading-medium-leading: 1.2;
   --type-heading-large-size: 1.44rem;
   --type-heading-large-leading: 1.2;
   --type-heading-x-large-size: 2rem;
@@ -51,6 +53,7 @@
     --type-label-medium-size: 0.875rem;
     --type-display-small-size: 1.76rem;
     --type-display-x-small-size: 1.76rem;
+    --type-heading-medium-size: 1.125rem;
     --type-heading-large-size: 1.25rem;
     --type-heading-x-large-size: 1.28rem;
     --type-heading-3-size: 1.28rem;
@@ -73,6 +76,7 @@
     --type-display-medium-size: 2.625rem;
     --type-display-small-size: 2.2rem;
     --type-display-x-small-size: 2.2rem;
+    --type-heading-medium-size: 1.28rem;
     --type-heading-large-size: 1.44rem;
     --type-heading-x-large-size: 1.6rem;
   }
@@ -87,6 +91,7 @@
     --type-label-medium-size: 0.875rem;
     --type-display-small-size: 2.75rem;
     --type-display-x-small-size: 2.75rem;
+    --type-heading-medium-size: 1.2rem;
     --type-heading-large-size: 1.35rem;
     --type-heading-x-large-size: 1.8rem;
     --type-heading-3-size: 1.6rem;

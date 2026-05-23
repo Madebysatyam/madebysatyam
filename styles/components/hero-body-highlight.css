@@ -1,4 +1,4 @@
-/* Hero body — teal shimmer on Pocket → 200M+. phrase (every 3s) */
+/* Hero body — neon lime shimmer on Pocket → 200M+. phrase (~4.5s cycle) */
 
 .hero__body-highlight {
   display: inline-grid;
@@ -20,15 +20,14 @@
   background-clip: text;
   background-image: linear-gradient(
     105deg,
-    transparent 38%,
-    rgb(64 224 129 / 0.2) 44%,
-    rgb(64 224 129 / 0.95) 50%,
-    rgb(64 224 129 / 0.2) 56%,
-    transparent 62%
+    transparent 44%,
+    var(--color-lime-500) 49.25%,
+    var(--color-lime-500) 50.75%,
+    transparent 56%
   );
-  background-size: 220% 100%;
-  background-position: 200% 0;
-  animation: hero-body-highlight-shimmer 3s ease-in-out infinite;
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  animation: hero-body-highlight-shimmer 4.5s ease-in-out infinite;
 }
 
 /* Keep terminal punctuation on the same line as 200M+ */
@@ -38,13 +37,13 @@
 
 @keyframes hero-body-highlight-shimmer {
   0%,
-  82%,
+  78%,
   100% {
-    background-position: 200% 0;
+    background-position: 150% 0;
   }
 
-  14% {
-    background-position: -200% 0;
+  22% {
+    background-position: -150% 0;
   }
 }
 
@@ -75,6 +74,6 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__body-highlight__shimmer {
     animation: none;
-    background-position: 200% 0;
+    background-position: 150% 0;
   }
 }

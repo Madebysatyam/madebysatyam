@@ -28,7 +28,7 @@
 
 .note-item__date.text-style-label-small {
   margin: var(--space-1) 0 0;
-  color: var(--color-border);
+  color: var(--color-text-tertiary);
   transition: color 0.12s ease;
 }
 

@@ -44,7 +44,7 @@
 
 .playground-tile__date.text-style-label-small {
   margin: 0;
-  color: var(--color-border);
+  color: var(--color-text-tertiary);
 }
 
 /* Tablet (md): 2×2 — two columns */

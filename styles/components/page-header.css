@@ -29,7 +29,7 @@
 .page-header .page-header__updated.text-style-label-small {
   flex: 0 0 auto;
   margin-left: auto;
-  color: var(--color-border);
+  color: var(--color-text-tertiary);
   text-align: right;
   line-height: 1;
 }

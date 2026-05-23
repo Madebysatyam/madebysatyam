@@ -86,6 +86,8 @@
     padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    -webkit-backdrop-filter 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    backdrop-filter 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     border-radius 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -99,8 +101,10 @@
   padding-inline: var(--space-4);
   border-color: transparent;
   border-bottom-color: transparent;
-  background-color: var(--color-bg-elevated);
+  background-color: var(--color-bg-blur);
   background-clip: padding-box;
+  -webkit-backdrop-filter: blur(var(--blur-surface));
+  backdrop-filter: blur(var(--blur-surface));
   box-shadow: none;
   overflow: hidden;
 }
@@ -306,7 +310,7 @@
 }
 
 .site-nav__link--projects {
-  --nav-accent: rgb(29, 76, 217);
+  --nav-accent: var(--color-pink-500);
   --terminal-ch: 8;
 }
 
@@ -364,10 +368,12 @@
     width: max-content;
     max-width: 100%;
     overflow: visible;
-    border: 1px solid var(--color-border-strong);
+    border: 1px solid var(--color-border);
     border-radius: 9999px;
-    background-color: var(--color-bg-elevated);
-    box-shadow: inset 0 0 0 1px rgb(10 10 10);
+    background-color: var(--color-bg-blur);
+    -webkit-backdrop-filter: blur(var(--blur-surface));
+    backdrop-filter: blur(var(--blur-surface));
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.35);
   }
 
   .site-header.is-compact .site-header__inner {

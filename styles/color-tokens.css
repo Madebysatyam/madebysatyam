@@ -6,6 +6,9 @@
   /* Surfaces — page on 1000, elevation steps upward */
   --color-bg: rgb(0, 0, 0); /* space-grey-1000 */
   --color-bg-elevated: rgb(24, 24, 24); /* space-grey-900 */
+  /* Frosted shell — darker tint over scrolling content (compact nav, overlays) */
+  --color-bg-blur: rgb(0 0 0 / 0.65);
+  --blur-surface: 10px;
   --color-bg-subtle: rgb(0, 0, 0); /* space-grey-1000 */
   --color-surface: rgb(24, 24, 24); /* space-grey-900 */
   --color-surface-hover: rgb(51, 51, 51); /* space-grey-800 */
@@ -28,4 +31,8 @@
   --color-focus: rgb(178, 178, 178); /* space-grey-300 */
 
   --color-ink: var(--color-text);
+
+  /* Content accent steps — locked palette */
+  --color-pink-500: rgb(255, 128, 236);
+  --color-lime-500: rgb(219, 255, 0);
 }

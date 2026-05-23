@@ -1,0 +1,102 @@
+/* Testimonial tile — name + role group, quote below (reference layout) */
+
+.testimonial-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-10);
+  margin: 0;
+  text-align: left;
+}
+
+.testimonial-tile__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.testimonial-tile__name.text-style-heading-2,
+.testimonial-tile__role-row.text-style-label-large,
+.testimonial-tile__quote.text-style-paragraph-large {
+  margin: 0;
+}
+
+/* Heading 2 — explicit rules so size isn’t lost to @layer / md token shrink */
+.testimonial-tile__name.text-style-heading-2 {
+  font-family: var(--font-heading);
+  font-size: var(--type-heading-2-size);
+  line-height: var(--type-heading-2-leading);
+  font-weight: 400;
+  color: var(--color-link-hover);
+}
+
+@media (min-width: 810px) {
+  .testimonial-tile__name.text-style-heading-2 {
+    /* Global heading-2 drops to 1.44rem at md — keep name closer to reference scale */
+    font-size: max(1.8rem, var(--type-heading-2-size));
+  }
+}
+
+.testimonial-tile__role-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em;
+  font-size: var(--type-label-large-size);
+  line-height: var(--type-label-large-leading);
+}
+
+.testimonial-tile__role {
+  color: var(--color-text-tertiary);
+}
+
+.testimonial-tile__role-logo {
+  display: block;
+  width: 1.2em;
+  height: 1.2em;
+  object-fit: contain;
+  /* Compact mark (Meta) — baseline-aligned with label caps */
+  transform: translateY(0.14em);
+}
+
+/* Horizontal wordmarks — cap height matches label-large em box */
+.testimonial-tile__role-logo--wordmark {
+  width: auto;
+  height: 1em;
+  max-height: 1em;
+  object-fit: contain;
+  object-position: left bottom;
+  transform: translateY(0.12em);
+}
+
+.testimonial-tile__role-logo--loop {
+  max-width: 2.75em;
+}
+
+/* OLA wordmark — ~2.5:1, bold caps aligned to label-large */
+.testimonial-tile__role-logo--ola {
+  width: auto;
+  height: 1em;
+  max-width: 2.5em;
+  max-height: 1em;
+  transform: translateY(0.1em);
+}
+
+.testimonial-tile__role-logo--placeholder {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-elevated);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-border) 0,
+    var(--color-border) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.testimonial-tile__quote {
+  color: var(--color-text);
+  max-width: none;
+}
