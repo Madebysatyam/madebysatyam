@@ -280,10 +280,6 @@
 
 /* Playground strip */
 
-.strip-section {
-  border-block: 1px solid var(--color-border-subtle);
-}
-
 .strip-section__body {
   margin: 0;
 }
