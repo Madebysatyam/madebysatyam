@@ -44,8 +44,14 @@
 
 .kind-words-ticker__item {
   flex: 0 0 auto;
-  width: min(32rem, 78vw);
+  width: min(32rem, 92vw);
   max-width: 32rem;
+}
+
+@media (min-width: 810px) {
+  .kind-words-ticker__item {
+    width: min(32rem, 78vw);
+  }
 }
 
 .kind-words-ticker:hover .kind-words-ticker__track {
