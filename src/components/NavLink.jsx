@@ -1,54 +1,39 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import useTerminalTyping from "../hooks/useTerminalTyping";
+
+function isClientRoute(href) {
+  return href.startsWith("/") && !href.slice(1).includes("#");
+}
 
 export default function NavLink({ href, label, className, onNavigate }) {
-  const [text, setText] = useState(label);
-  const [isTyping, setIsTyping] = useState(false);
-  const timerRef = useRef(null);
+  const { text, isTyping, runType } = useTerminalTyping(label);
 
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const linkClassName = `site-nav__link ${className} text-style-label-medium${isTyping ? " is-typing" : ""}`;
+  const linkProps = {
+    className: linkClassName,
+    onMouseEnter: runType,
+    onFocus: runType,
+    onClick: onNavigate,
+  };
 
-  const runType = useCallback(() => {
-    if (prefersReducedMotion) {
-      setText(label);
-      return;
-    }
-
-    window.clearTimeout(timerRef.current);
-    setIsTyping(true);
-    setText("");
-
-    let index = 0;
-
-    const step = () => {
-      if (index < label.length) {
-        setText(label.slice(0, index + 1));
-        index += 1;
-        timerRef.current = window.setTimeout(step, 48);
-        return;
-      }
-
-      setIsTyping(false);
-    };
-
-    step();
-  }, [label, prefersReducedMotion]);
-
-  useEffect(() => {
-    return () => window.clearTimeout(timerRef.current);
-  }, []);
-
-  return (
-    <a
-      className={`site-nav__link ${className} text-style-label-medium${isTyping ? " is-typing" : ""}`}
-      href={href}
-      onMouseEnter={runType}
-      onFocus={runType}
-      onClick={onNavigate}
-    >
+  const children = (
+    <>
       <span className="site-nav__terminal-text">{text}</span>
       <span className="site-nav__cursor" aria-hidden="true" />
+    </>
+  );
+
+  if (isClientRoute(href)) {
+    return (
+      <Link to={href} {...linkProps}>
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <a href={href} {...linkProps}>
+      {children}
     </a>
   );
 }

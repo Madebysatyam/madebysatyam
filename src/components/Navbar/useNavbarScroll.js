@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const COMPACT_ENTER_Y = 96;
+const COMPACT_EXIT_Y = 48;
 
 /**
- * Scroll down past threshold → compact. Any scroll up → expanded. Near top → expanded.
+ * Scroll down past threshold → compact. Returns to expanded only at page top.
  * Desktop only — disabled by Navbar when mobile or menu is open.
  */
 export default function useNavbarScroll({ disabled = false } = {}) {
   const [isCompact, setIsCompact] = useState(false);
-  const lastScrollY = useRef(0);
 
   useEffect(() => {
     if (disabled) {
@@ -16,24 +16,15 @@ export default function useNavbarScroll({ disabled = false } = {}) {
       return undefined;
     }
 
-    lastScrollY.current = window.scrollY;
-
     const onScroll = () => {
       const y = window.scrollY;
-      const goingDown = y > lastScrollY.current;
-      lastScrollY.current = y;
 
-      if (y < 48) {
+      if (y < COMPACT_EXIT_Y) {
         setIsCompact(false);
         return;
       }
 
-      if (!goingDown) {
-        setIsCompact(false);
-        return;
-      }
-
-      if (goingDown && y > COMPACT_ENTER_Y) {
+      if (y > COMPACT_ENTER_Y) {
         setIsCompact(true);
       }
     };

@@ -24,6 +24,7 @@
 .site-header-placeholder {
   flex-shrink: 0;
   overflow: hidden;
+  transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Fixed shell — header morphs between full width and centred notch */
@@ -79,11 +80,14 @@
   border-bottom-color: var(--color-border-subtle);
   background-color: var(--color-bg);
   box-shadow: none;
+  border-radius: 0;
   transition:
     width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Compact notch — logo + links (desktop scroll state only) */
@@ -93,9 +97,12 @@
   max-width: 100%;
   padding-block: var(--space-2);
   padding-inline: var(--space-4);
-  border-color: var(--color-border);
+  border-color: transparent;
+  border-bottom-color: transparent;
   background-color: var(--color-bg-elevated);
+  background-clip: padding-box;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .site-header.is-compact .site-nav {
@@ -152,6 +159,9 @@
   width: auto;
   height: 3rem;
   max-width: min(22rem, 60vw);
+  transition:
+    height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .site-brand:hover .site-brand__logo {
@@ -305,14 +315,14 @@
   --terminal-ch: 10;
 }
 
-.site-nav__link--about {
-  --nav-accent: rgb(255, 128, 236);
+.site-nav__link--notes {
+  --nav-accent: rgb(200, 180, 255);
   --terminal-ch: 5;
 }
 
-.site-nav__link--contact {
+.site-nav__link--about {
   --nav-accent: rgb(255, 86, 40);
-  --terminal-ch: 7;
+  --terminal-ch: 5;
 }
 
 .site-nav__link:hover,
@@ -320,7 +330,7 @@
   color: var(--nav-accent);
 }
 
-/* Desktop — 12-column header bar */
+/* Desktop — 12-column bar; compact morphs to centred flex pill */
 
 @media (min-width: 810px) {
   .site-header {
@@ -346,11 +356,18 @@
   }
 
   .site-header.is-compact {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: var(--space-8);
-    grid-template-columns: unset;
+    width: max-content;
+    max-width: 100%;
+    overflow: visible;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 9999px;
+    background-color: var(--color-bg-elevated);
+    box-shadow: inset 0 0 0 1px rgb(10 10 10);
   }
 
   .site-header.is-compact .site-header__inner {
@@ -375,6 +392,7 @@
     grid-column: unset;
     justify-self: unset;
     flex: 0 1 auto;
+    margin-left: 0;
   }
 }
 
@@ -390,6 +408,8 @@
     max-width: 100%;
     padding-block: var(--space-1);
     padding-inline: var(--space-2);
+    border-radius: 0;
+    box-shadow: none;
     overflow-x: auto;
     scrollbar-width: none;
   }

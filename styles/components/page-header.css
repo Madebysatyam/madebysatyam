@@ -1,0 +1,51 @@
+/* Listing page header — title + last updated only */
+
+.page-header {
+  margin: 0 0 var(--space-10);
+}
+
+.page-header__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  align-items: last baseline;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+}
+
+.page-header__title,
+.page-header__updated {
+  margin: 0;
+}
+
+.page-header__title {
+  flex: 1 1 auto;
+  min-width: min(100%, 12rem);
+  color: var(--color-link-hover);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.page-header .page-header__updated.text-style-label-small {
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: var(--color-border);
+  text-align: right;
+  line-height: 1;
+}
+
+@media (max-width: 809px) {
+  .page-header__row {
+    flex-wrap: nowrap;
+    gap: var(--space-3);
+  }
+
+  .page-header__title {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .page-header__updated {
+    flex-shrink: 0;
+  }
+}

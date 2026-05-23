@@ -2,23 +2,23 @@
 
 export const NAV_LINKS = [
   {
-    href: "#work",
+    href: "/#work",
     label: "Projects",
     className: "site-nav__link--projects",
   },
   {
-    href: "#playground",
+    href: "/playground",
     label: "Playground",
     className: "site-nav__link--playground",
   },
   {
-    href: "#about",
-    label: "About",
-    className: "site-nav__link--about",
+    href: "/Notes",
+    label: "Notes",
+    className: "site-nav__link--notes",
   },
   {
-    href: "#contact",
-    label: "Contact",
-    className: "site-nav__link--contact",
+    href: "/About",
+    label: "About",
+    className: "site-nav__link--about",
   },
 ];

@@ -160,11 +160,15 @@ export const backdropVariants = (reduced) => ({
     : { opacity: 0, transition: { duration: 0.2, ease: EASE_OUT } },
 });
 
-export const NAVBAR_SHELL_SPRING = {
-  type: "spring",
-  stiffness: 420,
-  damping: 36,
-  mass: 0.9,
+/** Navbar morph — ease only (no spring). */
+export const NAVBAR_MORPH_LAYOUT = {
+  duration: DURATION.slow,
+  ease: EASE_OUT,
+};
+
+const NAVBAR_MORPH = {
+  duration: DURATION.slow,
+  ease: EASE_OUT,
 };
 
 export function navbarShellLayoutTransition(reduced) {
@@ -172,7 +176,7 @@ export function navbarShellLayoutTransition(reduced) {
     return { layout: { duration: 0 } };
   }
 
-  return { layout: NAVBAR_SHELL_SPRING };
+  return { layout: NAVBAR_MORPH_LAYOUT };
 }
 
 export const navbarBrandVariants = (reduced) => ({
@@ -234,7 +238,7 @@ export const navbarHeaderShellVariants = (reduced) => ({
     : {
         y: 0,
         opacity: 1,
-        transition: NAVBAR_SHELL_SPRING,
+        transition: NAVBAR_MORPH_LAYOUT,
       },
 });
 
@@ -250,12 +254,6 @@ export const navbarLinkItemVariants = (reduced) => ({
       },
 });
 
-/** Navbar morph — restrained ease, minimal bounce (layout + chrome). */
-export const NAVBAR_MORPH_LAYOUT = {
-  duration: DURATION.slow,
-  ease: EASE_OUT,
-};
-
 export function navbarMorphTransition(reduced) {
   if (reduced) {
     return { duration: 0 };
@@ -266,11 +264,6 @@ export function navbarMorphTransition(reduced) {
     default: NAVBAR_MORPH_LAYOUT,
   };
 }
-
-const NAVBAR_MORPH = {
-  duration: DURATION.slow,
-  ease: EASE_OUT,
-};
 
 /** Logo — blur only; Y locked, no layout shift. */
 export function navbarBrandMotion(reduced) {

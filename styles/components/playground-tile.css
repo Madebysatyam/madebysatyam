@@ -1,0 +1,62 @@
+/* Playground tile — 1:1 media + paragraph title + label date */
+
+.playground-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mobile: single column stack */
+.playground-list__item {
+  grid-column: 1 / -1;
+}
+
+.playground-tile {
+  margin: 0;
+}
+
+.playground-tile__media {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-elevated);
+  background-image: repeating-linear-gradient(
+    -52deg,
+    var(--color-border) 0,
+    var(--color-border) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.playground-tile__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: var(--space-3);
+}
+
+/* Override global text-style margins inside tile copy */
+.playground-tile__title.text-style-paragraph-medium {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.playground-tile__date.text-style-label-small {
+  margin: 0;
+  color: var(--color-border);
+}
+
+/* Tablet (md): 2×2 — two columns */
+@media (min-width: 810px) {
+  .playground-list__item {
+    grid-column: span 6;
+  }
+}
+
+/* Desktop (lg): four columns */
+@media (min-width: 1200px) {
+  .playground-list__item {
+    grid-column: span 3;
+  }
+}

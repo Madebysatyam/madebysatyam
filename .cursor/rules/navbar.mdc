@@ -28,7 +28,7 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 - Default: full-width header — logo left, inline nav links right.
 - Scroll down past ~96px: morphs to a **centred compact notch** (logo + links), eased layout + subtle logo blur.
-- Scroll up or near top: returns to full header.
+- Scroll back to the top: returns to full header (scrolling up alone does not expand).
 - No hamburger on desktop.
 
 ### Mobile (< 810px)
@@ -39,7 +39,7 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 ### All viewports
 
-- Links defined only in `navLinks.js` (Projects, Playground, About, Contact).
+- Links defined only in `navLinks.js` (Projects, Playground, Notes, About).
 - `body.is-nav-menu-open` locks scroll when mobile menu is open.
 - Escape closes mobile menu.
 - Respect `prefers-reduced-motion` via existing motion presets.

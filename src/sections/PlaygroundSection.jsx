@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import PlaygroundTile, { PLAYGROUND_TILES } from "../components/PlaygroundTile";
+import SeeAllButton from "../components/SeeAllButton";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
@@ -17,23 +19,23 @@ export default function PlaygroundSection({ reduced }) {
         headingId="playground-heading"
         reduced={reduced}
       />
-      <motion.div
-        className="strip-section__body grid-12"
+      <motion.ul
+        className="playground-list strip-section__body grid-12"
         variants={staggerContainer(reduced, { stagger: 0.06 })}
       >
-        <motion.div
-          className="strip-section__secondary"
-          variants={staggerItem(reduced, { y: 14 })}
-        >
-          <p className="text-style-paragraph-medium">
-            Typography tests, motion studies, and tools that do not fit a case study
-            folder — collected here as they ship.
-          </p>
-          <a className="strip-section__link text-style-label-medium" href="#">
-            Enter playground →
-          </a>
-        </motion.div>
-      </motion.div>
+        {PLAYGROUND_TILES.map((tile) => (
+          <motion.li
+            key={tile.id}
+            className="playground-list__item"
+            variants={staggerItem(reduced, { y: 14 })}
+          >
+            <PlaygroundTile {...tile} />
+          </motion.li>
+        ))}
+      </motion.ul>
+      <div className="section-see-all">
+        <SeeAllButton to="/playground" />
+      </div>
     </Reveal>
   );
 }

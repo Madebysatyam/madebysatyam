@@ -244,9 +244,20 @@
 
 .work-section,
 .strip-section,
-.about-section,
+.notes-section,
 .contact-section {
   padding-block: var(--space-12);
+}
+
+.page-listing {
+  padding-block: var(--space-12);
+  min-height: 50vh;
+}
+
+.about-page__intro {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--color-text);
 }
 
 /* Work cards */
@@ -275,33 +286,6 @@
 
 .strip-section__body {
   margin: 0;
-}
-
-.strip-section__secondary {
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 1200px) {
-  .strip-section__secondary {
-    grid-column: 7 / -1;
-  }
-}
-
-.strip-section__link {
-  display: inline-block;
-  margin-top: var(--space-6);
-  color: var(--color-link);
-  text-decoration: none;
-}
-
-.strip-section__link:hover {
-  color: var(--color-link-hover);
-}
-
-/* About */
-
-.about-section .text-style-paragraph-medium:last-child {
-  color: var(--color-text-muted);
 }
 
 /* Contact */

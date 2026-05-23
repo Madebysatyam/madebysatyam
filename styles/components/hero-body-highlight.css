@@ -1,16 +1,34 @@
-/* Hero body — trim-path underline tracks Pocket → 200M+ text (per line when wrapped) */
+/* Hero body — teal shimmer on Pocket → 200M+. phrase (every 3s) */
 
 .hero__body-highlight {
-  position: relative;
-  display: inline-block;
+  display: inline-grid;
   max-width: 100%;
   vertical-align: baseline;
   color: inherit;
   line-height: inherit;
 }
 
-.hero__body-highlight__text {
-  display: inline;
+.hero__body-highlight__text,
+.hero__body-highlight__shimmer {
+  grid-area: 1 / 1;
+}
+
+.hero__body-highlight__shimmer {
+  pointer-events: none;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(64 224 129 / 0.2) 44%,
+    rgb(64 224 129 / 0.95) 50%,
+    rgb(64 224 129 / 0.2) 56%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  background-position: 200% 0;
+  animation: hero-body-highlight-shimmer 3s ease-in-out infinite;
 }
 
 /* Keep terminal punctuation on the same line as 200M+ */
@@ -18,26 +36,15 @@
   white-space: nowrap;
 }
 
-/* Full overlay in the highlight box — single path, pixel coordinates */
-.hero__body-highlight__underline {
-  position: absolute;
-  inset: 0;
-  display: block;
-  max-width: none !important;
-  color: rgb(64, 224, 129); /* teal-500 */
-  overflow: visible;
-  pointer-events: none;
-}
+@keyframes hero-body-highlight-shimmer {
+  0%,
+  82%,
+  100% {
+    background-position: 200% 0;
+  }
 
-.hero__body-highlight__path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: hero-body-highlight-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.75s forwards;
-}
-
-@keyframes hero-body-highlight-draw {
-  to {
-    stroke-dashoffset: 0;
+  14% {
+    background-position: -200% 0;
   }
 }
 
@@ -46,30 +53,28 @@
   .hero__body-highlight {
     width: max-content;
     white-space: nowrap;
-    padding-bottom: 0.24em;
   }
 }
 
-/* Mobile — wrap inside copy width; underline follows each text line */
+/* Mobile — wrap inside copy width */
 @media (max-width: 809px) {
   .hero__body-highlight {
-    display: block;
+    display: grid;
     width: 100%;
     white-space: normal;
     text-align: center;
     overflow: hidden;
-    padding-bottom: 0.28em;
   }
 
-  .hero__body-highlight__text {
-    display: inline;
+  .hero__body-highlight__text,
+  .hero__body-highlight__shimmer {
     overflow-wrap: break-word;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__body-highlight__path {
-    stroke-dashoffset: 0;
+  .hero__body-highlight__shimmer {
     animation: none;
+    background-position: 200% 0;
   }
 }

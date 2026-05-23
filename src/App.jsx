@@ -1,28 +1,21 @@
-import { motion, useReducedMotion } from "framer-motion";
-import Navbar from "./components/Navbar";
-import AboutSection from "./sections/AboutSection.jsx";
-import ContactSection from "./sections/ContactSection.jsx";
-import HeroSection from "./sections/HeroSection.jsx";
-import PlaygroundSection from "./sections/PlaygroundSection.jsx";
-import SiteFooter from "./sections/SiteFooter.jsx";
-import WorkSection from "./sections/WorkSection.jsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SiteLayout from "./layouts/SiteLayout.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import NotesPage from "./pages/NotesPage.jsx";
+import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 
 export default function App() {
-  const reduced = useReducedMotion();
-
   return (
-    <motion.div className="page-home" initial={false}>
-      <Navbar />
-
-      <main id="main">
-        <HeroSection />
-        <WorkSection reduced={reduced} />
-        <PlaygroundSection reduced={reduced} />
-        <AboutSection reduced={reduced} />
-        <ContactSection reduced={reduced} />
-      </main>
-
-      <SiteFooter reduced={reduced} />
-    </motion.div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/playground" element={<PlaygroundPage />} />
+          <Route path="/Notes" element={<NotesPage />} />
+          <Route path="/About" element={<AboutPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -1,0 +1,78 @@
+/* Note list entry — paragraph title + label date */
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.note-item {
+  display: block;
+  margin: 0;
+  padding-block: var(--space-4);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color 0.12s ease,
+    opacity 0.2s ease;
+}
+
+.note-item__title.text-style-paragraph-large {
+  margin: 0;
+  color: var(--color-text);
+  transition: color 0.12s ease;
+}
+
+.note-item__date.text-style-label-small {
+  margin: var(--space-1) 0 0;
+  color: var(--color-border);
+  transition: color 0.12s ease;
+}
+
+@media (hover: hover) {
+  .notes-list:has(.note-item:hover) .note-item {
+    opacity: 0.35;
+  }
+
+  .notes-list:has(.note-item:hover) .note-item:hover {
+    opacity: 1;
+  }
+
+  .note-item:hover .note-item__title.text-style-paragraph-large {
+    color: var(--color-link);
+  }
+
+  .note-item:hover .note-item__date.text-style-label-small {
+    color: var(--color-text-subtle);
+  }
+}
+
+.notes-list:has(.note-item:focus-visible) .note-item {
+  opacity: 0.35;
+}
+
+.notes-list:has(.note-item:focus-visible) .note-item:focus-visible {
+  opacity: 1;
+}
+
+.note-item:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.note-item:focus-visible .note-item__title.text-style-paragraph-large {
+  color: var(--color-link);
+}
+
+.note-item:focus-visible .note-item__date.text-style-label-small {
+  color: var(--color-text-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-item {
+    transition: color 0.01ms;
+  }
+}

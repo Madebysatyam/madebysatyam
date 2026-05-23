@@ -1,17 +1,11 @@
 import { motion } from "framer-motion";
-import {
-  mobileNavItemVariants,
-  mobileNavListVariants,
-  navbarDesktopLinkMotion,
-  navbarDesktopNavMotion,
-} from "../../motion/presets.js";
+import { mobileNavItemVariants, mobileNavListVariants } from "../../motion/presets.js";
 import NavLink from "../NavLink.jsx";
 import { NAV_LINKS } from "./navLinks.js";
 
 export default function NavLinksList({
   isMobile,
   isOpen,
-  isCompact,
   reduced,
   onNavigate,
 }) {
@@ -38,25 +32,17 @@ export default function NavLinksList({
   }
 
   return (
-    <motion.ul
-      className="site-nav__list"
-      initial={false}
-      animate={navbarDesktopNavMotion(reduced)}
-    >
+    <ul className="site-nav__list">
       {NAV_LINKS.map((link) => (
-        <motion.li
-          key={link.href}
-          initial={false}
-          animate={navbarDesktopLinkMotion(reduced, isCompact)}
-        >
+        <li key={link.href}>
           <NavLink
             href={link.href}
             label={link.label}
             className={link.className}
             onNavigate={onNavigate}
           />
-        </motion.li>
+        </li>
       ))}
-    </motion.ul>
+    </ul>
   );
 }

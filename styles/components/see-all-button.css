@@ -1,0 +1,89 @@
+/* Rounded pill — section “see all” link to full listing pages */
+
+.section-see-all {
+  margin-top: var(--space-8);
+}
+
+.see-all-button {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  height: 2.375rem;
+  padding-inline: var(--space-6);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 9999px;
+  background-color: transparent;
+  color: var(--color-text);
+  font-family: var(--font-label);
+  font-size: var(--type-label-medium-size);
+  text-decoration: none;
+  transition:
+    color 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.see-all-button__label {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* Space Mono caps read high in the em box — optical center in pill */
+  transform: translateY(0.09em);
+}
+
+.see-all-button__label-sizer,
+.see-all-button__label-text {
+  grid-area: 1 / 1;
+}
+
+.see-all-button__label-sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@supports (text-box-trim: trim-both) {
+  .see-all-button__label {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    transform: translateY(0.04em);
+  }
+}
+
+.see-all-button__cursor {
+  display: inline-block;
+  width: 0.6ch;
+  margin-left: 0.05em;
+  color: currentColor;
+  opacity: 0;
+}
+
+.see-all-button__cursor::after {
+  content: "_";
+}
+
+.see-all-button.is-typing .see-all-button__cursor,
+.see-all-button:hover .see-all-button__cursor,
+.see-all-button:focus-visible .see-all-button__cursor {
+  opacity: 1;
+  animation: nav-cursor-blink 0.85s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .see-all-button__cursor {
+    display: none;
+  }
+}
+
+.see-all-button:hover {
+  border-color: var(--color-text-subtle);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-link);
+}
+
+.see-all-button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}

@@ -2,11 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import logo from "../../../assets/logo.svg";
 import useIsMobile from "../../hooks/useIsMobile.js";
-import {
-  backdropVariants,
-  mobileNavPanelVariants,
-  navbarBrandMotion,
-} from "../../motion/presets.js";
+import { backdropVariants, mobileNavPanelVariants } from "../../motion/presets.js";
 import NavLinksList from "./NavLinksList.jsx";
 import useNavbarScroll from "./useNavbarScroll.js";
 
@@ -105,7 +101,7 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      <motion.div
+      <div
         className="site-header-placeholder"
         aria-hidden="true"
         style={{ height: placeholderHeight }}
@@ -125,15 +121,8 @@ export default function Navbar() {
             .filter(Boolean)
             .join(" ")}
         >
-          <motion.div className="site-header__inner" initial={false}>
-            <motion.a
-              className="site-brand"
-              href="/"
-              aria-label="Madebysatyam home"
-              initial={false}
-              animate={navbarBrandMotion(reduced)}
-              style={{ display: "inline-flex", originX: 0 }}
-            >
+          <div className="site-header__inner">
+            <a className="site-brand" href="/" aria-label="Madebysatyam home">
               <img
                 className="site-brand__logo"
                 src={logo}
@@ -142,7 +131,7 @@ export default function Navbar() {
                 height="56"
                 decoding="async"
               />
-            </motion.a>
+            </a>
             {isMobile && (
               <button
                 type="button"
@@ -159,14 +148,13 @@ export default function Navbar() {
                 </span>
               </button>
             )}
-          </motion.div>
+          </div>
 
           {!isMobile && (
             <nav className="site-nav" id="site-nav-panel" aria-label="Primary">
               <NavLinksList
                 isMobile={false}
                 isOpen={false}
-                isCompact={isCompact}
                 reduced={reduced}
                 onNavigate={closeMenu}
               />
@@ -201,7 +189,6 @@ export default function Navbar() {
                   <NavLinksList
                     isMobile={isMobile}
                     isOpen={isOpen}
-                    isCompact={false}
                     reduced={reduced}
                     onNavigate={closeMenu}
                   />

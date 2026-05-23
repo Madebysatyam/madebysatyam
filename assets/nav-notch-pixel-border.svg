@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <!-- 8-bit chamfer corner + dual 1px ring (outer light, inner stroke) -->
+  <path
+    fill="#4c4c4c"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M1 0H15L16 1V15L15 16H1L0 15V1ZM2 1H14L15 2V14L14 15H2L1 14V2Z"
+  />
+  <path
+    fill="#0a0a0a"
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M2 1H14L15 2V14L14 15H2L1 14V2ZM3 2H13L14 3V13L13 14H3L2 13V3Z"
+  />
+</svg>
