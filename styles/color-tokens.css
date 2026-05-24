@@ -32,7 +32,10 @@
 
   --color-ink: var(--color-text);
 
-  /* Content accent steps — locked palette */
-  --color-pink-500: rgb(255, 128, 236);
+  /* Content accent steps — locked palette (tags, cards, playground — not site chrome) */
   --color-lime-500: rgb(219, 255, 0);
+  --color-pink-500: rgb(255, 128, 236);
+  --color-teal-500: rgb(64, 224, 129);
+  --color-orange-500: rgb(255, 86, 40);
+  --color-purple-500: rgb(104, 91, 198);
 }

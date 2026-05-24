@@ -341,6 +341,36 @@ export function navbarMorphTransition(reduced) {
   };
 }
 
+/** Footer role verb — blur dissolve between cycling words. */
+export const footerRoleVerbDissolveVariants = (reduced) => ({
+  hidden: reduced
+    ? { opacity: 1, filter: "blur(0px)", y: 0 }
+    : {
+        opacity: 0,
+        filter: "blur(8px)",
+        y: "0.1em",
+      },
+  visible: reduced
+    ? { opacity: 1, filter: "blur(0px)", y: 0 }
+    : {
+        opacity: 1,
+        filter: "blur(0px)",
+        y: 0,
+        transition: { duration: DURATION.slow, ease: EASE_OUT },
+      },
+  exit: reduced
+    ? { opacity: 1, filter: "blur(0px)", y: 0 }
+    : {
+        opacity: 0,
+        filter: "blur(8px)",
+        y: "-0.1em",
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+});
+
+export const footerRoleShapeMorphTransition = (reduced) =>
+  reduced ? { duration: 0 } : { duration: DURATION.slow, ease: EASE_OUT };
+
 /** Logo — blur only; Y locked, no layout shift. */
 export function navbarBrandMotion(reduced) {
   if (reduced) {

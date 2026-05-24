@@ -1,5 +1,6 @@
 import { useReducedMotion } from "framer-motion";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 export default function SiteLayout() {
@@ -10,6 +11,7 @@ export default function SiteLayout() {
       <Navbar />
       <div className="page-home">
         <Outlet context={{ reduced }} />
+        <Footer />
       </div>
     </>
   );

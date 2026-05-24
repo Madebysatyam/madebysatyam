@@ -3,21 +3,25 @@ export const NOTES = [
     id: "habit-loops",
     title: "On habit loops and listener rituals",
     date: "00.00.0000",
+    category: "essay",
   },
   {
     id: "design-systems",
     title: "What a design system owes the next designer",
     date: "00.00.0000",
+    category: "systems",
   },
   {
     id: "motion-restraint",
     title: "Motion with restraint on product surfaces",
     date: "00.00.0000",
+    category: "process",
   },
   {
     id: "handoff",
     title: "Handoff notes that survive the first sprint",
     date: "00.00.0000",
+    category: "product",
   },
 ];
 
@@ -27,30 +31,36 @@ export const NOTES_PAGE = [
     id: "placeholder-05",
     title: "Placeholder essay — listening at scale",
     date: "00.00.0000",
+    category: "essay",
   },
   {
     id: "placeholder-06",
     title: "Placeholder essay — tokens before components",
     date: "00.00.0000",
+    category: "systems",
   },
   {
     id: "placeholder-07",
     title: "Placeholder essay — critique without a deck",
     date: "00.00.0000",
+    category: "research",
   },
   {
     id: "placeholder-08",
     title: "Placeholder essay — shipping the boring fix",
     date: "00.00.0000",
+    category: "product",
   },
   {
     id: "placeholder-09",
     title: "Placeholder essay — rhythm in editorial UI",
     date: "00.00.0000",
+    category: "process",
   },
   {
     id: "placeholder-10",
     title: "Placeholder essay — what we leave out",
     date: "00.00.0000",
+    category: "research",
   },
 ];

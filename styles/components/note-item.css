@@ -20,6 +20,52 @@
     opacity 0.2s ease;
 }
 
+/* Category tag — square swatch + label (content accent tokens) */
+
+.note-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  font-size: var(--type-label-small-size);
+  line-height: 1;
+}
+
+.note-tag__swatch {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-none);
+  background-color: var(--note-tag-color, var(--color-text-muted));
+  /* Uppercase mono sits high in the em box — slight lift centers on cap height */
+  margin-top: -0.0625em;
+}
+
+.note-tag__label.text-style-label-small {
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+
+.note-tag--essay {
+  --note-tag-color: var(--color-lime-500);
+}
+
+.note-tag--systems {
+  --note-tag-color: var(--color-teal-500);
+}
+
+.note-tag--process {
+  --note-tag-color: var(--color-pink-500);
+}
+
+.note-tag--research {
+  --note-tag-color: var(--color-purple-500);
+}
+
+.note-tag--product {
+  --note-tag-color: var(--color-orange-500);
+}
+
 .note-item__title.text-style-paragraph-large {
   margin: 0;
   color: var(--color-text);
