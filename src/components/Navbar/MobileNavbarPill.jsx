@@ -2,12 +2,12 @@ import { useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import logo from "../../../assets/logo.svg";
 import NavLinksList from "./NavLinksList.jsx";
-import useMobilePillNavScroll from "./useMobilePillNavScroll.js";
+import useNavScrollReveal from "./useNavScrollReveal.js";
 
 export default function MobileNavbarPill() {
   const [isOpen, setIsOpen] = useState(false);
   const reduced = useReducedMotion();
-  const isPillVisible = useMobilePillNavScroll({ disabled: isOpen });
+  const isPillVisible = useNavScrollReveal({ disabled: isOpen });
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
 

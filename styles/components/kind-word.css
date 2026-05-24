@@ -13,6 +13,8 @@
 
 .kind-words-ticker__viewport {
   overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -38,8 +40,16 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: kind-words-ticker-scroll 55s linear infinite;
   will-change: transform;
+}
+
+/* Fallback when JS is off — overridden by .is-js-driven */
+.kind-words-ticker__track:not(.is-js-driven) {
+  animation: kind-words-ticker-scroll 55s linear infinite;
+}
+
+.kind-words-ticker__track.is-js-driven {
+  animation: none;
 }
 
 .kind-words-ticker__item {
@@ -54,8 +64,10 @@
   }
 }
 
-.kind-words-ticker:hover .kind-words-ticker__track {
-  animation-play-state: paused;
+.kind-words-ticker__viewport.is-dragging {
+  cursor: grabbing;
+  touch-action: none;
+  user-select: none;
 }
 
 @keyframes kind-words-ticker-scroll {

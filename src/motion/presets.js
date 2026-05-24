@@ -173,6 +173,27 @@ export const backdropVariants = (reduced) => ({
     : { opacity: 0, transition: { duration: 0.2, ease: EASE_OUT } },
 });
 
+/** Desktop compact notch — hide while scrolling, blur dissolve on pause. */
+export const desktopNavRevealVariants = (reduced) => ({
+  visible: reduced
+    ? { opacity: 1, y: 0, filter: "blur(0px)" }
+    : {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        transition: { duration: DURATION.slow, ease: EASE_OUT },
+      },
+  hidden: reduced
+    ? { opacity: 0, y: 0, filter: "blur(0px)", pointerEvents: "none" }
+    : {
+        opacity: 0,
+        y: "-0.75rem",
+        filter: "blur(10px)",
+        pointerEvents: "none",
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+});
+
 /** Mobile bottom pill — hide while scrolling; opacity fade on pause (no parent filter/transform). */
 export const mobileNavPillShellVariants = (reduced) => ({
   visible: reduced

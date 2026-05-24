@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 const SCROLL_PAUSE_MS = 180;
 
 /**
- * Hides the mobile bottom pill while the user is scrolling; shows it again
- * after scroll pauses (blur + opacity settle).
+ * Hides chrome while scrolling; shows again after scroll pauses.
+ * Used by mobile bottom pill and desktop compact notch.
  */
-export default function useMobilePillNavScroll({ disabled = false } = {}) {
+export default function useNavScrollReveal({ disabled = false } = {}) {
   const [isVisible, setIsVisible] = useState(true);
   const pauseTimerRef = useRef(null);
   const lastScrollYRef = useRef(0);

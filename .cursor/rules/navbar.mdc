@@ -11,7 +11,7 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 | File | Role |
 |------|------|
-| `src/components/Navbar/` | `Navbar.jsx`, `MobileNavbarPill.jsx`, `NavLinksList.jsx`, `navLinks.js`, `useNavbarScroll.js`, `useMobilePillNavScroll.js` |
+| `src/components/Navbar/` | `Navbar.jsx`, `MobileNavbarPill.jsx`, `NavLinksList.jsx`, `navLinks.js`, `useNavScrollReveal.js` |
 | `src/components/NavLink.jsx` | Terminal-style link + typing interaction |
 | `styles/components/navbar.css` | Desktop header + compact notch |
 | `styles/components/mobile-nav-pill.css` | Mobile bottom pill only |
@@ -25,11 +25,10 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 ## Locked behaviour
 
-### Desktop (≥ 810px)
+### Desktop / tablet (≥ 810px)
 
-- Default: full-width header — logo left, inline nav links right.
-- Scroll down past ~96px: morphs to a **centred compact notch** (logo + links), eased layout + subtle logo blur.
-- Scroll back to the top: returns to full header (scrolling up alone does not expand).
+- Default: **centred compact frosted notch** (logo + links) — no full-width header.
+- **Scroll hide**: notch hides while scrolling; after scroll pause (~180ms) it returns with blur + opacity dissolve (`useNavScrollReveal`).
 - No hamburger on desktop.
 
 ### Mobile (< 810px)
