@@ -1,5 +1,9 @@
 import { motion } from "framer-motion";
-import { mobileNavItemVariants, mobileNavListVariants } from "../../motion/presets.js";
+import {
+  mobileNavItemVariants,
+  mobileNavListVariants,
+  mobileNavPillItemVariants,
+} from "../../motion/presets.js";
 import NavLink from "../NavLink.jsx";
 import { NAV_LINKS } from "./navLinks.js";
 
@@ -7,8 +11,12 @@ export default function NavLinksList({
   isMobile,
   isOpen,
   reduced,
+  layout = "drawer",
   onNavigate,
 }) {
+  const itemVariants =
+    layout === "pill" ? mobileNavPillItemVariants(reduced) : mobileNavItemVariants(reduced);
+
   if (isMobile) {
     return (
       <motion.ul
@@ -18,7 +26,7 @@ export default function NavLinksList({
         variants={mobileNavListVariants(reduced)}
       >
         {NAV_LINKS.map((link) => (
-          <motion.li key={link.href} variants={mobileNavItemVariants(reduced)}>
+          <motion.li key={link.href} variants={itemVariants}>
             <NavLink
               href={link.href}
               label={link.label}

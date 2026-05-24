@@ -11,15 +11,16 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 | File | Role |
 |------|------|
-| `src/components/Navbar/` | Component module (`Navbar.jsx`, `NavLinksList.jsx`, `navLinks.js`, `useNavbarScroll.js`) |
+| `src/components/Navbar/` | `Navbar.jsx`, `MobileNavbarPill.jsx`, `NavLinksList.jsx`, `navLinks.js`, `useNavbarScroll.js`, `useMobilePillNavScroll.js` |
 | `src/components/NavLink.jsx` | Terminal-style link + typing interaction |
-| `styles/components/navbar.css` | Layout, compact notch, mobile drawer |
-| `src/motion/presets.js` | `navbarMorphTransition`, `navbarBrandMotion`, `navbarShellMotion`, mobile nav variants |
+| `styles/components/navbar.css` | Desktop header + compact notch |
+| `styles/components/mobile-nav-pill.css` | Mobile bottom pill only |
+| `src/motion/presets.js` | Navbar morph + `mobileNavPillShellVariants`, `mobileNavPillMenuVariants` |
 
 ## Mounting
 
 - Import only from `src/components/Navbar` (barrel).
-- Render **once** in `App.jsx` above `<main>` — never duplicate `<Navbar />` or reimplement header markup inside page sections.
+- Render **once** in `SiteLayout` / `App.jsx` — never duplicate `<Navbar />` or reimplement header markup inside page sections.
 - New routes/pages must not add their own header, logo row, or nav list.
 
 ## Locked behaviour
@@ -33,25 +34,26 @@ The primary navigation is **one shared component** used on every page. Behaviour
 
 ### Mobile (< 810px)
 
-- **No compact scroll morph** — header stays full width at all scroll positions.
-- Hamburger opens a **full-height drawer** (`site-nav--drawer`) below the header bar, with backdrop.
-- Drawer and backdrop are **siblings of `<header>`** inside `site-header-shell`, not children of the animated header (fixed positioning must not sit inside transformed/filtered ancestors).
+- **No top header** — content starts at the viewport top.
+- **Sticky bottom pill** (`MobileNavbarPill`): logo + hamburger in a frosted pill; tap bar (or toggle) expands the pill vertically with nav links; hamburger animates to close.
+- **Scroll hide**: pill hides while scrolling; after scroll pause (~180ms) it returns with blur + opacity dissolve (`useMobilePillNavScroll`).
+- Menu open: pill stays visible; `body.is-mobile-nav-open` locks scroll.
+- Logo link stops propagation (home); bar tap toggles menu.
 
 ### All viewports
 
 - Links defined only in `navLinks.js` (Projects, Playground, Notes, About).
-- `body.is-nav-menu-open` locks scroll when mobile menu is open.
 - Escape closes mobile menu.
 - Respect `prefers-reduced-motion` via existing motion presets.
 
 ## Do not
 
 - Add per-page nav markup or alternate headers.
-- Nest mobile `position: fixed` menu panels inside `motion` elements that use `layout`, `filter`, or blur on ancestors.
-- Enable compact scroll state on mobile.
+- Reintroduce a top mobile header or full-screen drawer.
+- Enable desktop compact scroll morph on mobile.
 - Change nav link set in page files — update `navLinks.js` only.
-- Move navbar styles into page CSS (`homepage.css`, etc.) — keep chrome in `styles/components/navbar.css`.
+- Move navbar styles into page CSS (`homepage.css`, etc.) — keep chrome in `navbar.css` / `mobile-nav-pill.css`.
 
 ## Changing the navbar
 
-If a task asks to change nav behaviour, links, or chrome: edit the Navbar module and `navbar.css` together, then verify desktop scroll morph and mobile drawer on a long page.
+Edit the Navbar module and matching CSS (`navbar.css` + `mobile-nav-pill.css`), then verify desktop scroll morph and mobile bottom pill on a long page.

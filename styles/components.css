@@ -1,6 +1,7 @@
 /* Shared UI component styles — imported from global.css */
 
 @import "./components/navbar.css";
+@import "./components/mobile-nav-pill.css";
 @import "./components/cutting-mat.css";
 @import "./components/section-header.css";
 @import "./components/page-header.css";

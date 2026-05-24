@@ -116,6 +116,19 @@ export const mobileNavItemVariants = (reduced) => ({
       },
 });
 
+export const mobileNavPillItemVariants = (reduced) => ({
+  desktop: { opacity: 1, x: 0, y: 0 },
+  closed: reduced ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 0, y: 10 },
+  open: reduced
+    ? { opacity: 1, x: 0, y: 0 }
+    : {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+});
+
 export function strokeDraw(reduced, duration = 0.55) {
   if (reduced) {
     return {
@@ -158,6 +171,48 @@ export const backdropVariants = (reduced) => ({
   exit: reduced
     ? { opacity: 0 }
     : { opacity: 0, transition: { duration: 0.2, ease: EASE_OUT } },
+});
+
+/** Mobile bottom pill — hide while scrolling; opacity fade on pause (no parent filter/transform). */
+export const mobileNavPillShellVariants = (reduced) => ({
+  visible: reduced
+    ? { opacity: 1 }
+    : {
+        opacity: 1,
+        transition: { duration: DURATION.slow, ease: EASE_OUT },
+      },
+  hidden: reduced
+    ? { opacity: 0, pointerEvents: "none" }
+    : {
+        opacity: 0,
+        pointerEvents: "none",
+        transition: { duration: DURATION.base, ease: EASE_OUT },
+      },
+});
+
+/** Expanded link stack inside the bottom pill. */
+export const mobileNavPillMenuVariants = (reduced) => ({
+  hidden: reduced
+    ? { opacity: 0, height: 0 }
+    : {
+        opacity: 0,
+        height: 0,
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
+  visible: reduced
+    ? { opacity: 1, height: "auto" }
+    : {
+        opacity: 1,
+        height: "auto",
+        transition: { duration: DURATION.slow, ease: EASE_OUT },
+      },
+  exit: reduced
+    ? { opacity: 0, height: 0 }
+    : {
+        opacity: 0,
+        height: 0,
+        transition: { duration: DURATION.fast, ease: EASE_OUT },
+      },
 });
 
 /** Navbar morph — ease only (no spring). */

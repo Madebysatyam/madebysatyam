@@ -1,16 +1,16 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import logo from "../../../assets/logo.svg";
 import useIsMobile from "../../hooks/useIsMobile.js";
-import { backdropVariants, mobileNavPanelVariants } from "../../motion/presets.js";
 import NavLinksList from "./NavLinksList.jsx";
+import MobileNavbarPill from "./MobileNavbarPill.jsx";
 import useNavbarScroll from "./useNavbarScroll.js";
 
 /**
  * Site-wide primary navigation.
  *
  * Desktop: full header bar; scroll down → centred compact notch (logo + links).
- * Mobile: full header + hamburger; menu opens as viewport-fixed drawer (no compact morph).
+ * Mobile: sticky bottom pill (logo + menu); expands vertically in place.
  *
  * Mount once in App.jsx — do not duplicate per page.
  */
@@ -18,12 +18,11 @@ export default function Navbar() {
   const shellRef = useRef(null);
   const headerRef = useRef(null);
   const expandedHeightRef = useRef(0);
-  const [isOpen, setIsOpen] = useState(false);
   const [placeholderHeight, setPlaceholderHeight] = useState(0);
   const isMobile = useIsMobile();
   const reduced = useReducedMotion();
-  const isScrollCompact = useNavbarScroll({ disabled: isOpen || isMobile });
-  const isCompact = isScrollCompact && !isOpen && !isMobile;
+  const isScrollCompact = useNavbarScroll({ disabled: isMobile });
+  const isCompact = isScrollCompact && !isMobile;
 
   const syncOffsets = useCallback(() => {
     if (!headerRef.current) return;
@@ -40,15 +39,14 @@ export default function Navbar() {
     }
   }, [isCompact]);
 
-  const closeMenu = useCallback(() => setIsOpen(false), []);
-
-  const toggleMenu = useCallback(() => {
-    setIsOpen((open) => !open);
-  }, []);
-
   useLayoutEffect(() => {
+    if (isMobile) {
+      setPlaceholderHeight(0);
+      return;
+    }
+
     if (!headerRef.current) {
-      setPlaceholderHeight(isMobile ? 72 : 88);
+      setPlaceholderHeight(88);
       return;
     }
 
@@ -57,9 +55,11 @@ export default function Navbar() {
     } else {
       syncOffsets();
     }
-  }, [isCompact, isOpen, isMobile, syncOffsets]);
+  }, [isCompact, isMobile, syncOffsets]);
 
   useEffect(() => {
+    if (isMobile) return undefined;
+
     syncOffsets();
     window.addEventListener("resize", syncOffsets);
 
@@ -73,27 +73,18 @@ export default function Navbar() {
       window.removeEventListener("resize", syncOffsets);
       observer?.disconnect();
     };
-  }, [syncOffsets]);
+  }, [isMobile, syncOffsets]);
 
-  useEffect(() => {
-    document.body.classList.toggle("is-nav-menu-open", isOpen && isMobile);
-    return () => document.body.classList.remove("is-nav-menu-open");
-  }, [isOpen, isMobile]);
-
-  useEffect(() => {
-    if (!isMobile) {
-      setIsOpen(false);
-    }
-  }, [isMobile]);
-
-  useEffect(() => {
-    const onKeyDown = (event) => {
-      if (event.key === "Escape") closeMenu();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [closeMenu]);
+  if (isMobile) {
+    return (
+      <>
+        <a className="skip-link text-style-label-small" href="#main">
+          Skip to content
+        </a>
+        <MobileNavbarPill />
+      </>
+    );
+  }
 
   return (
     <>
@@ -101,27 +92,22 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      <div
+      <motion.div
         className="site-header-placeholder"
         aria-hidden="true"
-        style={{ height: placeholderHeight }}
+        animate={{ height: placeholderHeight }}
+        transition={{ duration: reduced ? 0 : 0.45, ease: [0.4, 0, 0.2, 1] }}
       />
 
-      <div
+      <motion.div
         ref={shellRef}
-        className={`site-header-shell${isCompact ? " is-compact" : ""}${isMobile ? " is-mobile" : ""}`}
+        className={`site-header-shell${isCompact ? " is-compact" : ""}`}
       >
         <header
           ref={headerRef}
-          className={[
-            "site-header",
-            isOpen && isMobile ? "is-nav-open" : "",
-            isCompact ? "is-compact" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
+          className={["site-header", isCompact ? "is-compact" : ""].filter(Boolean).join(" ")}
         >
-          <div className="site-header__inner">
+          <motion.div className="site-header__inner" layout="position">
             <a className="site-brand" href="/" aria-label="Madebysatyam home">
               <img
                 className="site-brand__logo"
@@ -132,72 +118,13 @@ export default function Navbar() {
                 decoding="async"
               />
             </a>
-            {isMobile && (
-              <button
-                type="button"
-                className="site-nav__toggle"
-                aria-expanded={isOpen}
-                aria-controls="site-nav-panel"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                onClick={toggleMenu}
-              >
-                <span className="site-nav__toggle-icon" aria-hidden="true">
-                  <span className="site-nav__toggle-line" />
-                  <span className="site-nav__toggle-line" />
-                  <span className="site-nav__toggle-line" />
-                </span>
-              </button>
-            )}
-          </div>
+          </motion.div>
 
-          {!isMobile && (
-            <nav className="site-nav" id="site-nav-panel" aria-label="Primary">
-              <NavLinksList
-                isMobile={false}
-                isOpen={false}
-                reduced={reduced}
-                onNavigate={closeMenu}
-              />
-            </nav>
-          )}
+          <nav className="site-nav" id="site-nav-panel" aria-label="Primary">
+            <NavLinksList isMobile={false} isOpen={false} reduced={reduced} onNavigate={() => {}} />
+          </nav>
         </header>
-
-        {isMobile && (
-          <AnimatePresence>
-            {isOpen && (
-              <>
-                <motion.button
-                  type="button"
-                  className="site-nav__backdrop site-nav__backdrop--drawer"
-                  aria-hidden="true"
-                  tabIndex={-1}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  variants={backdropVariants(reduced)}
-                  onClick={closeMenu}
-                />
-                <motion.nav
-                  className="site-nav site-nav--drawer"
-                  id="site-nav-panel"
-                  aria-label="Primary"
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  variants={mobileNavPanelVariants(reduced)}
-                >
-                  <NavLinksList
-                    isMobile={isMobile}
-                    isOpen={isOpen}
-                    reduced={reduced}
-                    onNavigate={closeMenu}
-                  />
-                </motion.nav>
-              </>
-            )}
-          </AnimatePresence>
-        )}
-      </div>
+      </motion.div>
     </>
   );
 }
