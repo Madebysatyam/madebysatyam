@@ -87,19 +87,26 @@ export const MAT_STICKERS = STICKER_LAYOUT.map((sticker) => ({
   rotateDeg: sticker.rotateDeg ?? magnetRotation(sticker.id),
 }));
 
+/** Nudge all anchors downward (% of mat) — keeps ring clear of headline. */
+const STICKER_Y_OFFSET = 5;
+
 /** Anchor + tilt for current viewport (< 810px uses `mobile` when present). */
 export function getStickerPlacement(sticker, isMobile) {
-  if (isMobile && sticker.mobile) {
-    return {
-      x: sticker.mobile.x,
-      y: sticker.mobile.y,
-      rotateDeg: sticker.mobile.rotateDeg ?? sticker.rotateDeg,
-    };
-  }
+  const base =
+    isMobile && sticker.mobile
+      ? {
+          x: sticker.mobile.x,
+          y: sticker.mobile.y,
+          rotateDeg: sticker.mobile.rotateDeg ?? sticker.rotateDeg,
+        }
+      : {
+          x: sticker.x,
+          y: sticker.y,
+          rotateDeg: sticker.rotateDeg,
+        };
 
   return {
-    x: sticker.x,
-    y: sticker.y,
-    rotateDeg: sticker.rotateDeg,
+    ...base,
+    y: Math.min(92, base.y + STICKER_Y_OFFSET),
   };
 }
