@@ -19,7 +19,7 @@
   /* Grid */
   --grid-columns: 12;
   --grid-gutter: var(--space-4);
-  --grid-margin: var(--space-4);
+  --grid-margin: var(--space-2);
 
   /* Content width */
   --content-max: 90rem; /* 1440px — matches design xl canvas */
