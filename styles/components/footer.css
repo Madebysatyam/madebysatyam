@@ -137,7 +137,7 @@ a.site-footer__meta-value:hover {
 
 @media (max-width: 809px) {
   .site-footer {
-    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
   }
 
   .site-footer__meta {
@@ -150,6 +150,22 @@ a.site-footer__meta-value:hover {
 
   .site-footer__meta-value.text-style-paragraph-small {
     text-align: left;
+  }
+
+  .site-footer__built-row {
+    padding-bottom: var(--space-6);
+  }
+
+  .site-footer__built-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .site-footer__built-line--cursor {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
   }
 }
 
@@ -171,9 +187,22 @@ a.site-footer__meta-value:hover {
 
 .site-footer__built-inner {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   max-width: 100%;
+}
+
+.site-footer__built-line {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-footer__built-line--cursor {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
 .site-footer__built-shimmer-wrap {

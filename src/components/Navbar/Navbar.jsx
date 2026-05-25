@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import logo from "../../../assets/logo.svg";
+import { useMatIntro } from "../../contexts/MatIntroContext.jsx";
 import useIsMobile from "../../hooks/useIsMobile.js";
 import { desktopNavRevealVariants } from "../../motion/presets.js";
 import NavLinksList from "./NavLinksList.jsx";
@@ -14,9 +15,14 @@ import useNavScrollReveal from "./useNavScrollReveal.js";
  * Mobile: sticky bottom pill.
  */
 export default function Navbar() {
+  const { isMatReady } = useMatIntro();
   const isMobile = useIsMobile();
   const reduced = useReducedMotion();
   const isNavVisible = useNavScrollReveal({ disabled: isMobile || reduced });
+
+  if (!isMatReady) {
+    return null;
+  }
 
   if (isMobile) {
     return (

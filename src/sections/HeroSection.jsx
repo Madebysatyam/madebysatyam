@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import CuttingMat from "../components/CuttingMat";
+import { useMatIntro } from "../contexts/MatIntroContext.jsx";
 import HeroBodyHighlight from "../components/HeroBodyHighlight";
 import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
 import HeroLocationRoute from "../components/HeroLocationRoute";
@@ -8,10 +9,12 @@ import HeroMatStickers from "../components/HeroMatStickers";
 const HERO_HEADLINE = "Curious by nature, careful by craft.";
 
 export default function HeroSection() {
+  const { setMatReady } = useMatIntro();
   const [isMatComplete, setIsMatComplete] = useState(false);
   const handleMatDrawComplete = useCallback(() => {
     setIsMatComplete(true);
-  }, []);
+    setMatReady(true);
+  }, [setMatReady]);
 
   return (
     <section
