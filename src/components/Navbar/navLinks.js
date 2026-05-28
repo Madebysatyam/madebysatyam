@@ -17,7 +17,7 @@ export const NAV_LINKS = [
     className: "site-nav__link--notes",
   },
   {
-    href: "/About",
+    href: "/about",
     label: "About",
     className: "site-nav__link--about",
   },

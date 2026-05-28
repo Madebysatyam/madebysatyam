@@ -254,10 +254,12 @@
   min-height: 50vh;
 }
 
-.about-page__intro {
-  margin: 0;
-  max-width: 40rem;
-  color: var(--color-text);
+@media (min-width: 810px) {
+  .page-listing--nav-offset {
+    --listing-navbar-height: 64px;
+    --listing-gap-from-navbar: 72px;
+    padding-top: calc(var(--listing-navbar-height) + var(--listing-gap-from-navbar));
+  }
 }
 
 /* Work cards */

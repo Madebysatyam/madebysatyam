@@ -1,12 +1,17 @@
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import NoteItem, { NOTES_PAGE } from "../components/NoteItem";
+import { staggerContainer, staggerItem } from "../motion/presets.js";
 import PageHeader from "../components/PageHeader";
 
 export default function NotesPage() {
   const { reduced } = useOutletContext();
+  const notesListRef = useRef(null);
+  const notesInView = useInView(notesListRef, { once: true, margin: "-8% 0px" });
 
   return (
-    <main id="main" className="page-listing">
+    <main id="main" className="page-listing page-listing--nav-offset">
       <section
         className="container-site"
         aria-labelledby="notes-page-heading"
@@ -16,13 +21,19 @@ export default function NotesPage() {
           headingId="notes-page-heading"
           reduced={reduced}
         />
-        <ul className="notes-list">
+        <motion.ul
+          ref={notesListRef}
+          className="notes-list"
+          initial="hidden"
+          animate={notesInView || reduced ? "visible" : "hidden"}
+          variants={staggerContainer(reduced, { stagger: 0.06, delayChildren: 0.04 })}
+        >
           {NOTES_PAGE.map((note) => (
-            <li key={note.id}>
+            <motion.li key={note.id} variants={staggerItem(reduced, { y: 12 })}>
               <NoteItem {...note} />
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </section>
     </main>
   );
