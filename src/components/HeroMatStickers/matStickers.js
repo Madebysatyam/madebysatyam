@@ -88,7 +88,7 @@ export const MAT_STICKERS = STICKER_LAYOUT.map((sticker) => ({
 }));
 
 /** Nudge all anchors downward (% of mat) — keeps ring clear of headline. */
-const STICKER_Y_OFFSET = 5;
+const STICKER_Y_OFFSET = 7;
 
 /** Anchor + tilt for current viewport (< 810px uses `mobile` when present). */
 export function getStickerPlacement(sticker, isMobile) {

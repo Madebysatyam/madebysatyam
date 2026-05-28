@@ -21,8 +21,8 @@
   background-image: linear-gradient(
     105deg,
     transparent 44%,
-    var(--color-lime-500) 49.25%,
-    var(--color-lime-500) 50.75%,
+    var(--color-pink-500) 49.25%,
+    var(--color-pink-500) 50.75%,
     transparent 56%
   );
   background-size: 250% 100%;

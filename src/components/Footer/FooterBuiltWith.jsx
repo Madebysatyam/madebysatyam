@@ -18,6 +18,18 @@ export default function FooterBuiltWith() {
   return (
     <p className="site-footer__built text-style-label-small">
       <span className="site-footer__built-inner">
+        <span className="site-footer__built-desktop-line">
+          <BuiltWithShimmerLine text={`${BUILT_WITH_LINE_ONE} ${BUILT_WITH_LINE_TWO}`} />
+          <img
+            className="site-footer__built-cursor-logo"
+            src={cursorLogo}
+            alt=""
+            width="20"
+            height="20"
+            decoding="async"
+          />
+        </span>
+
         <span className="site-footer__built-line">
           <BuiltWithShimmerLine text={BUILT_WITH_LINE_ONE} />
         </span>
