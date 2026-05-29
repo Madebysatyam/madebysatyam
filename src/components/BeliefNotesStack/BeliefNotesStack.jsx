@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile.js";
 import { DURATION, EASE_OUT } from "../../motion/presets.js";
 
@@ -21,6 +21,9 @@ const STACK_LAYOUT_MOBILE = [
 const BACK_STACK_LAYOUT_DESKTOP = STACK_LAYOUT_DESKTOP[STACK_LAYOUT_DESKTOP.length - 1];
 const BACK_STACK_LAYOUT_MOBILE = STACK_LAYOUT_MOBILE[STACK_LAYOUT_MOBILE.length - 1];
 
+/** Breathing room below the rearmost card overflow (matches --space-2) */
+const STACK_TAIL_BUFFER_PX = 8;
+
 function pickTallestBelief(beliefs) {
   return beliefs.reduce((tallest, belief) =>
     belief.body.length > tallest.body.length ? belief : tallest,
@@ -40,6 +43,26 @@ export default function BeliefNotesStack({ beliefs }) {
   );
 
   const tallestBelief = useMemo(() => pickTallestBelief(beliefs), [beliefs]);
+  const sizerRef = useRef(null);
+  const [stackTailHeight, setStackTailHeight] = useState(null);
+
+  useLayoutEffect(() => {
+    const sizer = sizerRef.current;
+    if (!sizer) return undefined;
+
+    const measure = () => {
+      const cardHeight = sizer.offsetHeight;
+      const { y, scale = 1, rotate = 0 } = backStackLayout;
+      const backOverflow = Math.max(0, Math.ceil(y + cardHeight * scale - cardHeight));
+      const rotationSlack = Math.ceil(Math.abs(rotate) * 3);
+      setStackTailHeight(backOverflow + STACK_TAIL_BUFFER_PX + rotationSlack);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(sizer);
+    return () => observer.disconnect();
+  }, [backStackLayout, tallestBelief.id, isMobile]);
 
   const cycle = useCallback(() => {
     setOrder((current) => [...current.slice(1), current[0]]);
@@ -54,9 +77,16 @@ export default function BeliefNotesStack({ beliefs }) {
         <div
           className="belief-notes-stack__bounds"
           aria-hidden="true"
-          style={{ "--belief-stack-tail": `${backStackLayout.y}px` }}
+          style={
+            stackTailHeight != null
+              ? { "--belief-stack-tail-height": `${stackTailHeight}px` }
+              : undefined
+          }
         >
-          <div className={`belief-note belief-note--sizer belief-note--${tallestBelief.accent}`}>
+          <div
+            ref={sizerRef}
+            className={`belief-note belief-note--sizer belief-note--${tallestBelief.accent}`}
+          >
             <div className="belief-note__inner">
               <h3 className="belief-note__title">{tallestBelief.title}</h3>
               <p className="belief-note__body">{tallestBelief.body}</p>

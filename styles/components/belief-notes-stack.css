@@ -35,8 +35,8 @@
 }
 
 .belief-notes-stack__stack-tail {
-  /* Room for the rearmost card (offset + scale) below the front note */
-  height: calc(var(--belief-stack-tail, 72px) + var(--space-6));
+  /* Only the rearmost card’s overflow past the front card baseline (set in JS) */
+  height: var(--belief-stack-tail-height, 3rem);
 }
 
 .belief-note {
@@ -129,10 +129,6 @@
 @media (min-width: 810px) {
   .belief-notes-stack__bounds .belief-note--sizer {
     width: min(100%, 40rem);
-  }
-
-  .belief-notes-stack__stack-tail {
-    height: calc(var(--belief-stack-tail, 72px) + var(--space-8));
   }
 
   .belief-note {
