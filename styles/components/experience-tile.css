@@ -78,6 +78,7 @@
   width: 4.75rem;
   flex-shrink: 0;
   touch-action: manipulation;
+  perspective: 900px;
 }
 
 .experience-tile--with-badge .experience-tile__badge-tilt {

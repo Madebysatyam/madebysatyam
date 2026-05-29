@@ -1,20 +1,35 @@
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
-import useIsMobile from "../../hooks/useIsMobile.js";
+import { useCallback, useEffect, useRef } from "react";
+import usePrefersTouchTilt from "../../hooks/usePrefersTouchTilt.js";
 
 const MAX_TILT_DEG = 14;
+const GYRO_GAIN = 0.7;
 const SPRING = { stiffness: 260, damping: 28, mass: 0.85 };
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function needsOrientationPermission() {
+  return (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof DeviceOrientationEvent.requestPermission === "function"
+  );
+}
+
+function requestOrientationAccess() {
+  if (needsOrientationPermission()) {
+    return DeviceOrientationEvent.requestPermission();
+  }
+  return Promise.resolve("granted");
+}
+
 export default function AwardBadge({ src, alt, className = "" }) {
   const reduced = useReducedMotion();
-  const isMobile = useIsMobile();
+  const prefersTouchTilt = usePrefersTouchTilt();
   const shellRef = useRef(null);
   const gyroBaseRef = useRef(null);
-  const [gyroEnabled, setGyroEnabled] = useState(false);
+  const listenersAttachedRef = useRef(false);
 
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -44,34 +59,8 @@ export default function AwardBadge({ src, alt, className = "" }) {
     [rotateX, rotateY],
   );
 
-  const startGyro = useCallback(async () => {
-    if (gyroEnabled || reduced) return true;
-
-    if (typeof DeviceOrientationEvent?.requestPermission === "function") {
-      try {
-        const permission = await DeviceOrientationEvent.requestPermission();
-        if (permission !== "granted") return false;
-      } catch {
-        return false;
-      }
-    }
-
-    setGyroEnabled(true);
-    return true;
-  }, [gyroEnabled, reduced]);
-
-  useEffect(() => {
-    if (!isMobile || reduced) return undefined;
-    if (typeof DeviceOrientationEvent?.requestPermission === "function") return undefined;
-
-    setGyroEnabled(true);
-    return () => setGyroEnabled(false);
-  }, [isMobile, reduced]);
-
-  useEffect(() => {
-    if (reduced || !isMobile || !gyroEnabled) return undefined;
-
-    const onOrientation = (event) => {
+  const onOrientation = useCallback(
+    (event) => {
       const { beta, gamma } = event;
       if (beta == null || gamma == null) return;
 
@@ -83,16 +72,53 @@ export default function AwardBadge({ src, alt, className = "" }) {
       const deltaGamma = gamma - gyroBaseRef.current.gamma;
       const deltaBeta = beta - gyroBaseRef.current.beta;
 
-      rotateY.set(clamp(deltaGamma * 0.55, -MAX_TILT_DEG, MAX_TILT_DEG));
-      rotateX.set(clamp(-deltaBeta * 0.55, -MAX_TILT_DEG, MAX_TILT_DEG));
-    };
+      rotateY.set(clamp(deltaGamma * GYRO_GAIN, -MAX_TILT_DEG, MAX_TILT_DEG));
+      rotateX.set(clamp(-deltaBeta * GYRO_GAIN, -MAX_TILT_DEG, MAX_TILT_DEG));
+    },
+    [rotateX, rotateY],
+  );
 
-    window.addEventListener("deviceorientation", onOrientation, true);
-    return () => window.removeEventListener("deviceorientation", onOrientation, true);
-  }, [gyroEnabled, isMobile, reduced, rotateX, rotateY]);
+  const attachGyroListeners = useCallback(() => {
+    if (listenersAttachedRef.current) return;
+    listenersAttachedRef.current = true;
+    gyroBaseRef.current = null;
+    window.addEventListener("deviceorientation", onOrientation);
+    window.addEventListener("deviceorientationabsolute", onOrientation);
+  }, [onOrientation]);
+
+  const detachGyroListeners = useCallback(() => {
+    if (!listenersAttachedRef.current) return;
+    listenersAttachedRef.current = false;
+    window.removeEventListener("deviceorientation", onOrientation);
+    window.removeEventListener("deviceorientationabsolute", onOrientation);
+    resetTilt();
+  }, [onOrientation, resetTilt]);
+
+  const activateGyro = useCallback(() => {
+    if (!prefersTouchTilt || reduced) return;
+
+    if (listenersAttachedRef.current) return;
+
+    requestOrientationAccess()
+      .then((state) => {
+        if (state === "granted") {
+          attachGyroListeners();
+        }
+      })
+      .catch(() => {});
+  }, [attachGyroListeners, prefersTouchTilt, reduced]);
 
   useEffect(() => {
-    if (reduced || isMobile) return undefined;
+    if (!prefersTouchTilt || reduced || needsOrientationPermission()) {
+      return undefined;
+    }
+
+    attachGyroListeners();
+    return detachGyroListeners;
+  }, [attachGyroListeners, detachGyroListeners, prefersTouchTilt, reduced]);
+
+  useEffect(() => {
+    if (prefersTouchTilt || reduced) return undefined;
 
     const shell = shellRef.current;
     if (!shell) return undefined;
@@ -107,19 +133,14 @@ export default function AwardBadge({ src, alt, className = "" }) {
       shell.removeEventListener("mousemove", onMove);
       shell.removeEventListener("mouseleave", onLeave);
     };
-  }, [applyPointerTilt, isMobile, reduced, resetTilt]);
+  }, [applyPointerTilt, prefersTouchTilt, reduced, resetTilt]);
 
-  useEffect(() => {
-    if (!isMobile) {
-      setGyroEnabled(false);
-      resetTilt();
-    }
-  }, [isMobile, resetTilt]);
-
-  const onMobilePointerDown = useCallback(async () => {
-    if (!isMobile || reduced) return;
-    await startGyro();
-  }, [isMobile, reduced, startGyro]);
+  useEffect(
+    () => () => {
+      detachGyroListeners();
+    },
+    [detachGyroListeners],
+  );
 
   const shellClassName = ["experience-tile__badge-shell", className].filter(Boolean).join(" ");
 
@@ -139,7 +160,8 @@ export default function AwardBadge({ src, alt, className = "" }) {
     <div
       ref={shellRef}
       className={shellClassName}
-      onPointerDown={isMobile ? onMobilePointerDown : undefined}
+      onTouchStart={prefersTouchTilt ? activateGyro : undefined}
+      onClick={prefersTouchTilt ? activateGyro : undefined}
     >
       <motion.div
         className="experience-tile__badge-tilt"
