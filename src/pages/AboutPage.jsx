@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import BeliefNotesStack from "../components/BeliefNotesStack";
+import AwardCard from "../components/AwardCard/index.js";
 import ExperienceTile from "../components/ExperienceTile/ExperienceTile.jsx";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
@@ -42,7 +43,10 @@ const AWARDS = [
   {
     company: "Pocket Star",
     duration: "Dec 2025",
-    note: "Recognised org-wide for shaping the Aural Design System, setting new quality benchmarks through scalable frameworks and leading key Pocket Toons design efforts. Mentored junior designers into core contributors and elevated the overall design standard across the team.",
+    badge: {
+      src: "/awards/pocket-star-badge.png",
+      alt: "Pocket Star award badge",
+    },
   },
   {
     company: "High Achiever",
@@ -51,7 +55,6 @@ const AWARDS = [
       src: "/awards/high-achiever-badge.png",
       alt: "High Achiever award badge",
     },
-    note: "Recognised for outstanding contributions to the design system, proactive collaboration with developers to resolve issues and independently driving higher design quality standards across the team.",
   },
 ];
 
@@ -80,14 +83,6 @@ const BELIEFS = [
     accent: "purple",
     body: "People do not return to a product for what it gives them. They return for what it means to them. I design for that deeper reason, not the surface one.",
   },
-];
-
-const FEEDING_THINKING = [
-  { label: "Reading", value: "Designing Data-Intensive Applications (re-read notes)" },
-  { label: "Listening", value: "Lenny's Podcast - product and craft conversations" },
-  { label: "Watching", value: "Character-led long-form dramas on Netflix" },
-  { label: "Playing", value: "Badminton and football on weekends" },
-  { label: "Thinking", value: "How design systems can scale without flattening product identity" },
 ];
 
 export default function AboutPage() {
@@ -188,7 +183,7 @@ export default function AboutPage() {
             </motion.section>
 
             <motion.section
-              className="about-page__section about-page__section--split"
+              className="about-page__section about-page__section--split about-page__section--awards"
               aria-labelledby="awards"
               initial="hidden"
               whileInView="visible"
@@ -199,59 +194,34 @@ export default function AboutPage() {
                 Awards
               </h2>
               <motion.div
-                className="about-page__history-list"
-                variants={staggerContainer(reduced, { stagger: 0.06, delayChildren: 0.03 })}
+                className="about-page__awards-grid"
+                variants={staggerContainer(reduced, { stagger: 0.08, delayChildren: 0.04 })}
               >
                 {AWARDS.map((item) => (
-                  <motion.div key={`${item.company}-${item.duration}`} variants={staggerItem(reduced, { y: 10 })}>
-                    <ExperienceTile
-                      company={item.company}
-                      duration={item.duration}
-                      description={item.note}
-                      badge={item.badge}
-                    />
+                  <motion.div
+                    key={`${item.company}-${item.duration}`}
+                    className="about-page__awards-item"
+                    variants={staggerItem(reduced, { y: 10 })}
+                  >
+                    <AwardCard company={item.company} duration={item.duration} badge={item.badge} />
                   </motion.div>
                 ))}
               </motion.div>
             </motion.section>
 
             <motion.section
-              className="about-page__section about-page__section--split"
-              aria-labelledby="off-the-clock"
+              className="about-page__section"
+              aria-label="What I am looking for"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
               variants={staggerItem(reduced, { y: 14 })}
             >
-              <h2 id="off-the-clock" className="about-page__section-title text-style-display-small">
-                Off the Clock
-              </h2>
-              <dl className="about-page__kv-list">
-                {FEEDING_THINKING.map((item) => (
-                  <div key={item.label} className="about-page__kv-item">
-                    <dt className="text-style-label-medium">{item.label}</dt>
-                    <dd className="text-style-paragraph-medium">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </motion.section>
-
-            <motion.section
-              className="about-page__section about-page__section--split"
-              aria-labelledby="looking-for"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
-              variants={staggerItem(reduced, { y: 14 })}
-            >
-              <h2 id="looking-for" className="about-page__section-title text-style-display-small">
-                What I am Looking For
-              </h2>
               <div className="about-page__prose">
                 <p className="text-style-paragraph-large">
                   A team that believes designers are not the execution layer. A problem that is
-                  genuinely hard. An environment where the question is never "did design deliver
-                  the screens" but always "did we build the right thing."
+                  genuinely hard. An environment where the question is never “did design deliver the
+                  screens” but always “did we build the right thing.”
                 </p>
                 <p className="text-style-paragraph-large">
                   If that sounds like where you are, let&apos;s talk.

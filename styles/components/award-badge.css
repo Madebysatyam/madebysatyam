@@ -1,0 +1,20 @@
+/* Award badge — gyro / hover tilt shell */
+
+.award-badge__shell {
+  touch-action: manipulation;
+  perspective: 900px;
+}
+
+.award-badge__tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.award-badge__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}

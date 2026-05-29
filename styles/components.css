@@ -8,6 +8,8 @@
 @import "./components/case-study-card.css";
 @import "./components/playground-tile.css";
 @import "./components/experience-tile.css";
+@import "./components/award-badge.css";
+@import "./components/award-card.css";
 @import "./components/belief-notes-stack.css";
 @import "./components/note-item.css";
 @import "./components/kind-word.css";

@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useId, useState } from "react";
-import AwardBadge from "../AwardBadge/index.js";
 import { DURATION, EASE_OUT } from "../../motion/presets.js";
 
 function experiencePanelVariants(reduced) {
@@ -30,7 +29,6 @@ export default function ExperienceTile({
   role,
   duration,
   description,
-  badge,
   isCurrent = false,
   collapsible = false,
   defaultExpanded = false,
@@ -63,70 +61,45 @@ export default function ExperienceTile({
     </>
   );
 
-  const bar = (
-    <div className="experience-tile__bar">
-      {isCollapsible ? (
-        <button
-          type="button"
-          className="experience-tile__trigger"
-          aria-expanded={isExpanded}
-          aria-controls={panelId}
-          onClick={() => setIsExpanded((open) => !open)}
-        >
-          <span className="experience-tile__trigger-inner">{headContent}</span>
-        </button>
-      ) : (
-        <div
-          className={`experience-tile__trigger-inner experience-tile__trigger-inner--static${badge ? " experience-tile__trigger-inner--in-badge" : ""}`}
-        >
-          {headContent}
-        </div>
-      )}
-    </div>
-  );
+  return (
+    <article className={`experience-tile${isExpanded ? " is-expanded" : ""}`}>
+      <div className="experience-tile__bar">
+        {isCollapsible ? (
+          <button
+            type="button"
+            className="experience-tile__trigger"
+            aria-expanded={isExpanded}
+            aria-controls={panelId}
+            onClick={() => setIsExpanded((open) => !open)}
+          >
+            <span className="experience-tile__trigger-inner">{headContent}</span>
+          </button>
+        ) : (
+          <div className="experience-tile__trigger-inner experience-tile__trigger-inner--static">
+            {headContent}
+          </div>
+        )}
+      </div>
 
-  const descriptionPanel =
-    hasDescription && isCollapsible ? (
-      <motion.div
-        id={panelId}
-        className="experience-tile__panel-wrap"
-        initial={false}
-        animate={isExpanded ? "open" : "closed"}
-        variants={experiencePanelVariants(reduced)}
-      >
-        <div className={`experience-tile__panel${badge ? " experience-tile__panel--in-badge" : ""}`}>
+      {hasDescription && isCollapsible ? (
+        <motion.div
+          id={panelId}
+          className="experience-tile__panel-wrap"
+          initial={false}
+          animate={isExpanded ? "open" : "closed"}
+          variants={experiencePanelVariants(reduced)}
+        >
+          <div className="experience-tile__panel">
+            <p className="experience-tile__description text-style-paragraph-medium">{description}</p>
+          </div>
+        </motion.div>
+      ) : null}
+
+      {hasDescription && !isCollapsible ? (
+        <div className="experience-tile__panel">
           <p className="experience-tile__description text-style-paragraph-medium">{description}</p>
         </div>
-      </motion.div>
-    ) : null;
-
-  const staticDescriptionPanel =
-    hasDescription && !isCollapsible ? (
-      <div className={`experience-tile__panel${badge ? " experience-tile__panel--in-badge" : ""}`}>
-        <p className="experience-tile__description text-style-paragraph-medium">{description}</p>
-      </div>
-    ) : null;
-
-  const tileBody = (
-    <>
-      {bar}
-      {descriptionPanel}
-      {staticDescriptionPanel}
-    </>
-  );
-
-  return (
-    <article
-      className={`experience-tile${isExpanded ? " is-expanded" : ""}${badge ? " experience-tile--with-badge" : ""}`}
-    >
-      {badge ? (
-        <div className="experience-tile__badge-layout">
-          <AwardBadge src={badge.src} alt={badge.alt} />
-          <div className="experience-tile__badge-body">{tileBody}</div>
-        </div>
-      ) : (
-        tileBody
-      )}
+      ) : null}
     </article>
   );
 }

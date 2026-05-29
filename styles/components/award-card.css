@@ -1,0 +1,56 @@
+/* Award card — centered badge, title, date */
+
+.award-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 12.5rem;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.award-card__badge.award-badge__shell {
+  width: 8.5rem;
+  flex-shrink: 0;
+}
+
+.award-card__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.award-card__name {
+  margin: 0;
+  width: 100%;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.award-card__date {
+  margin: 0;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+@media (min-width: 810px) {
+  .award-card {
+    gap: var(--space-5);
+    max-width: 14rem;
+  }
+
+  .award-card__badge.award-badge__shell {
+    width: 11rem;
+  }
+
+  .award-card__meta {
+    gap: var(--space-2);
+  }
+}

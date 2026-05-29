@@ -142,10 +142,10 @@ export default function AwardBadge({ src, alt, className = "" }) {
     [detachGyroListeners],
   );
 
-  const shellClassName = ["experience-tile__badge-shell", className].filter(Boolean).join(" ");
+  const shellClassName = ["award-badge__shell", className].filter(Boolean).join(" ");
 
   const badgeImage = (
-    <img className="experience-tile__badge" src={src} alt={alt} loading="lazy" decoding="async" />
+    <img className="award-badge__image" src={src} alt={alt} loading="lazy" decoding="async" />
   );
 
   if (reduced) {
@@ -164,7 +164,7 @@ export default function AwardBadge({ src, alt, className = "" }) {
       onClick={prefersTouchTilt ? activateGyro : undefined}
     >
       <motion.div
-        className="experience-tile__badge-tilt"
+        className="award-badge__tilt"
         style={{
           rotateX: springRotateX,
           rotateY: springRotateY,
