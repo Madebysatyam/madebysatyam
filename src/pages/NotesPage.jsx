@@ -11,9 +11,14 @@ export default function NotesPage() {
   const notesInView = useInView(notesListRef, { once: true, margin: "-8% 0px" });
 
   return (
-    <main id="main" className="page-listing page-listing--nav-offset">
+    <main id="main" className="page-listing page-listing--with-hero">
+      <div
+        className="page-listing__hero-media"
+        role="img"
+        aria-label="Notes page hero image placeholder"
+      />
       <section
-        className="container-site"
+        className="container-site page-listing__body"
         aria-labelledby="notes-page-heading"
       >
         <PageHeader

@@ -50,15 +50,6 @@ const AWARDS = [
   },
 ];
 
-const EDUCATION = [
-  {
-    company: "National Institute of Fashion Technology",
-    role: "B.Des - Fashion Communication",
-    duration: "Jan 2018 - Dec 2022",
-    note: "Led the design team for Spectrum, the college annual fest, for three consecutive years.",
-  },
-];
-
 const BELIEFS = [
   {
     title: "Earn your place",
@@ -90,16 +81,14 @@ export default function AboutPage() {
   const reduced = useReducedMotion();
 
   return (
-    <main id="main" className="page-listing page-listing--nav-offset">
-      <section className="container-site" aria-label="About page">
-        <div className="about-page__layout">
-          <aside className="about-page__left-rail" aria-label="Portrait panel">
-            <div className="about-page__portrait" role="img" aria-label="Portrait placeholder">
-              <span className="text-style-label-small">Portrait</span>
-            </div>
-          </aside>
-
-          <div className="about-page__right-content">
+    <main id="main" className="page-listing page-listing--with-hero">
+      <div
+        className="page-listing__hero-media"
+        role="img"
+        aria-label="About page hero image placeholder"
+      />
+      <section className="container-site page-listing__body" aria-label="About page">
+        <div className="about-page__content">
             <motion.section
               className="about-page__section"
               aria-label="Story"
@@ -133,7 +122,33 @@ export default function AboutPage() {
             </motion.section>
 
             <motion.section
-              className="about-page__section"
+              className="about-page__section about-page__section--split"
+              aria-labelledby="beliefs"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
+              variants={staggerItem(reduced, { y: 14 })}
+            >
+              <h2 id="beliefs" className="about-page__section-title text-style-display-small">
+                What I Believe
+              </h2>
+              <ol className="about-page__beliefs-list">
+                {BELIEFS.map((belief, index) => (
+                  <li key={belief.title} className="about-page__belief-item">
+                    <h3 className="text-style-heading-medium">
+                      <span className="about-page__belief-index text-style-label-medium">
+                        {String(index + 1).padStart(2, "0")}.
+                      </span>{" "}
+                      {belief.title}
+                    </h3>
+                    <p className="text-style-paragraph-large">{belief.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </motion.section>
+
+            <motion.section
+              className="about-page__section about-page__section--split"
               aria-labelledby="experience"
               initial="hidden"
               whileInView="visible"
@@ -162,6 +177,7 @@ export default function AboutPage() {
                           duration={roleItem.duration}
                           description={roleItem.note}
                           isCurrent={roleItem.isCurrent}
+                          collapsible
                         />
                       ))}
                     </motion.article>
@@ -171,33 +187,7 @@ export default function AboutPage() {
             </motion.section>
 
             <motion.section
-              className="about-page__section"
-              aria-labelledby="beliefs"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
-              variants={staggerItem(reduced, { y: 14 })}
-            >
-              <h2 id="beliefs" className="about-page__section-title text-style-display-small">
-                What I Believe
-              </h2>
-              <ol className="about-page__beliefs-list">
-                {BELIEFS.map((belief, index) => (
-                  <li key={belief.title} className="about-page__belief-item">
-                    <h3 className="text-style-heading-medium">
-                      <span className="about-page__belief-index text-style-label-medium">
-                        {String(index + 1).padStart(2, "0")}.
-                      </span>{" "}
-                      {belief.title}
-                    </h3>
-                    <p className="text-style-paragraph-large">{belief.body}</p>
-                  </li>
-                ))}
-              </ol>
-            </motion.section>
-
-            <motion.section
-              className="about-page__section"
+              className="about-page__section about-page__section--split"
               aria-labelledby="awards"
               initial="hidden"
               whileInView="visible"
@@ -224,43 +214,15 @@ export default function AboutPage() {
             </motion.section>
 
             <motion.section
-              className="about-page__section"
-              aria-labelledby="education"
+              className="about-page__section about-page__section--split"
+              aria-labelledby="off-the-clock"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
               variants={staggerItem(reduced, { y: 14 })}
             >
-              <h2 id="education" className="about-page__section-title text-style-display-small">
-                Education
-              </h2>
-              <motion.div
-                className="about-page__history-list"
-                variants={staggerContainer(reduced, { stagger: 0.06, delayChildren: 0.03 })}
-              >
-                {EDUCATION.map((item) => (
-                  <motion.div key={`${item.company}-${item.duration}`} variants={staggerItem(reduced, { y: 10 })}>
-                    <ExperienceTile
-                      company={item.company}
-                      role={item.role}
-                      duration={item.duration}
-                      description={item.note}
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.section>
-
-            <motion.section
-              className="about-page__section"
-              aria-labelledby="outside-work"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-8% 0px -8% 0px" }}
-              variants={staggerItem(reduced, { y: 14 })}
-            >
-              <h2 id="outside-work" className="about-page__section-title text-style-display-small">
-                What I Read, Watch, Think About
+              <h2 id="off-the-clock" className="about-page__section-title text-style-display-small">
+                Off the Clock
               </h2>
               <dl className="about-page__kv-list">
                 {FEEDING_THINKING.map((item) => (
@@ -273,7 +235,7 @@ export default function AboutPage() {
             </motion.section>
 
             <motion.section
-              className="about-page__section"
+              className="about-page__section about-page__section--split"
               aria-labelledby="looking-for"
               initial="hidden"
               whileInView="visible"
@@ -292,13 +254,8 @@ export default function AboutPage() {
                 <p className="text-style-paragraph-large">
                   If that sounds like where you are, let&apos;s talk.
                 </p>
-                <p className="about-page__cta text-style-label-medium">
-                  <a href="mailto:shekharsinha.satyam61@gmail.com">shekharsinha.satyam61@gmail.com</a>
-                </p>
-                <p className="text-style-label-small">LinkedIn - available on request</p>
               </div>
             </motion.section>
-          </div>
         </div>
       </section>
     </main>

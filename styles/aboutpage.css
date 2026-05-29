@@ -1,21 +1,15 @@
-.about-page__layout {
-  display: grid;
-  gap: var(--space-10);
-}
+/* About page layout — matches listing page container rhythm */
 
-.about-page__right-content {
+.about-page__content {
   display: grid;
   gap: var(--space-12);
-}
-
-.about-page__left-rail {
-  display: block;
+  width: 100%;
 }
 
 .about-page__section {
   display: grid;
   gap: var(--space-5);
-  max-width: 50rem;
+  width: 100%;
 }
 
 .about-page__section-title,
@@ -31,32 +25,52 @@
   color: var(--color-link-hover);
 }
 
-.about-page__portrait {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--color-border-subtle);
-  background-color: var(--color-surface);
+@media (min-width: 810px) {
+  .about-page__section--split {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .about-page__section--split .about-page__section-title {
+    grid-column: 1 / span 4;
+    align-self: start;
+  }
+
+  .about-page__section--split > :not(.about-page__section-title) {
+    grid-column: 5 / -1;
+    align-self: start;
+    min-width: 0;
+  }
 }
 
 .about-page__prose {
   display: grid;
   gap: var(--space-3);
+  width: 100%;
 }
 
 .about-page__prose p {
   color: var(--color-text);
 }
 
+.about-page__prose .text-style-paragraph-large {
+  font-family: var(--font-heading);
+  font-size: var(--type-heading-x-large-size);
+  line-height: 1.45;
+}
+
 .about-page__history-list {
   display: grid;
   gap: var(--space-6);
+  width: 100%;
 }
 
 .about-page__history-company-block {
   display: grid;
-  gap: var(--space-3);
+  gap: 0;
+  width: 100%;
 }
 
 .about-page__load-more {
@@ -78,6 +92,7 @@
   padding: 0;
   display: grid;
   gap: var(--space-8);
+  width: 100%;
 }
 
 .about-page__belief-item {
@@ -88,12 +103,12 @@
 .about-page__belief-item h3 {
   display: flex;
   align-items: baseline;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .about-page__belief-index {
   color: var(--color-text-muted);
-  min-width: 2.5rem;
+  min-width: 2rem;
 }
 
 .about-page__belief-item p {
@@ -101,7 +116,6 @@
 }
 
 .about-page__quote {
-  max-width: 44rem;
   color: var(--color-text);
 }
 
@@ -113,6 +127,7 @@
 .about-page__kv-list {
   display: grid;
   gap: var(--space-4);
+  width: 100%;
 }
 
 .about-page__kv-item {
@@ -144,29 +159,14 @@
 }
 
 @media (min-width: 810px) {
-  .about-page__layout {
-    --about-page-navbar-height: 64px;
-    --about-page-gap-from-navbar: 72px;
-    --about-page-top-offset: calc(
-      var(--about-page-navbar-height) + var(--about-page-gap-from-navbar)
-    );
-  }
-
-  .about-page__layout {
-    grid-template-columns: minmax(16rem, 24rem) minmax(0, 1fr);
-    align-items: start;
-    gap: var(--space-12);
-  }
-
-  .about-page__left-rail {
-    display: block;
-    position: sticky;
-    top: var(--about-page-top-offset);
-  }
-
   .about-page__kv-item {
     grid-template-columns: minmax(9rem, auto) 1fr;
     align-items: baseline;
     gap: var(--space-6);
+  }
+
+  .about-page__beliefs-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-8);
   }
 }

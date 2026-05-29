@@ -254,6 +254,30 @@
   min-height: 50vh;
 }
 
+.page-listing--with-hero {
+  padding-top: 0;
+}
+
+.page-listing__hero-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 5;
+  margin: 0;
+  border: 0;
+  background-color: var(--color-bg-elevated);
+  background-image: repeating-linear-gradient(
+    -52deg,
+    var(--color-border) 0,
+    var(--color-border) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+}
+
+.page-listing__body {
+  padding-block: var(--space-12);
+}
+
 @media (min-width: 810px) {
   .page-listing--nav-offset {
     --listing-navbar-height: 64px;
