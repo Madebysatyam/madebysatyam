@@ -115,7 +115,7 @@ export default function BeliefNotesStack({ beliefs }) {
               transition={
                 reduced
                   ? { duration: 0 }
-                  : { duration: DURATION.base, ease: EASE_OUT }
+                  : { duration: DURATION.slow, ease: EASE_OUT }
               }
               onClick={isTop ? cycle : undefined}
               tabIndex={isTop ? 0 : -1}

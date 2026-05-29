@@ -57,8 +57,20 @@
 
 .about-page__prose .text-style-paragraph-large {
   font-family: var(--font-heading);
-  font-size: var(--type-heading-x-large-size);
   line-height: 1.45;
+}
+
+@media (max-width: 809px) {
+  .about-page__prose .text-style-paragraph-large {
+    font-size: var(--type-heading-medium-size);
+    line-height: var(--type-heading-medium-leading);
+  }
+}
+
+@media (min-width: 810px) {
+  .about-page__prose .text-style-paragraph-large {
+    font-size: var(--type-heading-x-large-size);
+  }
 }
 
 .about-page__history-list {

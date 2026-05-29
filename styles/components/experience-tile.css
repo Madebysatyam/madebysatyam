@@ -66,6 +66,81 @@
   gap: 0.5rem;
 }
 
+.experience-tile--with-badge .experience-tile__badge-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) 0;
+}
+
+.experience-tile--with-badge .experience-tile__badge-shell {
+  width: 4.75rem;
+  flex-shrink: 0;
+  touch-action: manipulation;
+}
+
+.experience-tile--with-badge .experience-tile__badge-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.experience-tile--with-badge .experience-tile__badge {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}
+
+.experience-tile--with-badge .experience-tile__badge-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  min-width: 0;
+}
+
+.experience-tile--with-badge .experience-tile__trigger-inner--in-badge {
+  padding: 0;
+}
+
+.experience-tile--with-badge .experience-tile__panel--in-badge {
+  padding: var(--space-3) 0 0;
+}
+
+@media (max-width: 809px) {
+  .experience-tile--with-badge .experience-tile__badge-layout {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-4);
+  }
+
+  .experience-tile--with-badge .experience-tile__badge-shell {
+    width: 4.25rem;
+  }
+
+  .experience-tile--with-badge .experience-tile__badge-body {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (min-width: 810px) {
+  .experience-tile--with-badge .experience-tile__badge-layout {
+    gap: var(--space-6);
+  }
+
+  .experience-tile--with-badge .experience-tile__badge-shell {
+    width: 5.75rem;
+  }
+
+  .experience-tile--with-badge .experience-tile__badge-shell {
+    cursor: default;
+  }
+}
+
 .experience-tile__current-tag {
   --current-tag-shine-duration: 4.8s;
   --current-tag-shine-x: 120%;

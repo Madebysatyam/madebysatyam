@@ -47,6 +47,10 @@ const AWARDS = [
   {
     company: "High Achiever",
     duration: "Sept 2024",
+    badge: {
+      src: "/awards/high-achiever-badge.png",
+      alt: "High Achiever award badge",
+    },
     note: "Recognised for outstanding contributions to the design system, proactive collaboration with developers to resolve issues and independently driving higher design quality standards across the team.",
   },
 ];
@@ -204,6 +208,7 @@ export default function AboutPage() {
                       company={item.company}
                       duration={item.duration}
                       description={item.note}
+                      badge={item.badge}
                     />
                   </motion.div>
                 ))}

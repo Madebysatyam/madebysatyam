@@ -6,9 +6,9 @@
   width: 100%;
 }
 
-.belief-notes-stack__hint {
+.belief-notes-stack__hint.text-style-label-small {
   margin: 0;
-  color: rgb(48, 48, 48);
+  color: var(--color-text-tertiary);
   text-transform: uppercase;
 }
 
@@ -30,7 +30,6 @@
   left: auto;
   box-sizing: border-box;
   width: 100%;
-  max-width: 36rem;
   pointer-events: none;
 }
 
@@ -44,11 +43,11 @@
   --belief-note-fg: var(--color-text-inverse);
 
   position: absolute;
+  backface-visibility: hidden;
   top: 0;
   left: 0;
   box-sizing: border-box;
   width: 100%;
-  max-width: 36rem;
   margin: 0;
   padding: var(--space-10) var(--space-10) var(--space-5);
   border: 1px solid rgb(0 0 0 / 0.12);
@@ -127,12 +126,7 @@
 }
 
 @media (min-width: 810px) {
-  .belief-notes-stack__bounds .belief-note--sizer {
-    width: min(100%, 40rem);
-  }
-
   .belief-note {
-    width: min(100%, 40rem);
     padding: var(--space-12) var(--space-12) var(--space-6);
   }
 
