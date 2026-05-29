@@ -1,12 +1,5 @@
 /** Fridge-magnet stickers — scattered layout (% of mat), centre kept clear for hero copy */
 
-import bookImg from "../../assets/stickers/book.png";
-import coffeeImg from "../../assets/stickers/coffee.png";
-import guitarImg from "../../assets/stickers/guitar.png";
-import headphonesImg from "../../assets/stickers/headphones.png";
-import keyboardImg from "../../assets/stickers/keyboard.png";
-import shuttlecockImg from "../../assets/stickers/shuttlecock.png";
-
 function stickerHash(id) {
   let hash = 0;
   for (let i = 0; i < id.length; i += 1) {
@@ -34,7 +27,7 @@ function magnetSizeRem(id) {
 const STICKER_LAYOUT = [
   {
     id: "book",
-    src: bookImg,
+    src: "/stickers/book.png",
     alt: "Book sticker",
     x: 18,
     y: 14,
@@ -43,7 +36,7 @@ const STICKER_LAYOUT = [
   },
   {
     id: "guitar",
-    src: guitarImg,
+    src: "/stickers/guitar.png",
     alt: "Guitar sticker",
     x: 82,
     y: 14,
@@ -51,9 +44,9 @@ const STICKER_LAYOUT = [
     mobile: { x: 84, y: 12, rotateDeg: -10 },
   },
   {
-    id: "coffee",
-    src: coffeeImg,
-    alt: "Coffee mug sticker",
+    id: "laugh",
+    src: "/stickers/laugh.png",
+    alt: "Laughing face sticker",
     x: 92,
     y: 40,
     rotateDeg: -42,
@@ -61,7 +54,7 @@ const STICKER_LAYOUT = [
   },
   {
     id: "headphones",
-    src: headphonesImg,
+    src: "/stickers/headphones.png",
     alt: "Headphones sticker",
     x: 84,
     y: 76,
@@ -69,18 +62,18 @@ const STICKER_LAYOUT = [
     mobile: { x: 84, y: 80, rotateDeg: -8 },
   },
   {
-    id: "shuttlecock",
-    src: shuttlecockImg,
-    alt: "Badminton shuttlecock sticker",
+    id: "wink",
+    src: "/stickers/wink.png",
+    alt: "Winking face sticker",
     x: 16,
     y: 76,
     rotateDeg: 16,
     mobile: { x: 15, y: 80, rotateDeg: 18 },
   },
   {
-    id: "keyboard",
-    src: keyboardImg,
-    alt: "Keyboard sticker",
+    id: "sunglasses",
+    src: "/stickers/sunglasses.png",
+    alt: "Sunglasses face sticker",
     x: 10,
     y: 40,
     rotateDeg: 44,

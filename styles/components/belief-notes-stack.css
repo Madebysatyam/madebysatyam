@@ -1,0 +1,161 @@
+/* Belief notes — overlapping accent stack (content area only) */
+
+.belief-notes-stack {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.belief-notes-stack__hint {
+  margin: 0;
+  color: rgb(48, 48, 48);
+  text-transform: uppercase;
+}
+
+.belief-notes-stack__pile {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  overflow-x: clip;
+}
+
+.belief-notes-stack__bounds {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.belief-notes-stack__bounds .belief-note--sizer {
+  position: relative;
+  top: auto;
+  left: auto;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 36rem;
+  pointer-events: none;
+}
+
+.belief-notes-stack__stack-tail {
+  /* Room for the rearmost card (offset + scale) below the front note */
+  height: calc(var(--belief-stack-tail, 72px) + var(--space-6));
+}
+
+.belief-note {
+  --belief-note-bg: var(--color-orange-500);
+  --belief-note-fg: var(--color-text-inverse);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0;
+  padding: var(--space-10) var(--space-10) var(--space-5);
+  border: 1px solid rgb(0 0 0 / 0.12);
+  border-radius: 0;
+  background-color: var(--belief-note-bg);
+  color: var(--belief-note-fg);
+  text-align: left;
+  transform-origin: top left;
+  cursor: default;
+  pointer-events: none;
+}
+
+.belief-note--orange {
+  --belief-note-bg: var(--color-orange-500);
+}
+
+.belief-note--lime {
+  --belief-note-bg: var(--color-lime-500);
+}
+
+.belief-note--pink {
+  --belief-note-bg: var(--color-pink-500);
+}
+
+.belief-note--teal {
+  --belief-note-bg: var(--color-teal-500);
+}
+
+.belief-note--purple {
+  --belief-note-bg: var(--color-purple-500);
+}
+
+.belief-note--meaning-over-mechanics {
+  --belief-note-fg: var(--color-link-hover);
+}
+
+.belief-note.is-top {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.belief-note.is-top:hover {
+  border-color: rgb(0 0 0 / 0.22);
+}
+
+.belief-note.is-top:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.belief-note:disabled {
+  cursor: default;
+}
+
+.belief-note__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.belief-note__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--type-heading-x-large-size);
+  line-height: var(--type-heading-x-large-leading);
+  color: var(--belief-note-fg);
+}
+
+.belief-note__body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--type-heading-large-size);
+  line-height: 1.45;
+  color: var(--belief-note-fg);
+}
+
+@media (min-width: 810px) {
+  .belief-notes-stack__bounds .belief-note--sizer {
+    width: min(100%, 40rem);
+  }
+
+  .belief-notes-stack__stack-tail {
+    height: calc(var(--belief-stack-tail, 72px) + var(--space-8));
+  }
+
+  .belief-note {
+    width: min(100%, 40rem);
+    padding: var(--space-12) var(--space-12) var(--space-6);
+  }
+
+  .belief-note__inner {
+    gap: var(--space-5);
+  }
+
+  .belief-note__title {
+    font-size: var(--type-heading-3-size);
+  }
+
+  .belief-note__body {
+    font-size: var(--type-heading-x-large-size);
+    line-height: 1.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .belief-note.is-top:hover {
+    border-color: rgb(0 0 0 / 0.12);
+  }
+}

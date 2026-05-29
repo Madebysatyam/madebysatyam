@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
+import BeliefNotesStack from "../components/BeliefNotesStack";
 import ExperienceTile from "../components/ExperienceTile/ExperienceTile.jsx";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
@@ -52,19 +53,27 @@ const AWARDS = [
 
 const BELIEFS = [
   {
+    id: "earn-your-place",
     title: "Earn your place",
+    accent: "orange",
     body: "Every element on a screen has to justify its existence. If it is not doing something real for the person using it, it is decoration. Knowing when to stop is as important as knowing what to add.",
   },
   {
+    id: "read-the-gap",
     title: "Read the gap",
+    accent: "pink",
     body: "The most useful thing I do is observe the distance between what I designed and what people actually do. That gap is where the real design problem lives. It never fully closes. It just gets more specific.",
   },
   {
+    id: "own-the-outcome",
     title: "Own the outcome",
+    accent: "teal",
     body: "Design does not end at the handoff. It ends when you know whether the thing you built actually worked. I am not interested in delivering screens. I am interested in whether the problem got solved.",
   },
   {
+    id: "meaning-over-mechanics",
     title: "Meaning over mechanics",
+    accent: "purple",
     body: "People do not return to a product for what it gives them. They return for what it means to them. I design for that deeper reason, not the surface one.",
   },
 ];
@@ -132,19 +141,7 @@ export default function AboutPage() {
               <h2 id="beliefs" className="about-page__section-title text-style-display-small">
                 What I Believe
               </h2>
-              <ol className="about-page__beliefs-list">
-                {BELIEFS.map((belief, index) => (
-                  <li key={belief.title} className="about-page__belief-item">
-                    <h3 className="text-style-heading-medium">
-                      <span className="about-page__belief-index text-style-label-medium">
-                        {String(index + 1).padStart(2, "0")}.
-                      </span>{" "}
-                      {belief.title}
-                    </h3>
-                    <p className="text-style-paragraph-large">{belief.body}</p>
-                  </li>
-                ))}
-              </ol>
+              <BeliefNotesStack beliefs={BELIEFS} />
             </motion.section>
 
             <motion.section
