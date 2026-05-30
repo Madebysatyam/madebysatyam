@@ -256,6 +256,7 @@
 
 .page-listing--with-hero {
   padding-top: 0;
+  padding-bottom: 0;
 }
 
 .page-listing__hero-media {
@@ -275,7 +276,13 @@
 }
 
 .page-listing__body {
-  padding-block: var(--space-12);
+  padding-top: var(--space-12);
+  padding-bottom: 0;
+}
+
+/* Listing pages — avoid triple-stacked gap before footer (body + main + margin) */
+.page-home main.page-listing ~ .site-footer {
+  margin-top: var(--space-12);
 }
 
 @media (min-width: 810px) {

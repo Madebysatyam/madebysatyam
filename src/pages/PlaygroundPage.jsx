@@ -12,11 +12,20 @@ export default function PlaygroundPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <div
-        className="page-listing__hero-media"
-        role="img"
-        aria-label="Playground page hero image placeholder"
-      />
+      <div className="playground-page__hero">
+        <img
+          className="page-listing__hero-media playground-page__hero-media"
+          src="/playground/hero.png"
+          srcSet="/playground/hero.png 1024w, /playground/hero@2x.png 2048w"
+          sizes="100vw"
+          alt="Voxel art workspace with a developer at a desk, code on screen, and creative tools floating nearby"
+          width={1024}
+          height={439}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+        />
+      </div>
       <section
         className="container-site page-listing__body"
         aria-labelledby="playground-page-heading"

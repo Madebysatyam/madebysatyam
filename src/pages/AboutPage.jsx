@@ -90,11 +90,20 @@ export default function AboutPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <div
-        className="page-listing__hero-media"
-        role="img"
-        aria-label="About page hero image placeholder"
-      />
+      <div className="about-page__hero">
+        <img
+          className="page-listing__hero-media about-page__hero-media"
+          src="/about/hero.png"
+          srcSet="/about/hero.png 1024w, /about/hero@2x.png 2048w"
+          sizes="100vw"
+          alt="Voxel art street scene at golden hour, with a figure seated on a bench beside a tree and café sign"
+          width={1024}
+          height={439}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
+        />
+      </div>
       <section className="container-site page-listing__body" aria-label="About page">
         <div className="about-page__content">
             <motion.section

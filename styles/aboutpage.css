@@ -1,5 +1,22 @@
 /* About page layout — matches listing page container rhythm */
 
+.about-page__hero {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+}
+
+.page-listing__hero-media.about-page__hero-media {
+  aspect-ratio: auto;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  background-image: none;
+  background-color: transparent;
+}
+
 .about-page__content {
   display: grid;
   gap: var(--space-12);

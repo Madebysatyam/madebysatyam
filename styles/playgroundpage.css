@@ -1,0 +1,18 @@
+/* Playground page layout */
+
+.playground-page__hero {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+}
+
+.page-listing__hero-media.playground-page__hero-media {
+  aspect-ratio: auto;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  background-image: none;
+  background-color: transparent;
+}
