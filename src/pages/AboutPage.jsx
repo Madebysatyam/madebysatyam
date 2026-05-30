@@ -3,6 +3,7 @@ import { useState } from "react";
 import BeliefNotesStack from "../components/BeliefNotesStack";
 import AwardCard from "../components/AwardCard/index.js";
 import ExperienceTile from "../components/ExperienceTile/ExperienceTile.jsx";
+import ListingPageHero from "../components/ListingPageHero/index.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 const EXPERIENCE_COMPANIES = [
@@ -90,20 +91,16 @@ export default function AboutPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <div className="about-page__hero">
-        <img
-          className="page-listing__hero-media about-page__hero-media"
-          src="/about/hero.png"
-          srcSet="/about/hero.png 1024w, /about/hero@2x.png 2048w"
-          sizes="100vw"
-          alt="Voxel art street scene at golden hour, with a figure seated on a bench beside a tree and café sign"
-          width={1024}
-          height={439}
-          loading="eager"
-          decoding="sync"
-          fetchPriority="high"
-        />
-      </div>
+      <ListingPageHero
+        wrapperClassName="about-page__hero"
+        mediaClassName="about-page__hero-media"
+        src="/about/hero.png"
+        srcSet="/about/hero.png 1024w, /about/hero@2x.png 2048w"
+        alt="Voxel art street scene at golden hour, with a figure seated on a bench beside a tree and café sign"
+        width={1024}
+        height={439}
+        reduced={reduced}
+      />
       <section className="container-site page-listing__body" aria-label="About page">
         <div className="about-page__content">
             <motion.section
