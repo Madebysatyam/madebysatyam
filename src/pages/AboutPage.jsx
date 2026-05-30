@@ -3,6 +3,7 @@ import { useState } from "react";
 import BeliefNotesStack from "../components/BeliefNotesStack";
 import AwardCard from "../components/AwardCard/index.js";
 import ExperienceTile from "../components/ExperienceTile/ExperienceTile.jsx";
+import ListingPageHero from "../components/ListingPageHero/index.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 const EXPERIENCE_COMPANIES = [
@@ -90,19 +91,15 @@ export default function AboutPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <div className="about-page__hero">
-        <img
-          className="page-listing__hero-media about-page__hero-media"
-          src="/about/hero.webp"
-          sizes="100vw"
-          alt="Voxel art street scene at golden hour, with a figure seated on a bench beside a tree and café sign"
-          width={7660}
-          height={3284}
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-        />
-      </div>
+      <ListingPageHero
+        wrapperClassName="about-page__hero"
+        mediaClassName="about-page__hero-media"
+        src="/about/hero.webp"
+        alt="Voxel art street scene at golden hour, with a figure seated on a bench beside a tree and café sign"
+        width={7660}
+        height={3284}
+        reduced={reduced}
+      />
       <section className="container-site page-listing__body" aria-label="About page">
         <div className="about-page__content">
             <motion.section
@@ -173,6 +170,18 @@ export default function AboutPage() {
                       className="about-page__history-company-block"
                       variants={staggerItem(reduced, { y: 10 })}
                     >
+                      <div className="about-page__history-company-header">
+                        <span className="about-page__history-company-name text-style-heading-medium">
+                          <span className="experience-tile__company-row">
+                            {companyItem.company}
+                            {companyItem.roles.some((role) => role.isCurrent) ? (
+                              <span className="experience-tile__current-tag text-style-label-x-small">
+                                <span className="experience-tile__current-tag-text">Current</span>
+                              </span>
+                            ) : null}
+                          </span>
+                        </span>
+                      </div>
                       {companyItem.roles.map((roleItem) => (
                         <ExperienceTile
                           key={`${companyItem.company}-${roleItem.role}-${roleItem.duration}`}
@@ -180,7 +189,7 @@ export default function AboutPage() {
                           role={roleItem.role}
                           duration={roleItem.duration}
                           description={roleItem.note}
-                          isCurrent={roleItem.isCurrent}
+                          showCompany={false}
                           collapsible
                         />
                       ))}

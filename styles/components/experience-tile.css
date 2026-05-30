@@ -48,6 +48,11 @@
   min-width: 0;
 }
 
+.experience-tile--role-only .experience-tile__primary {
+  gap: 0;
+  align-content: end;
+}
+
 .experience-tile__company,
 .experience-tile__role,
 .experience-tile__duration,

@@ -30,6 +30,7 @@ export default function ExperienceTile({
   duration,
   description,
   isCurrent = false,
+  showCompany = true,
   collapsible = false,
   defaultExpanded = false,
 }) {
@@ -42,16 +43,18 @@ export default function ExperienceTile({
   const headContent = (
     <>
       <span className="experience-tile__primary">
-        <span className="experience-tile__company text-style-heading-medium">
-          <span className="experience-tile__company-row">
-            {company}
-            {isCurrent ? (
-              <span className="experience-tile__current-tag text-style-label-x-small">
-                <span className="experience-tile__current-tag-text">Current</span>
-              </span>
-            ) : null}
+        {showCompany && company ? (
+          <span className="experience-tile__company text-style-heading-medium">
+            <span className="experience-tile__company-row">
+              {company}
+              {isCurrent ? (
+                <span className="experience-tile__current-tag text-style-label-x-small">
+                  <span className="experience-tile__current-tag-text">Current</span>
+                </span>
+              ) : null}
+            </span>
           </span>
-        </span>
+        ) : null}
         {role ? <span className="experience-tile__role text-style-label-medium">{role}</span> : null}
       </span>
 
@@ -61,8 +64,15 @@ export default function ExperienceTile({
     </>
   );
 
+  const triggerLabel =
+    !showCompany && company && role
+      ? `${company}, ${role}, ${duration}`
+      : undefined;
+
   return (
-    <article className={`experience-tile${isExpanded ? " is-expanded" : ""}`}>
+    <article
+      className={`experience-tile${isExpanded ? " is-expanded" : ""}${showCompany ? "" : " experience-tile--role-only"}`}
+    >
       <div className="experience-tile__bar">
         {isCollapsible ? (
           <button
@@ -70,6 +80,7 @@ export default function ExperienceTile({
             className="experience-tile__trigger"
             aria-expanded={isExpanded}
             aria-controls={panelId}
+            aria-label={triggerLabel}
             onClick={() => setIsExpanded((open) => !open)}
           >
             <span className="experience-tile__trigger-inner">{headContent}</span>

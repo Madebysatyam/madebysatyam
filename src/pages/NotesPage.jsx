@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import NoteItem, { NOTES_PAGE } from "../components/NoteItem";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
+import ListingPageHero from "../components/ListingPageHero/index.js";
 import PageHeader from "../components/PageHeader";
 
 export default function NotesPage() {
@@ -12,19 +13,15 @@ export default function NotesPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <div className="notes-page__hero">
-        <img
-          className="page-listing__hero-media notes-page__hero-media"
-          src="/notes/hero.webp"
-          sizes="100vw"
-          alt="Voxel art overhead view of a blue typewriter with coffee, glasses, notebook, and scattered paper on a warm surface"
-          width={7660}
-          height={3284}
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-        />
-      </div>
+      <ListingPageHero
+        wrapperClassName="notes-page__hero"
+        mediaClassName="notes-page__hero-media"
+        src="/notes/hero.webp"
+        alt="Voxel art overhead view of a blue typewriter with coffee, glasses, notebook, and scattered paper on a warm surface"
+        width={7660}
+        height={3284}
+        reduced={reduced}
+      />
       <section
         className="container-site page-listing__body"
         aria-labelledby="notes-page-heading"

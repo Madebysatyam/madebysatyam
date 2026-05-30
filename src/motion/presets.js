@@ -50,6 +50,25 @@ export function staggerItem(reduced, { y = 12 } = {}) {
   return fadeUp(reduced, { y });
 }
 
+export function listingHeroReveal(reduced, { y = 18, scale = 0.985 } = {}) {
+  if (reduced) {
+    return {
+      hidden: { opacity: 1, y: 0, scale: 1 },
+      visible: { opacity: 1, y: 0, scale: 1 },
+    };
+  }
+
+  return {
+    hidden: { opacity: 0, y, scale },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: DURATION.slow, ease: EASE_OUT },
+    },
+  };
+}
+
 export const mobileNavPanelVariants = (reduced) => ({
   desktop: { opacity: 1, x: 0, y: 0, transition: { duration: 0 } },
   hidden: reduced

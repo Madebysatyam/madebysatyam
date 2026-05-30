@@ -149,6 +149,15 @@
   width: 100%;
 }
 
+.about-page__history-company-header {
+  padding-top: var(--space-5);
+}
+
+.about-page__history-company-name {
+  margin: 0;
+  color: var(--color-text);
+}
+
 .about-page__load-more {
   justify-self: start;
   padding: 0;
