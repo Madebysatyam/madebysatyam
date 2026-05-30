@@ -259,10 +259,9 @@
   padding-bottom: 0;
 }
 
-.about-page__hero,
-.notes-page__hero,
-.playground-page__hero {
-  overflow: hidden;
+.page-listing__hero-media.about-page__hero-media,
+.page-listing__hero-media.notes-page__hero-media {
+  aspect-ratio: auto;
 }
 
 .page-listing__hero-media {

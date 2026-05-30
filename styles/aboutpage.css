@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   background-color: var(--color-bg);
+  overflow: hidden;
 }
 
 .page-listing__hero-media.about-page__hero-media {
@@ -15,6 +16,14 @@
   margin: 0;
   background-image: none;
   background-color: transparent;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 809px) {
+  .page-listing__hero-media.about-page__hero-media {
+    aspect-ratio: 1 / 1;
+  }
 }
 
 .about-page__content {

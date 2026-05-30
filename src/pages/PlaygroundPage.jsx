@@ -2,7 +2,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
-import ListingPageHero from "../components/ListingPageHero/index.js";
 import PageHeader from "../components/PageHeader";
 import PlaygroundTile, { PLAYGROUND_TILES_PAGE } from "../components/PlaygroundTile";
 
@@ -13,16 +12,19 @@ export default function PlaygroundPage() {
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
-      <ListingPageHero
-        wrapperClassName="playground-page__hero"
-        mediaClassName="playground-page__hero-media"
-        src="/playground/hero.png"
-        srcSet="/playground/hero.png 1024w, /playground/hero@2x.png 2048w"
-        alt="Voxel art workspace with a developer at a desk, code on screen, and creative tools floating nearby"
-        width={1024}
-        height={439}
-        reduced={reduced}
-      />
+      <div className="playground-page__hero">
+        <img
+          className="page-listing__hero-media playground-page__hero-media"
+          src="/playground/hero.webp"
+          sizes="100vw"
+          alt="Voxel art scene with playful objects and warm lighting for the Playground page"
+          width={7660}
+          height={3284}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+        />
+      </div>
       <section
         className="container-site page-listing__body"
         aria-labelledby="playground-page-heading"
