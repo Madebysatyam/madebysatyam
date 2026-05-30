@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import useTerminalTyping from "../hooks/useTerminalTyping";
+import { prefetchListingHero } from "../lib/listingHeroes.js";
 
 function isClientRoute(href) {
   return href.startsWith("/") && !href.slice(1).includes("#");
@@ -7,12 +8,20 @@ function isClientRoute(href) {
 
 export default function NavLink({ href, label, className, onNavigate }) {
   const { text, isTyping, runType } = useTerminalTyping(label);
+  const routeMatch = useMatch({ path: href, end: true });
+
+  const prefetchHero = () => {
+    runType();
+    if (isClientRoute(href) && !routeMatch) {
+      prefetchListingHero(href);
+    }
+  };
 
   const linkClassName = `site-nav__link ${className} text-style-label-medium${isTyping ? " is-typing" : ""}`;
   const linkProps = {
     className: linkClassName,
-    onMouseEnter: runType,
-    onFocus: runType,
+    onMouseEnter: prefetchHero,
+    onFocus: prefetchHero,
     onClick: onNavigate,
   };
 

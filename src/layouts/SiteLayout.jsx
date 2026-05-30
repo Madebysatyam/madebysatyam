@@ -4,6 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { MatIntroProvider } from "../contexts/MatIntroContext.jsx";
+import { preloadListingHero } from "../lib/listingHeroes.js";
 
 export default function SiteLayout() {
   const reduced = useReducedMotion();
@@ -14,6 +15,10 @@ export default function SiteLayout() {
   useEffect(() => {
     setMatReady(!isHome);
   }, [isHome]);
+
+  useEffect(() => {
+    preloadListingHero(pathname);
+  }, [pathname]);
 
   return (
     <MatIntroProvider value={{ isMatReady, setMatReady }}>
