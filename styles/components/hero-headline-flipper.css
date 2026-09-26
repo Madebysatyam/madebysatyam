@@ -12,7 +12,7 @@
   display: inline-block;
   width: 0.6ch;
   margin-left: 0.05em;
-  color: rgb(226, 255, 52);
+  color: currentColor;
   animation: hero-headline-cursor-blink 0.85s step-end infinite;
 }
 

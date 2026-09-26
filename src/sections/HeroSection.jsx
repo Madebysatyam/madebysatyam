@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CuttingMat from "../components/CuttingMat";
+import MatPaletteControl, { DEFAULT_MAT_PALETTE } from "../components/MatPaletteControl";
 import { useMatIntro } from "../contexts/MatIntroContext.jsx";
 import HeroBodyHighlight from "../components/HeroBodyHighlight";
 import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
@@ -11,19 +12,43 @@ const HERO_HEADLINE = "Curious by nature, careful by craft.";
 export default function HeroSection() {
   const { setMatReady } = useMatIntro();
   const [isMatComplete, setIsMatComplete] = useState(false);
+  const [selectedPalette, setSelectedPalette] = useState(DEFAULT_MAT_PALETTE);
+  const [appliedPalette, setAppliedPalette] = useState(DEFAULT_MAT_PALETTE);
+  const [isRecolor, setIsRecolor] = useState(false);
   const handleMatDrawComplete = useCallback(() => {
     setIsMatComplete(true);
     setMatReady(true);
   }, [setMatReady]);
 
+  useEffect(() => {
+    if (!isMatComplete || selectedPalette === appliedPalette) {
+      return undefined;
+    }
+
+    setIsRecolor(true);
+    let inner = 0;
+    const outer = window.requestAnimationFrame(() => {
+      inner = window.requestAnimationFrame(() => {
+        setAppliedPalette(selectedPalette);
+        setIsRecolor(false);
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(outer);
+      window.cancelAnimationFrame(inner);
+    };
+  }, [isMatComplete, selectedPalette, appliedPalette]);
+
   return (
     <section
       className={`hero${isMatComplete ? " is-mat-complete" : ""}`}
+      data-mat-palette={appliedPalette}
       aria-label="Hero"
     >
       <div className="hero__bg">
         <div className="hero__bg-mat" aria-hidden="true">
-          <CuttingMat onDrawComplete={handleMatDrawComplete} />
+          <CuttingMat onDrawComplete={handleMatDrawComplete} recolor={isRecolor} />
         </div>
         {isMatComplete ? <HeroMatStickers /> : null}
       </div>
@@ -57,6 +82,9 @@ export default function HeroSection() {
           </div>
         ) : null}
       </div>
+      {isMatComplete ? (
+        <MatPaletteControl value={selectedPalette} onChange={setSelectedPalette} />
+      ) : null}
     </section>
   );
 }

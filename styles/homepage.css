@@ -20,6 +20,28 @@
   margin: 0;
   padding: 0;
   overflow: visible;
+  /* Teal copy stays as designed. Other mats use the same roles in that family. */
+  --hero-headline: rgb(226, 255, 52); /* lime-400 */
+  --hero-body: rgb(217, 248, 231); /* teal-100 */
+  --hero-meta: rgb(40, 133, 79); /* teal-700 */
+}
+
+.hero[data-mat-palette="blue"] {
+  --hero-headline: rgb(120, 148, 232); /* blue-300 */
+  --hero-body: rgb(210, 219, 248); /* blue-100 */
+  --hero-meta: rgb(75, 111, 224); /* blue-400 */
+}
+
+.hero[data-mat-palette="orange"] {
+  --hero-headline: rgb(254, 154, 126); /* orange-300 */
+  --hero-body: rgb(254, 222, 212); /* orange-100 */
+  --hero-meta: rgb(255, 86, 40); /* orange-500 */
+}
+
+.hero[data-mat-palette="purple"] {
+  --hero-headline: rgb(164, 155, 219); /* purple-300 */
+  --hero-body: rgb(224, 222, 243); /* purple-100 */
+  --hero-meta: rgb(135, 122, 211); /* purple-400 */
 }
 
 .hero__bg {
@@ -96,6 +118,7 @@
   transform: translate(-50%, -50%) scale(1.15);
   filter: blur(72px);
   pointer-events: none;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero__headline,
@@ -112,9 +135,10 @@
 }
 
 .hero__headline {
-  color: rgb(226, 255, 52);
+  color: var(--hero-headline);
   text-transform: uppercase;
   max-width: 100%;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero__headline.text-style-display-medium {
@@ -122,8 +146,9 @@
 }
 
 .hero__body {
-  color: rgb(217, 248, 231);
+  color: var(--hero-body);
   max-width: 100%;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero__body.text-style-heading-x-large {
@@ -147,15 +172,17 @@
 }
 
 .hero__aside {
-  color: rgb(40, 133, 79);
+  color: var(--hero-meta);
   max-width: 100%;
   margin: 0;
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero__location {
   display: flex;
   justify-content: center;
-  color: rgb(40, 133, 79);
+  color: var(--hero-meta);
+  transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   max-width: 100%;
   margin: 0;
 }
@@ -215,6 +242,14 @@
   .hero__copy {
     animation: none;
     opacity: 1;
+  }
+
+  .hero__text-backdrop,
+  .hero__headline,
+  .hero__body,
+  .hero__aside,
+  .hero__location {
+    transition: none;
   }
 
   .hero__text-backdrop {

@@ -1,8 +1,41 @@
-/* CuttingMat — stroke-draw animation and post-complete teal palette */
+/* CuttingMat — stroke-draw animation; completed palette via data-mat-palette */
 
-:root {
+:root,
+.hero[data-mat-palette="teal"],
+.cutting-mat[data-mat-palette="teal"] {
   --cutting-mat-fill-base: #000000;
   --cutting-mat-fill-accent: rgb(12, 45, 24); /* teal-900 */
+  --cutting-mat-stroke-minor: rgb(28, 89, 53); /* teal-800 */
+  --cutting-mat-stroke-major: rgb(40, 133, 79); /* teal-700 */
+  --cutting-mat-stroke-frame: rgb(52, 177, 104); /* teal-600 */
+  --cutting-mat-stroke-chart: rgb(64, 224, 129); /* teal-500 */
+}
+
+.hero[data-mat-palette="blue"],
+.cutting-mat[data-mat-palette="blue"] {
+  --cutting-mat-fill-accent: rgb(5, 15, 44); /* blue-900 */
+  --cutting-mat-stroke-minor: rgb(12, 30, 86); /* blue-800 */
+  --cutting-mat-stroke-major: rgb(18, 46, 130); /* blue-700 */
+  --cutting-mat-stroke-frame: rgb(23, 60, 170); /* blue-600 */
+  --cutting-mat-stroke-chart: rgb(29, 76, 217); /* blue-500 */
+}
+
+.hero[data-mat-palette="orange"],
+.cutting-mat[data-mat-palette="orange"] {
+  --cutting-mat-fill-accent: rgb(50, 17, 8); /* orange-900 */
+  --cutting-mat-stroke-minor: rgb(102, 34, 16); /* orange-800 */
+  --cutting-mat-stroke-major: rgb(152, 52, 25); /* orange-700 */
+  --cutting-mat-stroke-frame: rgb(202, 69, 33); /* orange-600 */
+  --cutting-mat-stroke-chart: rgb(255, 86, 40); /* orange-500 */
+}
+
+.hero[data-mat-palette="purple"],
+.cutting-mat[data-mat-palette="purple"] {
+  --cutting-mat-fill-accent: rgb(19, 18, 39); /* purple-900 */
+  --cutting-mat-stroke-minor: rgb(41, 36, 79); /* purple-800 */
+  --cutting-mat-stroke-major: rgb(62, 55, 119); /* purple-700 */
+  --cutting-mat-stroke-frame: rgb(84, 71, 160); /* purple-600 */
+  --cutting-mat-stroke-chart: rgb(104, 91, 198); /* purple-500 */
 }
 
 .cutting-mat__stroke {
@@ -39,13 +72,13 @@
   }
 }
 
-/* Fill — black base, teal-900 reveals bottom → top with soft leading edge */
+/* Fill — black base, 900 accent reveals bottom → top with soft leading edge */
 
 .cutting-mat__fill-base {
   fill: var(--cutting-mat-fill-base);
 }
 
-.cutting-mat__fill-teal {
+.cutting-mat__fill-accent {
   --cutting-mat-fill-feather: 22%;
   fill: var(--cutting-mat-fill-accent);
   -webkit-mask-image: linear-gradient(
@@ -68,7 +101,7 @@
   mask-repeat: no-repeat;
 }
 
-.cutting-mat.is-draw-complete .cutting-mat__fill-teal {
+.cutting-mat.is-draw-complete .cutting-mat__fill-accent {
   animation: cutting-mat-fill-reveal-up 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
@@ -84,55 +117,87 @@
   }
 }
 
-/* Strokes → tiered teal when mat completes (matches black-bg hierarchy) */
+/* Strokes → palette stops when mat completes (matches black-bg hierarchy) */
 
-.cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+.cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-accent) {
   transition:
     stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
     stroke-opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cutting-mat.is-draw-complete .cutting-mat__stroke--minor {
-  stroke: rgb(28, 89, 53); /* teal-800 */
+  stroke: var(--cutting-mat-stroke-minor);
   stroke-opacity: 1;
 }
 
 .cutting-mat.is-draw-complete .cutting-mat__stroke--major {
-  stroke: rgb(40, 133, 79); /* teal-700 */
+  stroke: var(--cutting-mat-stroke-major);
   stroke-opacity: 1;
 }
 
 .cutting-mat.is-draw-complete .cutting-mat__stroke--frame {
-  stroke: rgb(52, 177, 104); /* teal-600 */
+  stroke: var(--cutting-mat-stroke-frame);
   stroke-opacity: 1;
 }
 
 .cutting-mat.is-draw-complete .cutting-mat__stroke--chart {
-  stroke: rgb(64, 224, 129); /* teal-500 */
+  stroke: var(--cutting-mat-stroke-chart);
   stroke-opacity: 0.55;
+}
+
+/* Palette change replays the same grey → accent shift and bottom-up wash as first load */
+
+.cutting-mat.is-recolor .cutting-mat__fill-accent {
+  animation: none;
+  -webkit-mask-size: 100% 0%;
+  mask-size: 100% 0%;
+}
+
+.cutting-mat.is-recolor .cutting-mat__stroke--minor,
+.cutting-mat.is-recolor .cutting-mat__stroke--major {
+  stroke: #2a2a2a;
+  stroke-opacity: 1;
+  transition: none;
+}
+
+.cutting-mat.is-recolor .cutting-mat__stroke--frame {
+  stroke: #8a8a8a;
+  stroke-opacity: 1;
+  transition: none;
+}
+
+.cutting-mat.is-recolor .cutting-mat__stroke--chart {
+  stroke: #b8b8b8;
+  stroke-opacity: 0.48;
+  transition: none;
 }
 
 /* Mobile Safari — mask-size animation on SVG rects is unreliable; fade fill instead */
 @media (max-width: 809px) {
-  .cutting-mat__fill-teal {
+  .cutting-mat__fill-accent {
     -webkit-mask-image: none;
     mask-image: none;
     opacity: 0;
     transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .cutting-mat.is-draw-complete .cutting-mat__fill-teal {
+  .cutting-mat.is-draw-complete .cutting-mat__fill-accent {
     animation: none;
     opacity: 1;
   }
 
-  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-accent) {
+    transition: none;
+  }
+
+  .cutting-mat.is-recolor .cutting-mat__fill-accent {
+    opacity: 0;
     transition: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cutting-mat__fill-teal {
+  .cutting-mat__fill-accent {
     -webkit-mask-image: none;
     mask-image: none;
     -webkit-mask-size: 100% 100%;
@@ -141,7 +206,7 @@
     opacity: 1;
   }
 
-  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-teal) {
+  .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-accent) {
     transition-duration: 0.01ms;
   }
 }

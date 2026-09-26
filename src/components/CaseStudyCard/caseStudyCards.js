@@ -1,16 +1,9 @@
-/** Landing-page case study entries — swap href/title when pages ship. */
+import { getProjectCard } from "../../data/projects/index.js";
+import { AURAL_PROJECT } from "../../data/projects/aural.js";
+
+/** Landing-page case study entries — linked projects first, then placeholders. */
 export const CASE_STUDY_CARDS = [
-  {
-    id: "streaks",
-    href: "#",
-    tag: "Habit forming",
-    role: "Individual contributor",
-    title: "Designs an experience to build habit among listeners",
-    metricValue: "+32%",
-    metricLabel: "In daily LDAU users",
-    readTime: "9min read",
-    shipped: "Shipped 2025",
-  },
+  getProjectCard(AURAL_PROJECT),
   {
     id: "project-002",
     href: "#",

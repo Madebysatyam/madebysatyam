@@ -74,10 +74,11 @@ function ChartStroke({ reduced, d, kind, delay, duration, strokeLength }) {
 
 /**
  * Animated self-healing cutting mat (grid, arcs, radials).
- * Stroke-draw via CSS; fill and stroke colours shift to teal when complete.
+ * Stroke-draw via CSS; fill and stroke colours shift to the active palette when complete.
  */
 export default function CuttingMat({
   onDrawComplete,
+  recolor = false,
   className = "",
   preserveAspectRatio = "xMidYMid slice",
 }) {
@@ -113,6 +114,7 @@ export default function CuttingMat({
   const rootClass = [
     "cutting-mat",
     isDrawComplete ? "is-draw-complete" : "",
+    recolor ? "is-recolor" : "",
     className,
   ]
     .filter(Boolean)
@@ -132,7 +134,7 @@ export default function CuttingMat({
         height={CUTTING_MAT_HEIGHT}
       />
       <rect
-        className="cutting-mat__fill-teal"
+        className="cutting-mat__fill-accent"
         width={CUTTING_MAT_WIDTH}
         height={CUTTING_MAT_HEIGHT}
       />

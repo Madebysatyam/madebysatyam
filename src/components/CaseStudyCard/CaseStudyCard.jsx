@@ -1,3 +1,9 @@
+import { Link } from "react-router-dom";
+
+function isClientRoute(href) {
+  return href.startsWith("/") && !href.includes("#");
+}
+
 export default function CaseStudyCard({
   href,
   tag,
@@ -10,8 +16,9 @@ export default function CaseStudyCard({
   imageSrc,
   imageAlt = "",
 }) {
-  return (
-    <a className="case-study-card" href={href}>
+  const cardClassName = "case-study-card";
+  const cardBody = (
+    <>
       <div className="case-study-card__visual">
         {imageSrc ? (
           <img
@@ -70,6 +77,20 @@ export default function CaseStudyCard({
           ) : null}
         </footer>
       </div>
+    </>
+  );
+
+  if (isClientRoute(href)) {
+    return (
+      <Link className={cardClassName} to={href}>
+        {cardBody}
+      </Link>
+    );
+  }
+
+  return (
+    <a className={cardClassName} href={href}>
+      {cardBody}
     </a>
   );
 }

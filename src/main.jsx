@@ -7,6 +7,7 @@ import "../styles/homepage.css";
 import "../styles/aboutpage.css";
 import "../styles/notespage.css";
 import "../styles/playgroundpage.css";
+import "../styles/projects.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
