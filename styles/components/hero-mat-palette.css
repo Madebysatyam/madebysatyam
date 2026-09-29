@@ -9,8 +9,8 @@
   left: 50%;
   display: grid;
   place-items: center;
-  width: 1.625rem;
-  height: 1.625rem;
+  width: 2.25rem;
+  height: 2.25rem;
   margin: 0;
   translate: -50% 0;
   pointer-events: auto;
@@ -26,8 +26,8 @@
 .hero-mat-palette__face {
   position: relative;
   z-index: 1;
-  width: 1.625rem;
-  height: 1.625rem;
+  width: 2.25rem;
+  height: 2.25rem;
   transition: scale 0.28s cubic-bezier(0.34, 1.45, 0.64, 1);
 }
 
@@ -46,10 +46,12 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: rgb(12, 24, 18);
+  border: 0;
+  background-color: rgb(186, 244, 255);
+  isolation: isolate;
   box-shadow:
-    0 6px 14px rgb(0 0 0 / 0.16),
-    0 18px 28px rgb(0 0 0 / 0.12);
+    0 12px 24px rgb(0 0 0 / 0.22),
+    0 2px 8px rgb(0 0 0 / 0.14);
 }
 
 .hero-mat-palette__blobs {
@@ -67,59 +69,80 @@
   margin-top: -39%;
   margin-left: -39%;
   border-radius: 50%;
-  filter: blur(3.5px);
+  filter: blur(6px);
 }
 
 .hero-mat-palette__blob[data-palette="teal"] {
-  background-color: var(--color-teal-500);
+  background-color: rgb(70, 245, 255);
   animation: hero-mat-blob-teal 3.6s ease-in-out infinite;
 }
 
 .hero-mat-palette__blob[data-palette="blue"] {
-  background-color: rgb(29, 76, 217); /* blue-500 */
+  background-color: rgb(45, 70, 255);
   animation: hero-mat-blob-blue 4.8s ease-in-out infinite;
 }
 
-.hero-mat-palette__blob[data-palette="orange"] {
-  background-color: var(--color-orange-500);
-  animation: hero-mat-blob-orange 3.2s ease-in-out infinite;
-}
-
 .hero-mat-palette__blob[data-palette="purple"] {
-  background-color: var(--color-purple-500);
+  background-color: rgb(150, 70, 255);
   animation: hero-mat-blob-purple 5.4s ease-in-out infinite;
 }
 
+.hero-mat-palette__blob[data-palette="pink"] {
+  width: 64%;
+  height: 64%;
+  margin-top: -32%;
+  margin-left: -32%;
+  background-color: rgb(255, 90, 210);
+  animation: hero-mat-blob-pink 4.2s ease-in-out infinite;
+}
+
+.hero-mat-palette__blob[data-palette="orange"] {
+  width: 52%;
+  height: 52%;
+  margin-top: -26%;
+  margin-left: -26%;
+  background-color: rgb(255, 176, 120);
+  animation: hero-mat-blob-orange 3.2s ease-in-out infinite;
+}
+
 @keyframes hero-mat-blob-teal {
-  0% { transform: translate(-42%, -18%) scale(0.92); }
-  23% { transform: translate(36%, -34%) scale(1.18); }
-  47% { transform: translate(8%, 40%) scale(0.84); }
-  71% { transform: translate(-30%, 12%) scale(1.22); }
-  100% { transform: translate(-42%, -18%) scale(0.92); }
+  0% { transform: translate(34%, -28%) scale(1.05); }
+  23% { transform: translate(-36%, 8%) scale(0.88); }
+  47% { transform: translate(10%, 38%) scale(1.16); }
+  71% { transform: translate(-18%, -34%) scale(0.94); }
+  100% { transform: translate(34%, -28%) scale(1.05); }
 }
 
 @keyframes hero-mat-blob-blue {
-  0% { transform: translate(28%, -40%) scale(1.08); }
-  17% { transform: translate(-18%, 8%) scale(0.8); }
-  39% { transform: translate(40%, 26%) scale(1.24); }
-  68% { transform: translate(-36%, -22%) scale(0.96); }
-  100% { transform: translate(28%, -40%) scale(1.08); }
-}
-
-@keyframes hero-mat-blob-orange {
-  0% { transform: translate(12%, 36%) scale(0.88); }
-  28% { transform: translate(-40%, -8%) scale(1.16); }
-  52% { transform: translate(22%, -38%) scale(1.02); }
-  79% { transform: translate(34%, 14%) scale(0.78); }
-  100% { transform: translate(12%, 36%) scale(0.88); }
+  0% { transform: translate(-40%, 6%) scale(1.08); }
+  17% { transform: translate(18%, -32%) scale(0.86); }
+  39% { transform: translate(32%, 24%) scale(1.18); }
+  68% { transform: translate(-12%, 36%) scale(0.92); }
+  100% { transform: translate(-40%, 6%) scale(1.08); }
 }
 
 @keyframes hero-mat-blob-purple {
-  0% { transform: translate(-8%, 28%) scale(1.14); }
-  21% { transform: translate(32%, -6%) scale(0.82); }
-  44% { transform: translate(-24%, -36%) scale(1.2); }
-  73% { transform: translate(6%, 18%) scale(0.9); }
-  100% { transform: translate(-8%, 28%) scale(1.14); }
+  0% { transform: translate(-16%, 30%) scale(1.1); }
+  21% { transform: translate(36%, -8%) scale(0.84); }
+  44% { transform: translate(-28%, -32%) scale(1.16); }
+  73% { transform: translate(8%, 16%) scale(0.9); }
+  100% { transform: translate(-16%, 30%) scale(1.1); }
+}
+
+@keyframes hero-mat-blob-pink {
+  0% { transform: translate(22%, 28%) scale(1.04); }
+  27% { transform: translate(-30%, -16%) scale(1.18); }
+  54% { transform: translate(28%, -30%) scale(0.86); }
+  78% { transform: translate(-8%, 34%) scale(1.1); }
+  100% { transform: translate(22%, 28%) scale(1.04); }
+}
+
+@keyframes hero-mat-blob-orange {
+  0% { transform: translate(8%, 42%) scale(0.96); }
+  28% { transform: translate(-34%, -6%) scale(1.14); }
+  52% { transform: translate(24%, -36%) scale(0.88); }
+  79% { transform: translate(36%, 12%) scale(1.12); }
+  100% { transform: translate(8%, 42%) scale(0.96); }
 }
 
 @media (any-hover: hover) {
@@ -159,26 +182,26 @@
 
 .hero-mat-palette__swatch[data-idx="0"] {
   --idx: 0;
-  --translate-x: -1.99rem;
-  --translate-y: -1.67rem;
+  --translate-x: -2.34rem;
+  --translate-y: -1.96rem;
 }
 
 .hero-mat-palette__swatch[data-idx="1"] {
   --idx: 1;
-  --translate-x: -0.76rem;
-  --translate-y: -2.49rem;
+  --translate-x: -0.89rem;
+  --translate-y: -2.92rem;
 }
 
 .hero-mat-palette__swatch[data-idx="2"] {
   --idx: 2;
-  --translate-x: 0.76rem;
-  --translate-y: -2.49rem;
+  --translate-x: 0.89rem;
+  --translate-y: -2.92rem;
 }
 
 .hero-mat-palette__swatch[data-idx="3"] {
   --idx: 3;
-  --translate-x: 1.99rem;
-  --translate-y: -1.67rem;
+  --translate-x: 2.34rem;
+  --translate-y: -1.96rem;
 }
 
 .hero-mat-palette.is-open .hero-mat-palette__swatch {
@@ -192,63 +215,63 @@
 /* Hover stays on its arc point and pushes the others along the same circle. */
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="0"]:hover) .hero-mat-palette__swatch[data-idx="1"] {
-  --translate-x: -0.14rem;
-  --translate-y: -2.6rem;
+  --translate-x: -0.16rem;
+  --translate-y: -3.05rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="0"]:hover) .hero-mat-palette__swatch[data-idx="2"] {
-  --translate-x: 1.34rem;
-  --translate-y: -2.23rem;
+  --translate-x: 1.57rem;
+  --translate-y: -2.61rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="0"]:hover) .hero-mat-palette__swatch[data-idx="3"] {
-  --translate-x: 2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: 2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="1"]:hover) .hero-mat-palette__swatch[data-idx="0"] {
-  --translate-x: -2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: -2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="1"]:hover) .hero-mat-palette__swatch[data-idx="2"] {
-  --translate-x: 1.34rem;
-  --translate-y: -2.23rem;
+  --translate-x: 1.57rem;
+  --translate-y: -2.61rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="1"]:hover) .hero-mat-palette__swatch[data-idx="3"] {
-  --translate-x: 2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: 2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="2"]:hover) .hero-mat-palette__swatch[data-idx="0"] {
-  --translate-x: -2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: -2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="2"]:hover) .hero-mat-palette__swatch[data-idx="1"] {
-  --translate-x: -1.34rem;
-  --translate-y: -2.23rem;
+  --translate-x: -1.57rem;
+  --translate-y: -2.61rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="2"]:hover) .hero-mat-palette__swatch[data-idx="3"] {
-  --translate-x: 2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: 2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="3"]:hover) .hero-mat-palette__swatch[data-idx="0"] {
-  --translate-x: -2.34rem;
-  --translate-y: -1.14rem;
+  --translate-x: -2.74rem;
+  --translate-y: -1.34rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="3"]:hover) .hero-mat-palette__swatch[data-idx="1"] {
-  --translate-x: -1.34rem;
-  --translate-y: -2.23rem;
+  --translate-x: -1.57rem;
+  --translate-y: -2.61rem;
 }
 
 .hero-mat-palette.is-open:has(.hero-mat-palette__swatch[data-idx="3"]:hover) .hero-mat-palette__swatch[data-idx="2"] {
-  --translate-x: 0.14rem;
-  --translate-y: -2.6rem;
+  --translate-x: 0.16rem;
+  --translate-y: -3.05rem;
 }
 
 .hero-mat-palette__swatch.is-selected {

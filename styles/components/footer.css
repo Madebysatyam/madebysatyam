@@ -244,11 +244,26 @@ a.site-footer__meta-value:hover {
   animation: site-footer-built-shimmer 10s ease-in-out infinite;
 }
 
+.site-footer__built-cursor-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .site-footer__built-cursor-logo {
+  display: inline-flex;
   flex-shrink: 0;
-  width: 1.05em;
-  height: 1.05em;
-  transform: translateY(-0.07em);
+  align-items: center;
+  height: 1.15em;
+  transform: translateY(-0.08em);
+}
+
+.site-footer__built-cursor-video {
+  display: block;
+  height: 1.15em;
+  width: auto;
+  filter: url("#site-footer-cursor-key");
 }
 
 @keyframes site-footer-built-shimmer {

@@ -13,6 +13,7 @@ function PaletteBlobs() {
           data-palette={palette.id}
         />
       ))}
+      <span className="hero-mat-palette__blob" data-palette="pink" />
     </span>
   );
 }
