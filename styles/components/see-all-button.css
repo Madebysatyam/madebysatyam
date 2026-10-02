@@ -21,14 +21,14 @@
   font-size: var(--type-label-medium-size);
   text-decoration: none;
   transition:
-    color 0.12s ease,
-    border-color 0.12s ease,
-    background-color 0.12s ease;
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
 }
 
 .notes-section .see-all-button {
-  --see-all-accent: rgb(200, 180, 255);
-  --see-all-hover-fg: var(--color-bg);
+  --see-all-accent: var(--notes-see-all-accent);
+  --see-all-hover-fg: var(--notes-see-all-fg);
 }
 
 .strip-section .see-all-button {

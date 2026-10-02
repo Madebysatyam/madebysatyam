@@ -22,37 +22,22 @@ function BuiltWithShimmerLine({ text }) {
 function CursorLogo() {
   const rootRef = useRef(null);
   const videoRef = useRef(null);
-  const hoveringRef = useRef(false);
-  const playedInViewRef = useRef(false);
+  const inViewRef = useRef(false);
   const replayTimerRef = useRef(0);
   const reducedMotion = useReducedMotion();
 
-  const isVisible = () => {
-    const element = rootRef.current;
-    return Boolean(element && element.getClientRects().length > 0);
-  };
-
-  const play = () => {
-    const video = videoRef.current;
-    if (!video || reducedMotion !== false || !isVisible()) {
-      return;
-    }
-
-    video.playbackRate = 1;
-    if (!video.paused && !video.ended) {
-      return;
-    }
-
-    video.currentTime = 0;
-    const pending = video.play();
-    pending?.catch(() => {});
-  };
-
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) {
+    const element = rootRef.current;
+    if (!video || !element || reducedMotion === true) {
       return undefined;
     }
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const isShown = () => element.getClientRects().length > 0;
 
     const clearReplay = () => {
       if (replayTimerRef.current) {
@@ -61,69 +46,59 @@ function CursorLogo() {
       }
     };
 
+    const play = () => {
+      if (!inViewRef.current || !isShown()) {
+        return;
+      }
+
+      video.playbackRate = 1;
+      if (!video.paused && !video.ended) {
+        return;
+      }
+
+      video.currentTime = 0;
+      video.play()?.catch(() => {});
+    };
+
     const onEnded = () => {
       clearReplay();
-      if (!hoveringRef.current || reducedMotion !== false) {
+      if (!inViewRef.current || !isShown()) {
         return;
       }
 
       replayTimerRef.current = window.setTimeout(() => {
         replayTimerRef.current = 0;
-        if (hoveringRef.current) {
-          play();
-        }
+        play();
       }, REPLAY_DELAY_MS);
     };
 
-    video.addEventListener("ended", onEnded);
-    return () => {
-      clearReplay();
-      video.removeEventListener("ended", onEnded);
-    };
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    const element = rootRef.current;
-    if (!element || reducedMotion !== false) {
-      return undefined;
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry?.isIntersecting || playedInViewRef.current) {
+        inViewRef.current = Boolean(entry?.isIntersecting) && isShown();
+        if (inViewRef.current) {
+          play();
           return;
         }
 
-        playedInViewRef.current = true;
-        play();
+        clearReplay();
+        video.pause();
       },
-      { threshold: 0.8 },
+      { threshold: 0.2 },
     );
 
+    video.addEventListener("ended", onEnded);
     observer.observe(element);
-    return () => observer.disconnect();
+
+    return () => {
+      clearReplay();
+      video.removeEventListener("ended", onEnded);
+      observer.disconnect();
+      video.pause();
+    };
   }, [reducedMotion]);
 
-  const onMouseEnter = () => {
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      return;
-    }
-
-    hoveringRef.current = true;
-    play();
-  };
-
-  const onMouseLeave = () => {
-    hoveringRef.current = false;
-  };
-
   return (
-    <span
-      ref={rootRef}
-      className="site-footer__built-cursor-logo"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+    <span ref={rootRef} className="site-footer__built-cursor-logo">
       <video
         ref={videoRef}
         className="site-footer__built-cursor-video"
