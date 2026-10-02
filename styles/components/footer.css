@@ -246,18 +246,12 @@ a.site-footer__meta-value:hover {
   animation: site-footer-built-shimmer 10s ease-in-out infinite;
 }
 
-.site-footer__built-cursor-filter {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
 .site-footer__built-cursor-logo {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   height: 1.15em;
+  background-color: var(--color-bg);
   transform: translateY(-0.08em);
 }
 
@@ -265,7 +259,7 @@ a.site-footer__meta-value:hover {
   display: block;
   height: 1.15em;
   width: auto;
-  filter: url("#site-footer-cursor-key");
+  mix-blend-mode: screen;
 }
 
 @keyframes site-footer-built-shimmer {
