@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
-import PlaygroundTile, { PLAYGROUND_TILES } from "../components/PlaygroundTile";
-import SeeAllButton from "../components/SeeAllButton";
+import { Link } from "react-router-dom";
+import PlaygroundTile, { PLAYGROUND_TILES_PAGE } from "../components/PlaygroundTile";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
+const PLAYGROUND_ROW_LIMIT = 8;
+
 export default function PlaygroundSection({ reduced }) {
+  const tiles = PLAYGROUND_TILES_PAGE.slice(0, PLAYGROUND_ROW_LIMIT);
+
   return (
     <Reveal
       as={motion.section}
@@ -20,10 +24,10 @@ export default function PlaygroundSection({ reduced }) {
         reduced={reduced}
       />
       <motion.ul
-        className="playground-list strip-section__body grid-12"
+        className="playground-list playground-list--row strip-section__body"
         variants={staggerContainer(reduced, { stagger: 0.06 })}
       >
-        {PLAYGROUND_TILES.map((tile) => (
+        {tiles.map((tile) => (
           <motion.li
             key={tile.id}
             className="playground-list__item"
@@ -32,10 +36,12 @@ export default function PlaygroundSection({ reduced }) {
             <PlaygroundTile {...tile} />
           </motion.li>
         ))}
+        <motion.li className="playground-list__item" variants={staggerItem(reduced, { y: 14 })}>
+          <Link to="/playground" className="playground-see-all">
+            <span className="playground-see-all__label text-style-label-medium">See all</span>
+          </Link>
+        </motion.li>
       </motion.ul>
-      <div className="section-see-all">
-        <SeeAllButton to="/playground" />
-      </div>
     </Reveal>
   );
 }

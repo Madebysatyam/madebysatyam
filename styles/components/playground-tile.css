@@ -60,3 +60,76 @@
     grid-column: span 3;
   }
 }
+
+/* Homepage strip — one scrolling row, then a See all card */
+
+.playground-list--row {
+  display: flex;
+  gap: var(--grid-gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.playground-list--row::-webkit-scrollbar {
+  display: none;
+}
+
+.playground-list--row .playground-list__item {
+  flex: 0 0 72%;
+  grid-column: auto;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 810px) {
+  .playground-list--row .playground-list__item {
+    flex-basis: 34%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .playground-list--row .playground-list__item {
+    flex-basis: 24%;
+  }
+}
+
+.playground-see-all {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    color 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.playground-see-all__label {
+  margin: 0;
+  color: inherit;
+}
+
+.playground-see-all:hover,
+.playground-see-all:active,
+.playground-see-all:focus-visible {
+  border-color: var(--color-lime-500);
+  background-color: var(--color-lime-500);
+  color: var(--color-text-inverse);
+}
+
+.playground-see-all:hover .playground-see-all__label,
+.playground-see-all:active .playground-see-all__label,
+.playground-see-all:focus-visible .playground-see-all__label {
+  color: var(--color-text-inverse);
+}
+
+.playground-see-all:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}

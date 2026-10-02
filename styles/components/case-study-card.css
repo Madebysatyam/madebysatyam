@@ -103,8 +103,7 @@
   color: var(--color-text-muted);
 }
 
-.case-study-card__sep,
-.case-study-card__role {
+.case-study-card__sep {
   margin: 0;
 }
 
@@ -143,7 +142,6 @@
 
 /* Tertiary meta copy — space-grey-700 (overrides text-style label colors) */
 .case-study-card .case-study-card__sep.text-style-label-small,
-.case-study-card .case-study-card__role.text-style-label-small,
 .case-study-card .case-study-card__read-time.text-style-label-x-small,
 .case-study-card .case-study-card__shipped.text-style-label-x-small {
   color: var(--color-text-tertiary);

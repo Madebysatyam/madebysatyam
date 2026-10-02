@@ -24,7 +24,7 @@ export default function WorkSection({ reduced }) {
 
       <motion.ul
         ref={workListRef}
-        className="work-list grid-12"
+        className="work-list work-list--row"
         initial="hidden"
         animate={workInView || reduced ? "visible" : "hidden"}
         variants={staggerContainer(reduced, { stagger: 0.07, delayChildren: 0.04 })}

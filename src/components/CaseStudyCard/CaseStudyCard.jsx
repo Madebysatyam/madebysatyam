@@ -7,7 +7,6 @@ function isClientRoute(href) {
 export default function CaseStudyCard({
   href,
   tag,
-  role,
   title,
   metricValue,
   metricLabel,
@@ -31,21 +30,11 @@ export default function CaseStudyCard({
       </div>
 
       <div className="case-study-card__body">
-        {(tag || role) && (
+        {tag ? (
           <div className="case-study-card__row case-study-card__meta">
-            {tag ? (
-              <span className="case-study-card__tag text-style-label-x-small">{tag}</span>
-            ) : null}
-            {tag && role ? (
-              <span className="case-study-card__sep text-style-label-small" aria-hidden="true">
-                //
-              </span>
-            ) : null}
-            {role ? (
-              <span className="case-study-card__role text-style-label-small">{role}</span>
-            ) : null}
+            <span className="case-study-card__tag text-style-label-x-small">{tag}</span>
           </div>
-        )}
+        ) : null}
 
         <div className="case-study-card__row">
           <h3 className="case-study-card__title text-style-heading-3">{title}</h3>

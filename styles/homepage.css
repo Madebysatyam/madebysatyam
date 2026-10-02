@@ -324,7 +324,7 @@
   }
 }
 
-/* Work cards */
+/* Work cards — one scrolling row */
 
 .work-list {
   margin: 0;
@@ -332,13 +332,33 @@
   list-style: none;
 }
 
-.work-card {
-  grid-column: 1 / -1;
+.work-list--row {
+  display: flex;
+  gap: var(--grid-gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.work-list--row::-webkit-scrollbar {
+  display: none;
+}
+
+.work-list--row .work-card {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
 }
 
 @media (min-width: 810px) {
-  .work-card {
-    grid-column: span 6;
+  .work-list--row .work-card {
+    flex-basis: 46%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .work-list--row .work-card {
+    flex-basis: 32%;
   }
 }
 
