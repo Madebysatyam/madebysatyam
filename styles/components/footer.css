@@ -177,6 +177,8 @@ a.site-footer__meta-value:hover {
 /* Built with — label + pink shimmer + Cursor logo */
 
 .site-footer__built-row {
+  position: relative;
+  z-index: 55;
   display: flex;
   justify-content: center;
   margin-top: var(--space-10);

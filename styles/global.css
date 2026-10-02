@@ -5,6 +5,7 @@
 @import "./text-styles.css";
 @import "./grid.css";
 @import "./components.css";
+@import "./section-scroll-blur.css";
 
 @tailwind base;
 @tailwind components;
