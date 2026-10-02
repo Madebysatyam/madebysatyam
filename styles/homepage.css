@@ -345,6 +345,43 @@
   display: none;
 }
 
+@property --row-fade-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+.work-list--row,
+.playground-list--row,
+.notes-list--row {
+  --row-fade-alpha: 1;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / var(--row-fade-alpha)) 0%,
+    #000 10%
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgb(0 0 0 / var(--row-fade-alpha)) 0%,
+    #000 10%
+  );
+  transition: --row-fade-alpha 0.3s ease-in-out;
+}
+
+.work-list--row.is-scrolled-x,
+.playground-list--row.is-scrolled-x,
+.notes-list--row.is-scrolled-x {
+  --row-fade-alpha: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-list--row,
+  .playground-list--row,
+  .notes-list--row {
+    transition: none;
+  }
+}
+
 .work-list--row .work-card {
   flex: 0 0 82%;
   scroll-snap-align: start;

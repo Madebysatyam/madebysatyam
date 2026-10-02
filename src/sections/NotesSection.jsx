@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import NoteItem, { NOTES_PAGE } from "../components/NoteItem";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
+import useHorizontalRowFade from "../lib/useHorizontalRowFade.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 const NOTES_ROW_LIMIT = 8;
 
 export default function NotesSection({ reduced }) {
+  const rowRef = useRef(null);
   const notes = NOTES_PAGE.slice(0, NOTES_ROW_LIMIT);
+  useHorizontalRowFade(rowRef);
 
   return (
     <Reveal
@@ -24,6 +28,7 @@ export default function NotesSection({ reduced }) {
         reduced={reduced}
       />
       <motion.ul
+        ref={rowRef}
         className="notes-list notes-list--row"
         variants={staggerContainer(reduced, { stagger: 0.06 })}
       >

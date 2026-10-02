@@ -3,11 +3,13 @@ import { useRef } from "react";
 import CaseStudyCard from "../components/CaseStudyCard";
 import { CASE_STUDY_CARDS } from "../components/CaseStudyCard/caseStudyCards.js";
 import SectionHeader from "../components/SectionHeader";
+import useHorizontalRowFade from "../lib/useHorizontalRowFade.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function WorkSection({ reduced }) {
   const workListRef = useRef(null);
   const workInView = useInView(workListRef, { once: true, margin: "-8% 0px" });
+  useHorizontalRowFade(workListRef);
 
   return (
     <section

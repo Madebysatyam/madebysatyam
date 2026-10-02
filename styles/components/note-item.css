@@ -148,12 +148,17 @@
   }
 }
 
+.notes-list--row .notes-list__item:has(.notes-see-all) {
+  align-items: center;
+  justify-content: center;
+}
+
 .notes-see-all {
   display: grid;
   place-items: center;
   align-self: center;
   aspect-ratio: 1 / 1;
-  width: 100%;
+  width: 80%;
   border: 1px solid var(--color-border);
   border-radius: 50%;
   background-color: transparent;
