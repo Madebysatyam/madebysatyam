@@ -2,7 +2,10 @@ export default function HeroBodyHighlight({ children }) {
   return (
     <span className="hero__body-highlight">
       <span className="hero__body-highlight__text">{children}</span>
-      <span className="hero__body-highlight__shimmer" aria-hidden="true">
+      <span className="hero__body-highlight__glow" aria-hidden="true">
+        <span className="hero__body-highlight__band hero__body-highlight__band--glow">{children}</span>
+      </span>
+      <span className="hero__body-highlight__band hero__body-highlight__shimmer" aria-hidden="true">
         {children}
       </span>
     </span>

@@ -174,7 +174,7 @@ a.site-footer__meta-value:hover {
   }
 }
 
-/* Built with — label + pink shimmer + Cursor logo */
+/* Built with — label + light sweep + Cursor logo */
 
 .site-footer__built-row {
   position: relative;
@@ -232,18 +232,21 @@ a.site-footer__meta-value:hover {
 .site-footer__built-shimmer {
   pointer-events: none;
   color: transparent;
+  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
   background-image: linear-gradient(
-    105deg,
-    transparent 42%,
-    var(--color-pink-500) 48%,
-    var(--color-pink-500) 52%,
-    transparent 58%
+    90deg,
+    transparent 0%,
+    transparent 41%,
+    var(--color-link-hover) 50%,
+    transparent 59%,
+    transparent 100%
   );
-  background-size: 250% 100%;
-  background-position: 150% 0;
-  animation: site-footer-built-shimmer 10s ease-in-out infinite;
+  background-size: 200% 200%;
+  background-repeat: no-repeat;
+  background-position: 200% center;
+  animation: site-footer-built-shimmer 3s linear infinite;
 }
 
 .site-footer__built-cursor-logo {
@@ -263,21 +266,19 @@ a.site-footer__meta-value:hover {
 }
 
 @keyframes site-footer-built-shimmer {
-  0%,
-  78%,
-  100% {
-    background-position: 150% 0;
+  0% {
+    background-position: 200% center;
   }
 
-  22% {
-    background-position: -150% 0;
+  100% {
+    background-position: -100% center;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .site-footer__built-shimmer {
     animation: none;
-    background-position: 150% 0;
+    background-position: 200% center;
   }
 }
 

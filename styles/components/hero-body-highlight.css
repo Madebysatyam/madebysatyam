@@ -1,4 +1,4 @@
-/* Hero body — neon lime shimmer on Pocket → 200M+. phrase (~4.5s cycle) */
+/* Hero body — light band sweeping through the Pocket FM phrase */
 
 .hero__body-highlight {
   display: inline-grid;
@@ -9,25 +9,52 @@
 }
 
 .hero__body-highlight__text,
+.hero__body-highlight__glow,
 .hero__body-highlight__shimmer {
   grid-area: 1 / 1;
 }
 
+.hero__body-highlight__glow {
+  pointer-events: none;
+  overflow: visible;
+  filter: blur(18px);
+  mix-blend-mode: plus-lighter;
+}
+
+.hero__body-highlight__band,
 .hero__body-highlight__shimmer {
   pointer-events: none;
   color: transparent;
+  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
+  background-repeat: no-repeat;
+  background-size: 200% 200%;
+  background-position: 200% center;
+  animation: hero-body-highlight-shimmer 3s linear infinite;
+}
+
+.hero__body-highlight__band--glow {
   background-image: linear-gradient(
-    105deg,
+    90deg,
+    transparent 0%,
     transparent 44%,
-    var(--color-pink-500) 49.25%,
-    var(--color-pink-500) 50.75%,
-    transparent 56%
+    var(--hero-headline) 50%,
+    transparent 56%,
+    transparent 100%
   );
-  background-size: 250% 100%;
-  background-position: 150% 0;
-  animation: hero-body-highlight-shimmer 4.5s ease-in-out infinite;
+}
+
+.hero__body-highlight__shimmer {
+  mix-blend-mode: plus-lighter;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 41%,
+    var(--color-link-hover) 50%,
+    transparent 59%,
+    transparent 100%
+  );
 }
 
 /* Keep terminal punctuation on the same line as 200M+ */
@@ -36,14 +63,12 @@
 }
 
 @keyframes hero-body-highlight-shimmer {
-  0%,
-  78%,
-  100% {
-    background-position: 150% 0;
+  0% {
+    background-position: 200% center;
   }
 
-  22% {
-    background-position: -150% 0;
+  100% {
+    background-position: -100% center;
   }
 }
 
@@ -62,18 +87,23 @@
     width: 100%;
     white-space: normal;
     text-align: center;
-    overflow: hidden;
   }
 
   .hero__body-highlight__text,
+  .hero__body-highlight__band,
   .hero__body-highlight__shimmer {
     overflow-wrap: break-word;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero__body-highlight__glow {
+    filter: none;
+  }
+
+  .hero__body-highlight__band,
   .hero__body-highlight__shimmer {
     animation: none;
-    background-position: 150% 0;
+    background-position: 200% center;
   }
 }
