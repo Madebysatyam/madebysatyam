@@ -61,14 +61,38 @@
 }
 
 @keyframes cutting-mat-stroke-draw {
+  0% {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+  }
+
+  40% {
+    -webkit-filter: blur(0.6px);
+    filter: blur(0.6px);
+  }
+
   to {
     stroke-dashoffset: 0;
+    -webkit-filter: blur(0);
+    filter: blur(0);
   }
 }
 
 @keyframes cutting-mat-radial-draw {
+  0% {
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+  }
+
+  40% {
+    -webkit-filter: blur(0.6px);
+    filter: blur(0.6px);
+  }
+
   to {
     stroke-dashoffset: 0;
+    -webkit-filter: blur(0);
+    filter: blur(0);
   }
 }
 
@@ -99,6 +123,13 @@
   mask-position: bottom;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+}
+
+.cutting-mat.is-draw-complete .cutting-mat__stroke {
+  animation: none;
+  stroke-dashoffset: 0;
+  -webkit-filter: none;
+  filter: none;
 }
 
 .cutting-mat.is-draw-complete .cutting-mat__fill-accent {
@@ -208,5 +239,7 @@
 
   .cutting-mat path:not(.cutting-mat__fill-base):not(.cutting-mat__fill-accent) {
     transition-duration: 0.01ms;
+    -webkit-filter: none;
+    filter: none;
   }
 }
