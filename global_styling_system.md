@@ -153,7 +153,7 @@ Full step values are defined in `tailwind.config.js`.
 
 | Role | Family name | File / source | CSS variable | Tailwind |
 |------|-------------|---------------|--------------|----------|
-| Display | OT Brut | `fonts/OTBrut-Regular.otf` | `--font-display` | `font-display` |
+| Display | PP Neue Bit Bold | `fonts/PPNeueBit-Bold.otf` (`size-adjust: 160%`) | `--font-display` | `font-display` |
 | Headings | HEX Franklin v0.2 Condensed | `fonts/HEX-Franklin-v02-Condensed-Regular.ttf` | `--font-heading` | `font-heading` |
 | Body | HEX Franklin v0.2 Regular | `fonts/HEX-Franklin-v02-Regular.ttf` | `--font-body` | `font-sans` |
 | Labels | Space Mono | Google Fonts (400, 700, italic) | `--font-label` | `font-label` |
@@ -345,3 +345,4 @@ npm run watch:css   # develop
 | Date | Change |
 |------|--------|
 | 2026-05-17 | Initial lock: Space Grey 1000 bg, semantic tokens, typography, 8px grid, radius 0, terminal rules |
+| 2026-10-02 | Display face swapped from OT Brut to PP Neue Bit Bold. Sizes and line heights unchanged. Glyphs scaled 160% so cap height matches OT Brut. |

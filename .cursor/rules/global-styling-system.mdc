@@ -28,7 +28,7 @@ If the user asks to change styles in CSS/HTML but not the markdown file, impleme
 - **No primary colour** — UI uses Space Grey semantic tokens only.
 - **Page background (dark):** Space Grey 1000 (`--color-bg`).
 - **Corner radius:** always `0`.
-- **Font roles are locked:** display → OT Brut; headings → HEX Franklin Condensed; body → HEX Franklin Regular; labels → Space Mono uppercase.
+- **Font roles are locked:** display → PP Neue Bit Bold; headings → HEX Franklin Condensed; body → HEX Franklin Regular; labels → Space Mono uppercase.
 - **Accent palettes** (blue, lime, etc.): content areas only, never site chrome.
 - **Page CSS:** `styles/homepage.css`, `styles/projects.css`, etc. — layout only; do not duplicate tokens.
 - **Markup:** no inline styles; use `text-style-*` for responsive type.

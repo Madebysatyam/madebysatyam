@@ -16,11 +16,13 @@
 /* -------------------------------------------------------------------------- */
 
 @font-face {
-  font-family: "OT Brut";
-  src: url("../fonts/OTBrut-Regular.otf") format("opentype");
+  font-family: "PP Neue Bit";
+  src: url("../fonts/PPNeueBit-Bold.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* Cap height is 50% of the em; OT Brut was 80%. Scale glyphs only. */
+  size-adjust: 160%;
 }
 
 @font-face {
@@ -45,7 +47,7 @@
 
 :root {
   /* Typography — font families from Madebysatyam_Styles.json */
-  --font-display: "OT Brut", sans-serif;
+  --font-display: "PP Neue Bit", sans-serif;
   --font-heading: "HEX Franklin v0.2 Condensed", sans-serif;
   --font-body: "HEX Franklin v0.2", sans-serif;
   --font-label: "Space Mono", monospace;
