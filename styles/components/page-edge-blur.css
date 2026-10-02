@@ -1,0 +1,59 @@
+/* Viewport edge blur — 16px at the rim, fading inward. Nav stays above (z-index 60). */
+
+.page-edge-blur {
+  position: fixed;
+  z-index: 50;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  pointer-events: none;
+}
+
+.page-edge-blur--top {
+  top: 0;
+}
+
+.page-edge-blur--bottom {
+  bottom: 0;
+  transform: scaleY(-1);
+}
+
+.page-edge-blur > span {
+  position: absolute;
+  inset: 0;
+}
+
+.page-edge-blur > span:nth-child(1) {
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+.page-edge-blur > span:nth-child(2) {
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
+}
+
+.page-edge-blur > span:nth-child(3) {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 62%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 62%);
+}
+
+.page-edge-blur > span:nth-child(4) {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 44%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 44%);
+}
+
+.page-edge-blur > span:nth-child(5) {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 28%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 28%);
+}

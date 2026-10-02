@@ -6,6 +6,18 @@ import Navbar from "../components/Navbar";
 import { MatIntroProvider } from "../contexts/MatIntroContext.jsx";
 import { preloadListingHero } from "../lib/listingHeroes.js";
 
+function PageEdgeBlur({ edge }) {
+  return (
+    <div className={`page-edge-blur page-edge-blur--${edge}`} aria-hidden="true">
+      <span />
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  );
+}
+
 export default function SiteLayout() {
   const reduced = useReducedMotion();
   const { pathname } = useLocation();
@@ -33,6 +45,8 @@ export default function SiteLayout() {
   return (
     <MatIntroProvider value={{ isMatReady, setMatReady }}>
       <Navbar />
+      <PageEdgeBlur edge="top" />
+      <PageEdgeBlur edge="bottom" />
       <div className="page-home">
         <Outlet context={{ reduced }} />
         <Footer />

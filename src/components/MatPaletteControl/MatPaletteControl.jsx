@@ -109,7 +109,9 @@ export default function MatPaletteControl({
             aria-pressed={isSelected}
             tabIndex={isOpen ? 0 : -1}
             onClick={() => selectPalette(palette.id)}
-          />
+          >
+            <span className="hero-mat-palette__swatch-sphere" />
+          </button>
         );
       })}
     </div>

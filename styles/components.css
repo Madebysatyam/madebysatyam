@@ -2,6 +2,7 @@
 
 @import "./components/navbar.css";
 @import "./components/mobile-nav-pill.css";
+@import "./components/page-edge-blur.css";
 @import "./components/cutting-mat.css";
 @import "./components/hero-mat-palette.css";
 @import "./components/section-header.css";

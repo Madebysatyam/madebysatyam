@@ -14,28 +14,26 @@ export const RADIAL_ANGLES = [15, 30, 45, 60];
 export const RADIAL_LENGTH = 98;
 export const ARC_RADII = [10, 20, 30];
 
-/** Global timing scale — lower = faster (0.7 ≈ 30% quicker). */
-export const SPEED = 0.7;
-
+/** Stroke draw — short strokes, overlapping groups, visible per-line stagger. */
 export const TIMING = {
-  frame: 0.7 * SPEED,
-  gridMinor: 0.35 * SPEED,
-  gridMajor: 0.4 * SPEED,
-  arc: 0.85 * SPEED,
-  radial: 1.15 * SPEED,
-  staggerMinor: 0.006 * SPEED,
-  staggerMajor: 0.04 * SPEED,
-  staggerChart: 0.14 * SPEED,
+  frame: 0.32,
+  gridMinor: 0.18,
+  gridMajor: 0.22,
+  arc: 0.38,
+  radial: 0.42,
+  staggerMinor: 0.014,
+  staggerMajor: 0.055,
+  staggerChart: 0.09,
 };
 
 export const START = {
   frame: 0,
-  verticalMinor: 0.25 * SPEED,
-  verticalMajor: 0.85 * SPEED,
-  horizontalMinor: 1.35 * SPEED,
-  horizontalMajor: 1.85 * SPEED,
-  arcs: 2.35 * SPEED,
-  radials: 2.85 * SPEED,
+  verticalMinor: 0.06,
+  verticalMajor: 0.1,
+  horizontalMinor: 0.28,
+  horizontalMajor: 0.34,
+  arcs: 0.62,
+  radials: 0.78,
 };
 
 /** When the last stroke draw finishes (seconds). */

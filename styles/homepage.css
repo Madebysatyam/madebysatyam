@@ -195,19 +195,10 @@
 }
 
 .hero__location-prefix,
-.hero__location-code {
+.hero__location-place {
   display: inline-block;
   letter-spacing: 0.04em;
   transform: translateY(0.04em);
-}
-
-.hero__location-arc {
-  display: block;
-  width: 2.85em;
-  height: auto;
-  aspect-ratio: 56 / 14;
-  flex-shrink: 0;
-  transform: translateY(-0.06em);
 }
 
 /* Hero copy — smaller type on mobile only (< 810px) */

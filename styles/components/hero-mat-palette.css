@@ -170,14 +170,26 @@
 }
 
 .hero-mat-palette__swatch {
-  width: 1.125rem;
-  height: 1.125rem;
-  background-color: var(--color-teal-500);
+  /* Containers stay on the arc and meet. The sphere inside is smaller. */
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 0;
+  background-color: transparent;
   pointer-events: none;
   transform: translate(0, 0) scale(0.5);
   transition-duration: 0.28s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+.hero-mat-palette__swatch-sphere {
+  width: 68%;
+  height: 68%;
+  border-radius: 50%;
+  background-color: var(--color-teal-500);
+  pointer-events: none;
 }
 
 .hero-mat-palette__swatch[data-idx="0"] {
@@ -274,20 +286,20 @@
   --translate-y: -3.05rem;
 }
 
-.hero-mat-palette__swatch.is-selected {
+.hero-mat-palette__swatch.is-selected .hero-mat-palette__swatch-sphere {
   outline: 1px solid var(--color-link);
   outline-offset: 2px;
 }
 
-.hero-mat-palette__swatch[data-palette="blue"] {
+.hero-mat-palette__swatch[data-palette="blue"] .hero-mat-palette__swatch-sphere {
   background-color: rgb(29, 76, 217); /* blue-500 */
 }
 
-.hero-mat-palette__swatch[data-palette="orange"] {
+.hero-mat-palette__swatch[data-palette="orange"] .hero-mat-palette__swatch-sphere {
   background-color: var(--color-orange-500);
 }
 
-.hero-mat-palette__swatch[data-palette="purple"] {
+.hero-mat-palette__swatch[data-palette="purple"] .hero-mat-palette__swatch-sphere {
   background-color: var(--color-purple-500);
 }
 
