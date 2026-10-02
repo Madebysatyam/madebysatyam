@@ -41,25 +41,15 @@ export default function SiteLayout() {
       "main > section:not(:first-child), main > article, .about-page__section, .page-home > .site-footer";
     const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sections = () => document.querySelectorAll(sectionSelector);
-    const touched = new Set();
     let targets = new WeakMap();
+    let observer = null;
     let cancelled = false;
-
-    const atTop = () => window.scrollY <= 1;
+    let userMoved = false;
 
     const viewHeight = () => window.visualViewport?.height ?? window.innerHeight;
 
-    const clearBlur = (nodes) => {
-      nodes.forEach((node) => {
-        node.style.removeProperty("filter");
-        touched.delete(node);
-      });
-    };
-
-    const collectTargets = (section) => {
-      const limit = viewHeight() * 1.2;
+    const collectTargets = (section, limit) => {
       const found = [];
-
       const visit = (node) => {
         const children = node.children;
         if (node.getBoundingClientRect().height > limit && children.length > 0) {
@@ -68,113 +58,121 @@ export default function SiteLayout() {
         }
         found.push(node);
       };
-
       if (section.children.length === 0) return [section];
       Array.from(section.children).forEach(visit);
       return found.length > 0 ? found : [section];
     };
 
-    const targetsFor = (section) => {
-      const cached = targets.get(section);
-      if (cached) return cached;
-      const next = collectTargets(section);
-      targets.set(section, next);
-      return next;
-    };
-
-    const markVisibleOnOpen = () => {
-      if (!atTop()) return;
-
-      const bottomEdge = viewHeight();
-      sections().forEach((section) => {
-        const { top, bottom } = section.getBoundingClientRect();
-        const onScreen = top < bottomEdge && bottom > 0;
-        section.classList.toggle("is-visible-on-load", onScreen);
-        if (onScreen) clearBlur(targetsFor(section));
+    const clearSection = (section) => {
+      section.classList.remove("is-visible-on-load", "section-reveal", "section-reveal--blur", "is-revealed");
+      (targets.get(section) || []).forEach((node) => {
+        node.classList.remove("section-reveal", "section-reveal--blur", "is-revealed");
       });
     };
 
-    const updateBlur = () => {
-      if (reduced || reduceQuery.matches) {
-        sections().forEach((section) => clearBlur(targetsFor(section)));
+    const reveal = (section) => {
+      if (section.classList.contains("is-revealed") || section.classList.contains("is-visible-on-load")) {
         return;
       }
+      section.classList.add("is-revealed");
+      (targets.get(section) || []).forEach((node) => node.classList.add("is-revealed"));
+      observer?.unobserve(section);
+    };
+
+    const revealEntered = () => {
+      const height = viewHeight();
+      const rootBottom = height - 50;
+      sections().forEach((section) => {
+        if (!section.classList.contains("section-reveal") || section.classList.contains("is-revealed")) {
+          return;
+        }
+        const rect = section.getBoundingClientRect();
+        const visible = Math.min(rect.bottom, rootBottom) - Math.max(rect.top, 0);
+        if (visible >= rect.height * 0.1) reveal(section);
+      });
+    };
+
+    const setup = () => {
+      if (cancelled || userMoved || window.scrollY > 8) return;
+      observer?.disconnect();
+      sections().forEach(clearSection);
+      targets = new WeakMap();
+      if (reduced || reduceQuery.matches) return;
 
       const height = viewHeight();
+      const pending = [];
+
       sections().forEach((section) => {
-        const nodes = targetsFor(section);
-        if (section.classList.contains("is-visible-on-load")) {
-          clearBlur(nodes);
+        const { top, bottom, height: sectionHeight } = section.getBoundingClientRect();
+        if (top < height && bottom > 0) {
+          section.classList.add("is-visible-on-load");
           return;
         }
 
-        const { top, height: sectionHeight } = section.getBoundingClientRect();
-        const travel = Math.max(sectionHeight * 0.66, 1);
-        const progress = Math.min(1, Math.max(0, (height - top) / travel));
-        const blur = 16 * (1 - progress);
-
-        if (blur < 0.25) {
-          clearBlur(nodes);
-          return;
+        const limit = height * 1.2;
+        const tooTall = sectionHeight > limit;
+        const nodes = tooTall ? collectTargets(section, limit) : [];
+        targets.set(section, nodes);
+        section.classList.add("section-reveal");
+        if (tooTall) {
+          nodes.forEach((node) => node.classList.add("section-reveal", "section-reveal--blur"));
+        } else {
+          section.classList.add("section-reveal--blur");
         }
-
-        const value = `blur(${blur.toFixed(2)}px)`;
-        nodes.forEach((node) => {
-          touched.add(node);
-          if (node.style.filter !== value) node.style.filter = value;
-        });
+        pending.push(section);
       });
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) reveal(entry.target);
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+      );
+
+      pending.forEach((section) => observer.observe(section));
     };
 
     const onScroll = () => {
-      if (atTop()) markVisibleOnOpen();
-      updateBlur();
+      if (window.scrollY > 24) userMoved = true;
+      revealEntered();
     };
 
-    const onResize = () => {
-      targets = new WeakMap();
-      markVisibleOnOpen();
-      updateBlur();
-    };
-
-    const settle = () => {
-      if (cancelled) return;
-      targets = new WeakMap();
-      markVisibleOnOpen();
-      updateBlur();
+    const onViewportSettle = () => {
+      if (!userMoved && window.scrollY <= 8) setup();
+      else revealEntered();
     };
 
     let secondFrame = 0;
     const firstFrame = window.requestAnimationFrame(() => {
-      secondFrame = window.requestAnimationFrame(settle);
+      secondFrame = window.requestAnimationFrame(setup);
     });
-
-    const settleTimers = [150, 600].map((delay) => window.setTimeout(settle, delay));
-    document.fonts?.ready.then(settle);
+    const settleTimers = [150, 600].map((delay) => window.setTimeout(setup, delay));
+    document.fonts?.ready.then(setup);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("scroll", onScroll, { passive: true, capture: true });
     window.addEventListener("touchmove", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
-    window.visualViewport?.addEventListener("resize", onResize);
+    window.addEventListener("resize", onViewportSettle);
+    window.visualViewport?.addEventListener("resize", onViewportSettle);
     window.visualViewport?.addEventListener("scroll", onScroll);
-    reduceQuery.addEventListener("change", onResize);
+    reduceQuery.addEventListener("change", onViewportSettle);
 
     return () => {
       cancelled = true;
+      observer?.disconnect();
       window.cancelAnimationFrame(firstFrame);
       window.cancelAnimationFrame(secondFrame);
       settleTimers.forEach((timer) => window.clearTimeout(timer));
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("scroll", onScroll, { capture: true });
       window.removeEventListener("touchmove", onScroll);
-      window.removeEventListener("resize", onResize);
-      window.visualViewport?.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onViewportSettle);
+      window.visualViewport?.removeEventListener("resize", onViewportSettle);
       window.visualViewport?.removeEventListener("scroll", onScroll);
-      reduceQuery.removeEventListener("change", onResize);
-      sections().forEach((section) => section.classList.remove("is-visible-on-load"));
-      touched.forEach((node) => node.style.removeProperty("filter"));
-      touched.clear();
+      reduceQuery.removeEventListener("change", onViewportSettle);
+      sections().forEach(clearSection);
     };
   }, [pathname, reduced]);
 

@@ -1,5 +1,31 @@
-/* Blur amount is written from script onto the pieces of each section.
-   A filter on the whole section is large enough that mobile Safari drops it. */
+/* Same reveal as the reference: 8px blur and opacity, 0.6s ease-out.
+   Sections already on screen at open never get these classes. */
+
+.section-reveal {
+  transition: filter 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+main > section.section-reveal,
+main > article.section-reveal,
+.about-page__section.section-reveal,
+.page-home > .site-footer.section-reveal {
+  opacity: 0;
+}
+
+.section-reveal--blur {
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+}
+
+main > section.section-reveal.is-revealed,
+main > article.section-reveal.is-revealed,
+.about-page__section.section-reveal.is-revealed,
+.page-home > .site-footer.section-reveal.is-revealed,
+.section-reveal--blur.is-revealed {
+  opacity: 1;
+  -webkit-filter: blur(0);
+  filter: blur(0);
+}
 
 .page-home > .site-footer {
   position: relative;
@@ -7,10 +33,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main > section:not(:first-child),
-  main > article,
-  .about-page__section,
-  .page-home > .site-footer {
+  .section-reveal,
+  .section-reveal--blur {
     filter: none;
+    opacity: 1;
+    transition: none;
   }
 }
