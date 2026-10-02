@@ -1,3 +1,56 @@
+export const DUMMY_NOTE = {
+  id: "the-measure-of-a-line",
+  title: "The measure of a line",
+  summary: "How many characters a line can hold before the eye loses its way back, and a meter for setting that width by hand.",
+  date: "03.10.2026",
+  category: "essay",
+  href: "/notes/the-measure-of-a-line",
+};
+
+export const NOTE_ARTICLES = {
+  [DUMMY_NOTE.id]: {
+    ...DUMMY_NOTE,
+    sections: [
+      {
+        type: "p",
+        text: "A line is a length, not a decoration. Too long and the eye drops to the next row in the wrong place. Too short and the rhythm breaks into a stack of fragments. This note is a dummy, written so the page has something to reflow while the meter moves.",
+      },
+      {
+        type: "p",
+        text: "The useful range sits somewhere near sixty-six characters. That is a habit from print, not a law. On a phone the column is already narrow, and the same sentence takes more lines. The meter is here so you can feel that change instead of only reading about it.",
+      },
+      {
+        type: "h2",
+        text: "What the meter does",
+      },
+      {
+        type: "p",
+        text: "Drag the mark at the right edge of the column, or the ruler above the text. The number is the width in characters of the zero in this face. The words stay where they are. Only the line endings move.",
+      },
+      {
+        type: "p",
+        text: "Set it wide and the note reads like a page. Set it narrow and it reads like a margin note. Either way the sentences are the same ones, already on the page.",
+      },
+      {
+        type: "h2",
+        text: "What it leaves alone",
+      },
+      {
+        type: "p",
+        text: "Nothing arrives late. The paragraph is already written. Changing the measure does not introduce the text, hide it, or send it down the page word by word. It only decides how far each line is allowed to run.",
+      },
+      {
+        type: "p",
+        text: "A blog page is mostly this: a title, a date, and a column of type. The rest of the site can stay sharp and quiet. This page is the place where the column itself is the control.",
+      },
+    ],
+  },
+};
+
+export function getNoteArticle(slug) {
+  return NOTE_ARTICLES[slug] ?? null;
+}
+
 export const NOTES = [
   {
     id: "habit-loops",
@@ -30,6 +83,7 @@ export const NOTES = [
 ];
 
 export const NOTES_PAGE = [
+  DUMMY_NOTE,
   ...NOTES,
   {
     id: "placeholder-05",
