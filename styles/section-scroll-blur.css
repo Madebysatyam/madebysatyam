@@ -1,25 +1,9 @@
-/* Sections sharpen as they scroll into view. Blur matches the 16px edge blur.
-   Progress is set from script so the same range applies on phones, where
-   animation-timeline: view() can stay stuck on the blurred frame. */
+/* Blur amount is written from script onto the pieces of each section.
+   A filter on the whole section is large enough that mobile Safari drops it. */
 
-main > section:not(:first-child),
-main > article,
-.about-page__section,
-.page-home > .site-footer {
-  filter: blur(var(--section-blur, 0px));
-}
-
-/* Keep the footer, including the built-with line, above the viewport edge blur. */
 .page-home > .site-footer {
   position: relative;
   z-index: 55;
-}
-
-main > section:not(:first-child).is-visible-on-load,
-main > article.is-visible-on-load,
-.about-page__section.is-visible-on-load,
-.page-home > .site-footer.is-visible-on-load {
-  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
