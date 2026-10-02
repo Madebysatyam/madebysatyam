@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from "react";
 import usePrefersTouchTilt from "../../hooks/usePrefersTouchTilt.js";
 
 const MAX_TILT_DEG = 14;
-const GYRO_GAIN = 0.7;
+const GYRO_GAIN = 1.6;
 const SPRING = { stiffness: 260, damping: 28, mass: 0.85 };
 
 function clamp(value, min, max) {
