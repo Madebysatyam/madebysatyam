@@ -11,12 +11,18 @@ import { getStickerPlacement, MAT_STICKERS } from "./matStickers.js";
 const MOBILE_STICKER_SCALE = 0.72;
 const DESKTOP_STICKER_SCALE = 1.2;
 
+/** Entrance starts once the mat fill has settled, then each sticker follows. */
+const STICKER_ENTER_DELAY = 0.28;
+const STICKER_ENTER_STAGGER = 0.09;
+const STICKER_ENTER_EASE = [0.4, 0, 0.2, 1];
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
 function MatSticker({
   sticker,
+  index,
   anchorX,
   anchorY,
   rotateDeg,
@@ -102,8 +108,14 @@ function MatSticker({
         y,
         width: `${sizeRem}rem`,
         rotate: rotateDeg,
-        opacity: isPlaced ? 1 : 0,
         "--sticker-mask": `url("${sticker.src}")`,
+      }}
+      initial={{ opacity: 0, scale: 0.86 }}
+      animate={isPlaced ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.86 }}
+      transition={{
+        duration: reduced ? 0 : 0.45,
+        delay: reduced || !isPlaced ? 0 : STICKER_ENTER_DELAY + index * STICKER_ENTER_STAGGER,
+        ease: STICKER_ENTER_EASE,
       }}
       drag={ready && !reduced}
       dragConstraints={containerRef}
@@ -158,21 +170,19 @@ export default function HeroMatStickers() {
   }, []);
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
       className="hero-mat-stickers"
       aria-label="Draggable stickers on cutting mat"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.45, delay: 0.55 }}
     >
-      {MAT_STICKERS.map((sticker) => {
+      {MAT_STICKERS.map((sticker, index) => {
         const { x, y, rotateDeg } = getStickerPlacement(sticker, isMobile);
 
         return (
           <MatSticker
             key={sticker.id}
             sticker={sticker}
+            index={index}
             anchorX={x}
             anchorY={y}
             rotateDeg={rotateDeg}
@@ -182,6 +192,6 @@ export default function HeroMatStickers() {
           />
         );
       })}
-    </motion.div>
+    </div>
   );
 }

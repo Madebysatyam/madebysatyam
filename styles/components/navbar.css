@@ -36,6 +36,13 @@
   pointer-events: none;
 }
 
+/* Home, desktop only: 4px of mat between the top ruler and the notch. */
+@media (min-width: 810px) {
+  body:has(.hero) .site-header-shell {
+    padding-top: calc(1rem + 4px);
+  }
+}
+
 .site-header-shell .site-header {
   pointer-events: auto;
   flex-shrink: 0;

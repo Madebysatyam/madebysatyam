@@ -4,9 +4,9 @@ import NoteCategoryTag from "../components/NoteItem/NoteCategoryTag.jsx";
 import { getNoteArticle } from "../components/NoteItem/notes.js";
 
 const MEASURE_MIN = 20;
-const MEASURE_MAX = 80;
-const MEASURE_DEFAULT = 66;
-const RULER_MARKS = [0, 10, 20, 30, 40, 50, 60, 70, 80];
+const MEASURE_MAX = 100;
+const MEASURE_DEFAULT = 80;
+const RULER_MARKS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 function clampMeasure(value) {
   return Math.min(MEASURE_MAX, Math.max(MEASURE_MIN, value));

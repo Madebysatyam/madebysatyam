@@ -8,6 +8,13 @@
 main > section.section-reveal,
 main > article.section-reveal,
 .about-page__section.section-reveal,
+.note-page__title.section-reveal,
+.note-page__meta.section-reveal,
+.note-page__dek.section-reveal,
+.note-ruler.section-reveal,
+.note-measure.section-reveal,
+.note-page__prose > p.section-reveal,
+.note-page__prose > h2.section-reveal,
 .page-home > .site-footer.section-reveal {
   opacity: 0;
 }
@@ -20,6 +27,11 @@ main > article.section-reveal,
 main > section.section-reveal.is-revealed,
 main > article.section-reveal.is-revealed,
 .about-page__section.section-reveal.is-revealed,
+.note-page__title.section-reveal.is-revealed,
+.note-page__meta.section-reveal.is-revealed,
+.note-page__dek.section-reveal.is-revealed,
+.note-page__prose > p.section-reveal.is-revealed,
+.note-page__prose > h2.section-reveal.is-revealed,
 .page-home > .site-footer.section-reveal.is-revealed,
 .section-reveal--blur.is-revealed {
   opacity: 1;

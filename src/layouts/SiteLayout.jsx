@@ -37,14 +37,18 @@ export default function SiteLayout() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
+    const notePieceSelector =
+      ".note-page__title, .note-page__meta, .note-page__dek, .note-ruler, .note-measure, .note-page__prose > p, .note-page__prose > h2";
     const sectionSelector =
-      "main > section:not(:first-child), main > article, .about-page__section, .page-home > .site-footer";
+      `main > section:not(:first-child), main > article, .about-page__section, ${notePieceSelector}, .page-home > .site-footer`;
     const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sections = () => document.querySelectorAll(sectionSelector);
     let targets = new WeakMap();
     let observer = null;
     let cancelled = false;
     let userMoved = false;
+    let revealFrame = 0;
+    let revealFrame2 = 0;
 
     const viewHeight = () => window.visualViewport?.height ?? window.innerHeight;
 
@@ -95,22 +99,33 @@ export default function SiteLayout() {
     const setup = () => {
       if (cancelled || userMoved || window.scrollY > 8) return;
       observer?.disconnect();
-      sections().forEach(clearSection);
+      window.cancelAnimationFrame(revealFrame);
+      window.cancelAnimationFrame(revealFrame2);
       targets = new WeakMap();
-      if (reduced || reduceQuery.matches) return;
+      if (reduceQuery.matches) {
+        sections().forEach(clearSection);
+        return;
+      }
 
       const height = viewHeight();
       const pending = [];
+      const inView = [];
 
       sections().forEach((section) => {
+        if (section.classList.contains("is-revealed")) return;
+        clearSection(section);
+
         const { top, bottom, height: sectionHeight } = section.getBoundingClientRect();
-        if (top < height && bottom > 0) {
+        const onScreen = top < height && bottom > 0;
+        const alwaysReveal = section.matches(notePieceSelector);
+
+        if (onScreen && !alwaysReveal) {
           section.classList.add("is-visible-on-load");
           return;
         }
 
         const limit = height * 1.2;
-        const tooTall = sectionHeight > limit;
+        const tooTall = !alwaysReveal && sectionHeight > limit;
         const nodes = tooTall ? collectTargets(section, limit) : [];
         targets.set(section, nodes);
         section.classList.add("section-reveal");
@@ -119,7 +134,9 @@ export default function SiteLayout() {
         } else {
           section.classList.add("section-reveal--blur");
         }
-        pending.push(section);
+
+        if (onScreen && alwaysReveal) inView.push(section);
+        else pending.push(section);
       });
 
       observer = new IntersectionObserver(
@@ -132,6 +149,15 @@ export default function SiteLayout() {
       );
 
       pending.forEach((section) => observer.observe(section));
+
+      if (inView.length > 0) {
+        revealFrame = window.requestAnimationFrame(() => {
+          revealFrame2 = window.requestAnimationFrame(() => {
+            if (cancelled) return;
+            inView.forEach(reveal);
+          });
+        });
+      }
     };
 
     const onScroll = () => {
@@ -162,6 +188,8 @@ export default function SiteLayout() {
     return () => {
       cancelled = true;
       observer?.disconnect();
+      window.cancelAnimationFrame(revealFrame);
+      window.cancelAnimationFrame(revealFrame2);
       window.cancelAnimationFrame(firstFrame);
       window.cancelAnimationFrame(secondFrame);
       settleTimers.forEach((timer) => window.clearTimeout(timer));
@@ -174,7 +202,7 @@ export default function SiteLayout() {
       reduceQuery.removeEventListener("change", onViewportSettle);
       sections().forEach(clearSection);
     };
-  }, [pathname, reduced]);
+  }, [pathname]);
 
   useEffect(() => {
     preloadListingHero(pathname);

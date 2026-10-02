@@ -62,7 +62,7 @@
   padding: var(--space-5);
 }
 
-.note-item__title.text-style-paragraph-large {
+.note-item__title.text-style-heading-medium {
   margin: 0;
   color: var(--color-link);
 }

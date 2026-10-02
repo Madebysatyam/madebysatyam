@@ -5,6 +5,7 @@ import { useMatIntro } from "../contexts/MatIntroContext.jsx";
 import HeroBodyHighlight from "../components/HeroBodyHighlight";
 import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
 import HeroLocationRoute from "../components/HeroLocationRoute";
+import HeroMatScale from "../components/HeroMatScale";
 import HeroMatStickers from "../components/HeroMatStickers";
 
 const HERO_HEADLINE = "Curious by nature, careful by craft.";
@@ -51,6 +52,7 @@ export default function HeroSection() {
           <CuttingMat onDrawComplete={handleMatDrawComplete} recolor={isRecolor} />
         </div>
         {isMatComplete ? <HeroMatStickers /> : null}
+        {isMatComplete ? <HeroMatScale /> : null}
       </div>
       <div className="hero__content container-site">
         {isMatComplete ? (

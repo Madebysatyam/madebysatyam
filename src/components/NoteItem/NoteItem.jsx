@@ -14,7 +14,7 @@ export default function NoteItem({ title, summary, date, href = "#", category })
         </span>
       ) : null}
       <span className="note-item__body">
-        <h3 className="note-item__title text-style-paragraph-large">{title}</h3>
+        <h3 className="note-item__title text-style-heading-medium">{title}</h3>
         {summary ? <p className="note-item__summary text-style-paragraph-small">{summary}</p> : null}
         {date ? <p className="note-item__date text-style-label-small">{date}</p> : null}
       </span>
