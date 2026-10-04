@@ -5,6 +5,7 @@ import {
   isTouchLikePointer,
   triggerStickerGrabHaptic,
 } from "../../utils/stickerGrabHaptic.js";
+import { playUiSound, primeUiSound } from "../../sound/uiSounds.js";
 import { getStickerPlacement, MAT_STICKERS } from "./matStickers.js";
 
 /** Width multipliers — mobile unchanged; desktop boosted only at 810px+. */
@@ -34,6 +35,7 @@ function MatSticker({
   const y = useMotionValue(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isPlaced, setIsPlaced] = useState(false);
+  const releasedRef = useRef(false);
   const reduced = useReducedMotion();
 
   const getStickerBounds = () => {
@@ -126,14 +128,25 @@ function MatSticker({
         zIndex: 20,
       }}
       onPointerDown={(event) => {
+        releasedRef.current = false;
+        primeUiSound();
+        playUiSound("grab", 0.85);
         if (isTouchLikePointer(event.pointerType)) {
           triggerStickerGrabHaptic(event.pointerType);
         }
+      }}
+      onPointerUp={() => {
+        if (releasedRef.current) return;
+        releasedRef.current = true;
+        playUiSound("drop", 0.8);
       }}
       onDragStart={() => setIsDragging(true)}
       onDragEnd={() => {
         clampToMat();
         setIsDragging(false);
+        if (releasedRef.current) return;
+        releasedRef.current = true;
+        playUiSound("drop", 0.8);
       }}
     >
       <span className="hero-mat-sticker__shimmer" aria-hidden="true" />

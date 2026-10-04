@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import SiteSounds from "../sound/SiteSounds.jsx";
 import { MatIntroProvider } from "../contexts/MatIntroContext.jsx";
 import { preloadListingHero } from "../lib/listingHeroes.js";
 
@@ -210,6 +211,7 @@ export default function SiteLayout() {
 
   return (
     <MatIntroProvider value={{ isMatReady, setMatReady }}>
+      <SiteSounds />
       <Navbar />
       <PageEdgeBlur edge="top" />
       <PageEdgeBlur edge="bottom" />

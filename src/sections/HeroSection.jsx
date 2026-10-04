@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CuttingMat from "../components/CuttingMat";
 import MatPaletteControl, { DEFAULT_MAT_PALETTE } from "../components/MatPaletteControl";
 import { useMatIntro } from "../contexts/MatIntroContext.jsx";
@@ -7,6 +7,7 @@ import HeroHeadlineFlipper from "../components/HeroHeadlineFlipper";
 import HeroLocationRoute from "../components/HeroLocationRoute";
 import HeroMatScale from "../components/HeroMatScale";
 import HeroMatStickers from "../components/HeroMatStickers";
+import { playUiSound } from "../sound/uiSounds.js";
 
 const HERO_HEADLINE = "Curious by nature, careful by craft.";
 
@@ -16,6 +17,7 @@ export default function HeroSection() {
   const [selectedPalette, setSelectedPalette] = useState(DEFAULT_MAT_PALETTE);
   const [appliedPalette, setAppliedPalette] = useState(DEFAULT_MAT_PALETTE);
   const [isRecolor, setIsRecolor] = useState(false);
+  const skipPaletteSwoosh = useRef(true);
   const handleMatDrawComplete = useCallback(() => {
     setIsMatComplete(true);
     setMatReady(true);
@@ -40,6 +42,22 @@ export default function HeroSection() {
       window.cancelAnimationFrame(inner);
     };
   }, [isMatComplete, selectedPalette, appliedPalette]);
+
+  useEffect(() => {
+    if (!isMatComplete) return undefined;
+    playUiSound("swoosh", 0.9);
+    return undefined;
+  }, [isMatComplete]);
+
+  useEffect(() => {
+    if (!isMatComplete) return undefined;
+    if (skipPaletteSwoosh.current) {
+      skipPaletteSwoosh.current = false;
+      return undefined;
+    }
+    playUiSound("swoosh", 0.9);
+    return undefined;
+  }, [appliedPalette, isMatComplete]);
 
   return (
     <section
