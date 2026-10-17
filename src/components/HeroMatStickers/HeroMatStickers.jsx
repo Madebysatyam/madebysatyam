@@ -12,6 +12,11 @@ import { getStickerPlacement, MAT_STICKERS } from "./matStickers.js";
 const MOBILE_STICKER_SCALE = 0.72;
 const DESKTOP_STICKER_SCALE = 1.2;
 
+/** Desktop magnets grow with mat width relative to the 1440 design canvas. */
+const STICKER_DESIGN_WIDTH = 1440;
+const VIEWPORT_SCALE_MIN = 1;
+const VIEWPORT_SCALE_MAX = 1.45;
+
 /** Entrance starts once the mat fill has settled, then each sticker follows. */
 const STICKER_ENTER_DELAY = 0.28;
 const STICKER_ENTER_STAGGER = 0.09;
@@ -163,8 +168,13 @@ function MatSticker({
 export default function HeroMatStickers() {
   const containerRef = useRef(null);
   const [ready, setReady] = useState(false);
+  const [matWidth, setMatWidth] = useState(0);
   const isMobile = useIsMobile();
-  const sizeScale = isMobile ? MOBILE_STICKER_SCALE : DESKTOP_STICKER_SCALE;
+  const viewportScale = isMobile
+    ? 1
+    : clamp(matWidth / STICKER_DESIGN_WIDTH, VIEWPORT_SCALE_MIN, VIEWPORT_SCALE_MAX);
+  const sizeScale =
+    (isMobile ? MOBILE_STICKER_SCALE : DESKTOP_STICKER_SCALE) * viewportScale;
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -172,11 +182,14 @@ export default function HeroMatStickers() {
       return undefined;
     }
 
-    const markReady = () => setReady(true);
+    const sync = () => {
+      setMatWidth(container.getBoundingClientRect().width);
+      setReady(true);
+    };
 
-    markReady();
+    sync();
 
-    const observer = new ResizeObserver(markReady);
+    const observer = new ResizeObserver(sync);
     observer.observe(container);
 
     return () => observer.disconnect();

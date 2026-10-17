@@ -46,9 +46,31 @@
 }
 
 .hero__bg {
+  --hero-mat-fade-height: 22%;
   position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+/* Soften bottom edge of mat + left ruler into site --color-bg */
+.hero__bg-mat,
+.hero-mat-scale {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(100% - var(--hero-mat-fade-height)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(100% - var(--hero-mat-fade-height)),
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
 .hero__bg-mat {

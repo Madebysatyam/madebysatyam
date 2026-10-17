@@ -49,6 +49,13 @@
 
 .about-page__section-title {
   color: var(--color-link-hover);
+  text-transform: uppercase;
+}
+
+.about-page__history-company-name,
+.about-page__section .belief-note__title,
+.about-page__section .award-card__name {
+  text-transform: uppercase;
 }
 
 @media (min-width: 810px) {
