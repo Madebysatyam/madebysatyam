@@ -39,7 +39,7 @@ export default function SiteLayout() {
     window.scrollTo(0, 0);
 
     const notePieceSelector =
-      ".note-page__title, .note-page__meta, .note-page__dek, .note-ruler, .note-measure, .note-page__prose > p, .note-page__prose > h2";
+      ".note-page__title, .note-page__meta, .note-page__dek, .note-ruler, .note-measure, .note-page__prose > p, .note-page__prose > h2, .note-page__prose > .content-figure, .note-page__prose > .note-page__figure";
     const sectionSelector =
       `main > section:not(:first-child), main > article, .about-page__section, ${notePieceSelector}, .page-home > .site-footer`;
     const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -50,6 +50,7 @@ export default function SiteLayout() {
     let userMoved = false;
     let revealFrame = 0;
     let revealFrame2 = 0;
+    let contentRefreshTimer = 0;
 
     const viewHeight = () => window.visualViewport?.height ?? window.innerHeight;
 
@@ -171,12 +172,24 @@ export default function SiteLayout() {
       else revealEntered();
     };
 
+    // CMS note sections (esp. images) mount after the first setup — refresh reveal targets.
+    const onContentMutated = () => {
+      window.clearTimeout(contentRefreshTimer);
+      contentRefreshTimer = window.setTimeout(onViewportSettle, 50);
+    };
+
     let secondFrame = 0;
     const firstFrame = window.requestAnimationFrame(() => {
       secondFrame = window.requestAnimationFrame(setup);
     });
     const settleTimers = [150, 600].map((delay) => window.setTimeout(setup, delay));
     document.fonts?.ready.then(setup);
+
+    const mutationObserver = new MutationObserver(onContentMutated);
+    const main = document.getElementById("main");
+    if (main) {
+      mutationObserver.observe(main, { childList: true, subtree: true });
+    }
 
     window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("scroll", onScroll, { passive: true, capture: true });
@@ -189,6 +202,8 @@ export default function SiteLayout() {
     return () => {
       cancelled = true;
       observer?.disconnect();
+      mutationObserver.disconnect();
+      window.clearTimeout(contentRefreshTimer);
       window.cancelAnimationFrame(revealFrame);
       window.cancelAnimationFrame(revealFrame2);
       window.cancelAnimationFrame(firstFrame);

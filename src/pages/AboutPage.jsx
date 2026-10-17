@@ -15,7 +15,11 @@ export default function AboutPage() {
     return mapCmsAbout(doc);
   }, DEFAULT_ABOUT);
 
-  const { story, beliefs, experience, awards, closing } = about;
+  const story = about.story?.length ? about.story : DEFAULT_ABOUT.story;
+  const beliefs = about.beliefs?.length ? about.beliefs : DEFAULT_ABOUT.beliefs;
+  const experience = about.experience?.length ? about.experience : DEFAULT_ABOUT.experience;
+  const awards = about.awards?.length ? about.awards : DEFAULT_ABOUT.awards;
+  const closing = about.closing?.length ? about.closing : DEFAULT_ABOUT.closing;
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">

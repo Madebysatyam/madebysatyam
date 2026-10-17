@@ -9,7 +9,7 @@ import { fetchTestimonials, mapCmsTestimonials } from "../lib/cms.js";
 export default function KindWordsSection({ reduced }) {
   const tiles = useCmsResource(async () => {
     const docs = await fetchTestimonials();
-    return mapCmsTestimonials(docs);
+    return mapCmsTestimonials(docs, TESTIMONIAL_TILES);
   }, TESTIMONIAL_TILES);
 
   return (

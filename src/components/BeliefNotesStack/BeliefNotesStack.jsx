@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile.js";
 import { DURATION, EASE_OUT } from "../../motion/presets.js";
 
@@ -25,9 +25,14 @@ const BACK_STACK_LAYOUT_MOBILE = STACK_LAYOUT_MOBILE[STACK_LAYOUT_MOBILE.length 
 const STACK_TAIL_BUFFER_PX = 8;
 
 function pickTallestBelief(beliefs) {
+  if (!beliefs?.length) return null;
   return beliefs.reduce((tallest, belief) =>
     belief.body.length > tallest.body.length ? belief : tallest,
   );
+}
+
+function beliefIdsKey(beliefs) {
+  return (beliefs || []).map((belief) => belief.id).join("|");
 }
 
 export default function BeliefNotesStack({ beliefs }) {
@@ -36,6 +41,11 @@ export default function BeliefNotesStack({ beliefs }) {
   const stackLayout = isMobile ? STACK_LAYOUT_MOBILE : STACK_LAYOUT_DESKTOP;
   const backStackLayout = isMobile ? BACK_STACK_LAYOUT_MOBILE : BACK_STACK_LAYOUT_DESKTOP;
   const [order, setOrder] = useState(() => beliefs.map((belief) => belief.id));
+  const idsKey = beliefIdsKey(beliefs);
+
+  useEffect(() => {
+    setOrder(beliefs.map((belief) => belief.id));
+  }, [idsKey, beliefs]);
 
   const orderedBeliefs = useMemo(
     () => order.map((id) => beliefs.find((belief) => belief.id === id)).filter(Boolean),
@@ -48,7 +58,7 @@ export default function BeliefNotesStack({ beliefs }) {
 
   useLayoutEffect(() => {
     const sizer = sizerRef.current;
-    if (!sizer) return undefined;
+    if (!sizer || !tallestBelief) return undefined;
 
     const measure = () => {
       const cardHeight = sizer.offsetHeight;
@@ -62,11 +72,13 @@ export default function BeliefNotesStack({ beliefs }) {
     const observer = new ResizeObserver(measure);
     observer.observe(sizer);
     return () => observer.disconnect();
-  }, [backStackLayout, tallestBelief.id, isMobile]);
+  }, [backStackLayout, tallestBelief?.id, isMobile]);
 
   const cycle = useCallback(() => {
     setOrder((current) => [...current.slice(1), current[0]]);
   }, []);
+
+  if (!beliefs?.length || !tallestBelief) return null;
 
   return (
     <div className="belief-notes-stack" aria-label="Belief notes stack">

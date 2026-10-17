@@ -1,21 +1,25 @@
-import 'dotenv/config'
-
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import dotenv from 'dotenv'
 import { getPayload } from 'payload'
-
-import config from './payload.config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const cmsRoot = path.resolve(dirname, '..')
 const repoRoot = path.resolve(dirname, '../..')
+
+// Prefer .env.local (Neon) when present so seed targets the same DB as `next dev`.
+// Must run before payload.config is imported (ESM static imports hoist otherwise).
+dotenv.config({ path: path.join(cmsRoot, '.env') })
+dotenv.config({ path: path.join(cmsRoot, '.env.local'), override: true })
 
 function readRepoFile(...parts: string[]) {
   return fs.readFileSync(path.join(repoRoot, ...parts), 'utf8')
 }
 
 export async function seed() {
+  const { default: config } = await import('./payload.config')
   const payload = await getPayload({ config })
 
   const existingProjects = await payload.find({
@@ -229,10 +233,52 @@ export async function seed() {
     console.log(`Skipped playground seed (${existingPlayground.docs.length} items already exist)`)
   }
 
+  async function upsertMediaFromRepo(alt: string, ...fileParts: string[]) {
+    const filePath = path.join(repoRoot, ...fileParts)
+    const existing = await payload.find({
+      collection: 'media',
+      where: { alt: { equals: alt } },
+      limit: 1,
+    })
+    const current = existing.docs[0]
+    const onBlob =
+      Boolean(current && typeof current === 'object' && '_objectKey' in current && current._objectKey) ||
+      (typeof current?.url === 'string' && current.url.includes('blob.vercel-storage.com'))
+
+    // Replace rows that only have DB metadata (typical after a seed without Blob).
+    if (current && !onBlob) {
+      const updated = await payload.update({
+        collection: 'media',
+        id: current.id,
+        data: { alt },
+        filePath,
+      })
+      console.log(`Re-uploaded media to storage: ${alt}`)
+      return updated
+    }
+
+    if (current) {
+      return current
+    }
+
+    const created = await payload.create({
+      collection: 'media',
+      data: { alt },
+      filePath,
+    })
+    console.log(`Created media: ${alt}`)
+    return created
+  }
+
+  const metaLogo = await upsertMediaFromRepo('Meta', 'assets/logos/meta.png')
+  const loopHealthLogo = await upsertMediaFromRepo('Loop Health', 'assets/logos/loop-health.png')
+  const olaElectricLogo = await upsertMediaFromRepo('Ola Electric', 'assets/logos/ola-electric.png')
+
   const testimonials = [
     {
       name: 'Niteesh Yadav',
       role: 'AVP of design Pocket FM | Ex',
+      logo: metaLogo.id,
       logoAlt: 'Meta',
       logoLayout: 'mark' as const,
       quote:
@@ -241,6 +287,7 @@ export async function seed() {
     {
       name: 'Neeru Yadav',
       role: 'Senior product designer Pocket FM | Ex',
+      logo: loopHealthLogo.id,
       logoAlt: 'Loop Health',
       logoLayout: 'wordmark' as const,
       quote:
@@ -249,6 +296,7 @@ export async function seed() {
     {
       name: 'Divya Bhatia',
       role: 'Lead product designer Pocket FM | Ex',
+      logo: olaElectricLogo.id,
       logoAlt: 'Ola Electric',
       logoLayout: 'wordmark' as const,
       quote:
@@ -256,16 +304,24 @@ export async function seed() {
     },
   ]
 
-  const existingTestimonials = await payload.find({ collection: 'testimonials', limit: 100 })
-  if (existingTestimonials.docs.length === 0) {
-    for (const item of testimonials) {
+  for (const item of testimonials) {
+    const existing = await payload.find({
+      collection: 'testimonials',
+      where: { name: { equals: item.name } },
+      limit: 1,
+    })
+
+    if (existing.docs[0]) {
+      await payload.update({
+        collection: 'testimonials',
+        id: existing.docs[0].id,
+        data: item,
+      })
+      console.log(`Updated testimonial: ${item.name}`)
+    } else {
       await payload.create({ collection: 'testimonials', data: item })
       console.log(`Created testimonial: ${item.name}`)
     }
-  } else {
-    console.log(
-      `Skipped testimonials seed (${existingTestimonials.docs.length} items already exist)`,
-    )
   }
 
   await payload.updateGlobal({

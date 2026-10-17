@@ -1,4 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/admin",
+      "destination": "https://madebysatyam-cms.vercel.app/admin",
+      "permanent": false
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "https://madebysatyam-cms.vercel.app/admin/:path*",
+      "permanent": false
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

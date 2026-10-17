@@ -120,30 +120,8 @@
   margin: var(--space-8) 0;
 }
 
-.note-page__title,
-.note-page__meta,
-.note-page__dek,
-.note-page__prose > p,
-.note-page__prose > h2,
-.note-page__prose > .content-figure,
-.note-page__prose > .note-page__figure {
-  opacity: 0;
-  -webkit-filter: blur(8px);
-  filter: blur(8px);
-}
-
-.note-page__title.is-revealed,
-.note-page__meta.is-revealed,
-.note-page__dek.is-revealed,
-.note-page__prose > p.is-revealed,
-.note-page__prose > h2.is-revealed,
-.note-page__prose > .content-figure.is-revealed,
-.note-page__prose > .note-page__figure.is-revealed {
-  opacity: 1;
-  -webkit-filter: blur(0);
-  filter: blur(0);
-  transition: filter 0.6s ease-out, opacity 0.6s ease-out;
-}
+/* Title/meta/prose/figures: hide-until-reveal is only via `.section-reveal` in
+   section-scroll-blur.css. Forcing opacity:0 here left CMS images invisible. */
 
 .note-page__missing {
   margin: 0 0 var(--space-6);

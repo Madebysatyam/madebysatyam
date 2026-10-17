@@ -169,38 +169,64 @@ export function mapCmsPlayground(docs) {
   return (docs || []).map(mapCmsPlaygroundItem).filter(Boolean);
 }
 
-export function mapCmsTestimonial(doc) {
+function isCmsBlobMedia(media) {
+  if (!media || typeof media !== "object") return false;
+  if (media._objectKey) return true;
+  const url = typeof media.url === "string" ? media.url : "";
+  return url.includes("blob.vercel-storage.com");
+}
+
+export function mapCmsTestimonial(doc, localFallback) {
   if (!doc) return null;
   const logoUrl = cmsMediaUrl(doc.logo);
+  const localLogo = localFallback?.roleLogo;
+  // Seeded logos often have DB rows but 404 files (no Blob). Prefer local assets then.
+  const src = isCmsBlobMedia(doc.logo) ? logoUrl : localLogo?.src || logoUrl;
   return {
     id: String(doc.id),
     name: doc.name,
     role: doc.role,
     quote: doc.quote,
-    roleLogo: logoUrl
+    roleLogo: src
       ? {
-          src: logoUrl,
-          alt: doc.logoAlt || doc.name,
-          layout: doc.logoLayout || "mark",
+          src,
+          alt: doc.logoAlt || localLogo?.alt || doc.name,
+          layout: doc.logoLayout || localLogo?.layout || "mark",
+          logoClass: localLogo?.logoClass,
         }
-      : undefined,
+      : localLogo
+        ? { ...localLogo }
+        : undefined,
   };
 }
 
-export function mapCmsTestimonials(docs) {
-  return (docs || []).map(mapCmsTestimonial).filter(Boolean);
+export function mapCmsTestimonials(docs, localFallback = []) {
+  const byName = new Map(
+    (localFallback || []).map((tile) => [tile.name, tile]),
+  );
+
+  return (docs || [])
+    .map((doc) => mapCmsTestimonial(doc, byName.get(doc.name)))
+    .filter(Boolean);
 }
 
 export function mapCmsAbout(doc) {
   if (!doc) return null;
 
   const story = (doc.story || []).map((item) => item.text).filter(Boolean);
-  const beliefs = (doc.beliefs || []).map((item, index) => ({
-    id: `belief-${index}-${(item.title || "").toLowerCase().replace(/\s+/g, "-")}`,
-    title: item.title,
-    accent: item.accent,
-    body: item.body,
-  }));
+  const beliefs = (doc.beliefs || [])
+    .map((item, index) => {
+      const title = item.title?.trim();
+      const body = item.body?.trim();
+      if (!title || !body) return null;
+      return {
+        id: title.toLowerCase().replace(/\s+/g, "-") || `belief-${index}`,
+        title,
+        accent: item.accent || "orange",
+        body,
+      };
+    })
+    .filter(Boolean);
   const experience = (doc.experience || []).map((companyItem) => ({
     company: companyItem.company,
     roles: (companyItem.roles || []).map((roleItem) => ({
