@@ -1,3 +1,5 @@
+import { lexicalBodyHasContent, sectionsToLexical } from "./lexicalBody.js";
+
 const CMS_URL = (import.meta.env.VITE_CMS_URL || "http://localhost:3000").replace(/\/$/, "");
 
 export function getCmsBaseUrl() {
@@ -22,13 +24,39 @@ async function cmsFetch(pathname, params = {}) {
 
   const response = await fetch(url.toString());
   if (!response.ok) {
-    throw new Error(`CMS request failed (${response.status}): ${url.pathname}`);
+    let detail = "";
+    try {
+      const body = await response.json();
+      detail = body?.errors?.[0]?.message || body?.message || "";
+    } catch {
+      /* ignore */
+    }
+    throw new Error(
+      `CMS request failed (${response.status}): ${url.pathname}${detail ? ` — ${detail}` : ""}`,
+    );
   }
   return response.json();
 }
 
+/**
+ * Prefer populated relations (`depth`), but fall back to shallow docs when
+ * media population 500s (common when Blob storage is misconfigured).
+ */
+async function cmsFetchDocs(pathname, params = {}) {
+  try {
+    return await cmsFetch(pathname, params);
+  } catch (error) {
+    const depth = Number(params.depth ?? 0);
+    if (depth <= 0) throw error;
+    if (import.meta.env.DEV) {
+      console.warn(`[cms] ${pathname} depth=${depth} failed; retrying depth=0`, error);
+    }
+    return cmsFetch(pathname, { ...params, depth: 0 });
+  }
+}
+
 export async function fetchProjects({ limit = 50 } = {}) {
-  const data = await cmsFetch("/api/projects", {
+  const data = await cmsFetchDocs("/api/projects", {
     limit,
     depth: 1,
     sort: "-updatedAt",
@@ -37,7 +65,7 @@ export async function fetchProjects({ limit = 50 } = {}) {
 }
 
 export async function fetchProjectBySlug(slug) {
-  const data = await cmsFetch("/api/projects", {
+  const data = await cmsFetchDocs("/api/projects", {
     "where[slug][equals]": slug,
     limit: 1,
     depth: 2,
@@ -55,16 +83,17 @@ export async function fetchNotes({ limit = 50 } = {}) {
 }
 
 export async function fetchNoteBySlug(slug) {
-  const data = await cmsFetch("/api/notes", {
+  // Prefer depth 2 for Lexical uploads; fall back if Media/Blob is broken.
+  const data = await cmsFetchDocs("/api/notes", {
     "where[slug][equals]": slug,
     limit: 1,
-    depth: 1,
+    depth: 2,
   });
   return data.docs?.[0] ?? null;
 }
 
 export async function fetchPlayground({ limit = 50 } = {}) {
-  const data = await cmsFetch("/api/playground", {
+  const data = await cmsFetchDocs("/api/playground", {
     limit,
     depth: 1,
     sort: "-updatedAt",
@@ -73,16 +102,17 @@ export async function fetchPlayground({ limit = 50 } = {}) {
 }
 
 export async function fetchTestimonials({ limit = 50 } = {}) {
-  const data = await cmsFetch("/api/testimonials", {
+  // depth 0: production Media/Blob currently 500s on populate; logos fall back locally by name.
+  const data = await cmsFetchDocs("/api/testimonials", {
     limit,
-    depth: 1,
+    depth: 0,
     sort: "-updatedAt",
   });
   return data.docs ?? [];
 }
 
 export async function fetchAbout() {
-  return cmsFetch("/api/globals/about", { depth: 1 });
+  return cmsFetchDocs("/api/globals/about", { depth: 1 });
 }
 
 export async function fetchSiteSettings() {
@@ -120,6 +150,13 @@ export function mapCmsProjectCards(docs) {
 
 export function mapCmsNote(doc) {
   if (!doc) return null;
+
+  // Prefer Lexical body; fall back to legacy sections array if still present.
+  let body = doc.body || null;
+  if (!lexicalBodyHasContent(body) && Array.isArray(doc.sections) && doc.sections.length > 0) {
+    body = sectionsToLexical(doc.sections);
+  }
+
   return {
     id: doc.slug || String(doc.id),
     title: doc.title,
@@ -127,23 +164,7 @@ export function mapCmsNote(doc) {
     date: doc.date,
     category: doc.category,
     href: `/notes/${doc.slug}`,
-    sections: (doc.sections || []).map((section, index) => {
-      if (section.type === "image") {
-        const image = typeof section.image === "object" ? section.image : null;
-        return {
-          id: section.id || `image-${index}`,
-          type: "image",
-          src: cmsMediaUrl(image),
-          alt: image?.alt || section.caption || "",
-          caption: section.caption || "",
-        };
-      }
-      return {
-        id: section.id || `${section.type}-${index}`,
-        type: section.type,
-        text: section.text,
-      };
-    }),
+    body,
     source: "cms",
   };
 }

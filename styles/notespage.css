@@ -115,6 +115,12 @@
   margin-bottom: 0;
 }
 
+.note-page__prose a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .note-page__prose .note-page__figure,
 .note-page__prose .content-figure {
   margin: var(--space-8) 0;

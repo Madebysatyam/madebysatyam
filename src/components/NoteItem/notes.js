@@ -1,3 +1,5 @@
+import { sectionsToLexical } from "../../lib/lexicalBody.js";
+
 export const DUMMY_NOTE = {
   id: "the-measure-of-a-line",
   title: "The measure of a line",
@@ -7,71 +9,73 @@ export const DUMMY_NOTE = {
   href: "/notes/the-measure-of-a-line",
 };
 
+const MEASURE_SECTIONS = [
+  {
+    type: "p",
+    text: "A line is a length, not a decoration. Too long and the eye drops to the next row in the wrong place. Too short and the rhythm breaks into a stack of fragments. This note is a dummy, written so the page has something to reflow while the meter moves.",
+  },
+  {
+    type: "p",
+    text: "The useful range sits somewhere near sixty-six characters. That is a habit from print, not a law. This page opens at eighty, which is already a wide line, and the meter will let you pull it out to one hundred. On a phone the column is already narrow, and the same sentence takes more lines. The meter is here so you can feel that change instead of only reading about it.",
+  },
+  {
+    type: "p",
+    text: "A hundred characters is a long trip for the eye. The return from the end of the line to the start of the next one gets less reliable, and a heading that felt compact at eighty starts to look stranded. That is worth seeing once, which is why the scale goes that far, and why the essay is long enough to show it.",
+  },
+  {
+    type: "h2",
+    text: "What the meter does",
+  },
+  {
+    type: "p",
+    text: "Drag the mark at the right edge of the column, or the ruler above the text. The number is the width in characters of the zero in this face. The words stay where they are. Only the line endings move.",
+  },
+  {
+    type: "p",
+    text: "Set it wide and the note reads like a page. Set it narrow and it reads like a margin note. Either way the sentences are the same ones, already on the page. Nothing is added when the column grows, and nothing is removed when it shrinks.",
+  },
+  {
+    type: "h2",
+    text: "At the wide end",
+  },
+  {
+    type: "p",
+    text: "Pull the measure toward one hundred and the paragraphs flatten. Lines hold more words than a comfortable glance can carry, and the gap between the start of one line and the start of the next becomes the thing you notice. Wide measure is useful for tables, code, and a proof that the column can actually get that wide. It is a poor place to leave an essay.",
+  },
+  {
+    type: "p",
+    text: "Eighty is the resting width because it still feels like a page and not a banner. You can read a sentence without hunting for where it began. If you want the older print habit, drag back toward sixty-six and the same paragraphs pick up a quicker rhythm. The line endings change. The argument does not.",
+  },
+  {
+    type: "h2",
+    text: "At the narrow end",
+  },
+  {
+    type: "p",
+    text: "Take it down toward twenty and the essay becomes a stack. Words that sat together on one line now occupy three, and a heading wraps even when the thought is short. That is the other lesson of the meter: length is not only about comfort at the wide end. A column can also be so short that the sentence loses its shape.",
+  },
+  {
+    type: "p",
+    text: "Between those ends is the work. Most of what I set for reading lives in that middle, close enough to sixty-six that the eye can return, wide enough that a paragraph does not shatter. Eighty is a step past that habit, on purpose, so the default already shows a longer line than the textbook measure.",
+  },
+  {
+    type: "h2",
+    text: "What it leaves alone",
+  },
+  {
+    type: "p",
+    text: "Nothing arrives late. The paragraph is already written. Changing the measure does not introduce the text, hide it, or send it down the page word by word. It only decides how far each line is allowed to run.",
+  },
+  {
+    type: "p",
+    text: "A blog page is mostly this: a title, a date, and a column of type. The rest of the site can stay sharp and quiet. This page is the place where the column itself is the control. Leave it at eighty, or take it to one hundred and watch the same words occupy fewer lines. Then bring it back. The essay will still be the one you started.",
+  },
+];
+
 export const NOTE_ARTICLES = {
   [DUMMY_NOTE.id]: {
     ...DUMMY_NOTE,
-    sections: [
-      {
-        type: "p",
-        text: "A line is a length, not a decoration. Too long and the eye drops to the next row in the wrong place. Too short and the rhythm breaks into a stack of fragments. This note is a dummy, written so the page has something to reflow while the meter moves.",
-      },
-      {
-        type: "p",
-        text: "The useful range sits somewhere near sixty-six characters. That is a habit from print, not a law. This page opens at eighty, which is already a wide line, and the meter will let you pull it out to one hundred. On a phone the column is already narrow, and the same sentence takes more lines. The meter is here so you can feel that change instead of only reading about it.",
-      },
-      {
-        type: "p",
-        text: "A hundred characters is a long trip for the eye. The return from the end of the line to the start of the next one gets less reliable, and a heading that felt compact at eighty starts to look stranded. That is worth seeing once, which is why the scale goes that far, and why the essay is long enough to show it.",
-      },
-      {
-        type: "h2",
-        text: "What the meter does",
-      },
-      {
-        type: "p",
-        text: "Drag the mark at the right edge of the column, or the ruler above the text. The number is the width in characters of the zero in this face. The words stay where they are. Only the line endings move.",
-      },
-      {
-        type: "p",
-        text: "Set it wide and the note reads like a page. Set it narrow and it reads like a margin note. Either way the sentences are the same ones, already on the page. Nothing is added when the column grows, and nothing is removed when it shrinks.",
-      },
-      {
-        type: "h2",
-        text: "At the wide end",
-      },
-      {
-        type: "p",
-        text: "Pull the measure toward one hundred and the paragraphs flatten. Lines hold more words than a comfortable glance can carry, and the gap between the start of one line and the start of the next becomes the thing you notice. Wide measure is useful for tables, code, and a proof that the column can actually get that wide. It is a poor place to leave an essay.",
-      },
-      {
-        type: "p",
-        text: "Eighty is the resting width because it still feels like a page and not a banner. You can read a sentence without hunting for where it began. If you want the older print habit, drag back toward sixty-six and the same paragraphs pick up a quicker rhythm. The line endings change. The argument does not.",
-      },
-      {
-        type: "h2",
-        text: "At the narrow end",
-      },
-      {
-        type: "p",
-        text: "Take it down toward twenty and the essay becomes a stack. Words that sat together on one line now occupy three, and a heading wraps even when the thought is short. That is the other lesson of the meter: length is not only about comfort at the wide end. A column can also be so short that the sentence loses its shape.",
-      },
-      {
-        type: "p",
-        text: "Between those ends is the work. Most of what I set for reading lives in that middle, close enough to sixty-six that the eye can return, wide enough that a paragraph does not shatter. Eighty is a step past that habit, on purpose, so the default already shows a longer line than the textbook measure.",
-      },
-      {
-        type: "h2",
-        text: "What it leaves alone",
-      },
-      {
-        type: "p",
-        text: "Nothing arrives late. The paragraph is already written. Changing the measure does not introduce the text, hide it, or send it down the page word by word. It only decides how far each line is allowed to run.",
-      },
-      {
-        type: "p",
-        text: "A blog page is mostly this: a title, a date, and a column of type. The rest of the site can stay sharp and quiet. This page is the place where the column itself is the control. Leave it at eighty, or take it to one hundred and watch the same words occupy fewer lines. Then bring it back. The essay will still be the one you started.",
-      },
-    ],
+    body: sectionsToLexical(MEASURE_SECTIONS),
   },
 };
 

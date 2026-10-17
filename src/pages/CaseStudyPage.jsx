@@ -1,29 +1,30 @@
+import { useLivePreview } from "@payloadcms/live-preview-react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import CaseStudyContent from "../components/CaseStudyContent";
 import { getProjectBySlug } from "../data/projects/index.js";
 import { fetchProjectBySlug, mapCmsProject } from "../lib/cms.js";
+import { getLivePreviewServerURL, LIVE_PREVIEW_DEPTH } from "../lib/livePreview.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function CaseStudyPage() {
   const { reduced } = useOutletContext();
   const { slug } = useParams();
-  const [project, setProject] = useState(() => getProjectBySlug(slug));
-  const [status, setStatus] = useState(project ? "ready" : "loading");
+  const local = useMemo(() => getProjectBySlug(slug), [slug]);
+  const [cmsDoc, setCmsDoc] = useState(null);
+  const [status, setStatus] = useState(local ? "ready" : "loading");
 
   useEffect(() => {
     let cancelled = false;
-    const local = getProjectBySlug(slug);
-    setProject(local);
+    setCmsDoc(null);
     setStatus(local ? "ready" : "loading");
 
     fetchProjectBySlug(slug)
       .then((doc) => {
         if (cancelled) return;
-        const mapped = mapCmsProject(doc);
-        if (mapped) {
-          setProject(mapped);
+        if (doc) {
+          setCmsDoc(doc);
           setStatus("ready");
         } else if (!local) {
           setStatus("missing");
@@ -37,7 +38,18 @@ export default function CaseStudyPage() {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [slug, local]);
+
+  const { data: liveDoc } = useLivePreview({
+    serverURL: getLivePreviewServerURL(),
+    depth: LIVE_PREVIEW_DEPTH,
+    initialData: cmsDoc || {},
+  });
+
+  const project = useMemo(() => {
+    const source = liveDoc?.slug || liveDoc?.shortTitle ? liveDoc : cmsDoc;
+    return mapCmsProject(source) || local;
+  }, [liveDoc, cmsDoc, local]);
 
   useEffect(() => {
     if (project) {

@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url'
 import dotenv from 'dotenv'
 import { getPayload } from 'payload'
 
+import { emptyNoteBody, markdownToNoteBody } from './lib/noteLexical'
+import type { Note } from './payload-types'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const cmsRoot = path.resolve(dirname, '..')
@@ -18,9 +21,41 @@ function readRepoFile(...parts: string[]) {
   return fs.readFileSync(path.join(repoRoot, ...parts), 'utf8')
 }
 
+const MEASURE_NOTE_MARKDOWN = `A line is a length, not a decoration. Too long and the eye drops to the next row in the wrong place. Too short and the rhythm breaks into a stack of fragments. This note is a dummy, written so the page has something to reflow while the meter moves.
+
+The useful range sits somewhere near sixty-six characters. That is a habit from print, not a law. This page opens at eighty, which is already a wide line, and the meter will let you pull it out to one hundred. On a phone the column is already narrow, and the same sentence takes more lines. The meter is here so you can feel that change instead of only reading about it.
+
+A hundred characters is a long trip for the eye. The return from the end of the line to the start of the next one gets less reliable, and a heading that felt compact at eighty starts to look stranded. That is worth seeing once, which is why the scale goes that far, and why the essay is long enough to show it.
+
+## What the meter does
+
+Drag the mark at the right edge of the column, or the ruler above the text. The number is the width in characters of the zero in this face. The words stay where they are. Only the line endings move.
+
+Set it wide and the note reads like a page. Set it narrow and it reads like a margin note. Either way the sentences are the same ones, already on the page. Nothing is added when the column grows, and nothing is removed when it shrinks.
+
+## At the wide end
+
+Pull the measure toward one hundred and the paragraphs flatten. Lines hold more words than a comfortable glance can carry, and the gap between the start of one line and the start of the next becomes the thing you notice. Wide measure is useful for tables, code, and a proof that the column can actually get that wide. It is a poor place to leave an essay.
+
+Eighty is the resting width because it still feels like a page and not a banner. You can read a sentence without hunting for where it began. If you want the older print habit, drag back toward sixty-six and the same paragraphs pick up a quicker rhythm. The line endings change. The argument does not.
+
+## At the narrow end
+
+Take it down toward twenty and the essay becomes a stack. Words that sat together on one line now occupy three, and a heading wraps even when the thought is short. That is the other lesson of the meter: length is not only about comfort at the wide end. A column can also be so short that the sentence loses its shape.
+
+Between those ends is the work. Most of what I set for reading lives in that middle, close enough to sixty-six that the eye can return, wide enough that a paragraph does not shatter. Eighty is a step past that habit, on purpose, so the default already shows a longer line than the textbook measure.
+
+## What it leaves alone
+
+Nothing arrives late. The paragraph is already written. Changing the measure does not introduce the text, hide it, or send it down the page word by word. It only decides how far each line is allowed to run.
+
+A blog page is mostly this: a title, a date, and a column of type. The rest of the site can stay sharp and quiet. This page is the place where the column itself is the control. Leave it at eighty, or take it to one hundred and watch the same words occupy fewer lines. Then bring it back. The essay will still be the one you started.`
+
 export async function seed() {
   const { default: config } = await import('./payload.config')
   const payload = await getPayload({ config })
+  const noteBody = await markdownToNoteBody(payload.config, MEASURE_NOTE_MARKDOWN)
+  const blankBody = await emptyNoteBody(payload.config)
 
   const existingProjects = await payload.find({
     collection: 'projects',
@@ -91,56 +126,7 @@ export async function seed() {
       'How many characters a line can hold before the eye loses its way back, and a meter for setting that width by hand.',
     date: '03.10.2026',
     category: 'essay' as const,
-    sections: [
-      {
-        type: 'p' as const,
-        text: 'A line is a length, not a decoration. Too long and the eye drops to the next row in the wrong place. Too short and the rhythm breaks into a stack of fragments. This note is a dummy, written so the page has something to reflow while the meter moves.',
-      },
-      {
-        type: 'p' as const,
-        text: 'The useful range sits somewhere near sixty-six characters. That is a habit from print, not a law. This page opens at eighty, which is already a wide line, and the meter will let you pull it out to one hundred. On a phone the column is already narrow, and the same sentence takes more lines. The meter is here so you can feel that change instead of only reading about it.',
-      },
-      {
-        type: 'p' as const,
-        text: 'A hundred characters is a long trip for the eye. The return from the end of the line to the start of the next one gets less reliable, and a heading that felt compact at eighty starts to look stranded. That is worth seeing once, which is why the scale goes that far, and why the essay is long enough to show it.',
-      },
-      { type: 'h2' as const, text: 'What the meter does' },
-      {
-        type: 'p' as const,
-        text: 'Drag the mark at the right edge of the column, or the ruler above the text. The number is the width in characters of the zero in this face. The words stay where they are. Only the line endings move.',
-      },
-      {
-        type: 'p' as const,
-        text: 'Set it wide and the note reads like a page. Set it narrow and it reads like a margin note. Either way the sentences are the same ones, already on the page. Nothing is added when the column grows, and nothing is removed when it shrinks.',
-      },
-      { type: 'h2' as const, text: 'At the wide end' },
-      {
-        type: 'p' as const,
-        text: 'Pull the measure toward one hundred and the paragraphs flatten. Lines hold more words than a comfortable glance can carry, and the gap between the start of one line and the start of the next becomes the thing you notice. Wide measure is useful for tables, code, and a proof that the column can actually get that wide. It is a poor place to leave an essay.',
-      },
-      {
-        type: 'p' as const,
-        text: 'Eighty is the resting width because it still feels like a page and not a banner. You can read a sentence without hunting for where it began. If you want the older print habit, drag back toward sixty-six and the same paragraphs pick up a quicker rhythm. The line endings change. The argument does not.',
-      },
-      { type: 'h2' as const, text: 'At the narrow end' },
-      {
-        type: 'p' as const,
-        text: 'Take it down toward twenty and the essay becomes a stack. Words that sat together on one line now occupy three, and a heading wraps even when the thought is short. That is the other lesson of the meter: length is not only about comfort at the wide end. A column can also be so short that the sentence loses its shape.',
-      },
-      {
-        type: 'p' as const,
-        text: 'Between those ends is the work. Most of what I set for reading lives in that middle, close enough to sixty-six that the eye can return, wide enough that a paragraph does not shatter. Eighty is a step past that habit, on purpose, so the default already shows a longer line than the textbook measure.',
-      },
-      { type: 'h2' as const, text: 'What it leaves alone' },
-      {
-        type: 'p' as const,
-        text: 'Nothing arrives late. The paragraph is already written. Changing the measure does not introduce the text, hide it, or send it down the page word by word. It only decides how far each line is allowed to run.',
-      },
-      {
-        type: 'p' as const,
-        text: 'A blog page is mostly this: a title, a date, and a column of type. The rest of the site can stay sharp and quiet. This page is the place where the column itself is the control. Leave it at eighty, or take it to one hundred and watch the same words occupy fewer lines. Then bring it back. The essay will still be the one you started.',
-      },
-    ],
+    body: noteBody as Note['body'],
   }
 
   if (existingNotes.docs[0]) {
@@ -166,7 +152,7 @@ export async function seed() {
         'How repeated listening turns a product into a daily ritual, and what the interface should get out of the way.',
       date: '00.00.0000',
       category: 'essay' as const,
-      sections: [],
+      body: blankBody as Note['body'],
     },
     {
       slug: 'design-systems',
@@ -175,7 +161,7 @@ export async function seed() {
         'The parts a system has to leave behind so the next person can extend it without starting over.',
       date: '00.00.0000',
       category: 'systems' as const,
-      sections: [],
+      body: blankBody as Note['body'],
     },
     {
       slug: 'motion-restraint',
@@ -184,7 +170,7 @@ export async function seed() {
         'Where motion earns its place on a product surface, and where a still frame is the clearer choice.',
       date: '00.00.0000',
       category: 'process' as const,
-      sections: [],
+      body: blankBody as Note['body'],
     },
     {
       slug: 'handoff',
@@ -193,7 +179,7 @@ export async function seed() {
         'Notes written so engineering can ship the first sprint without guessing what the design meant.',
       date: '00.00.0000',
       category: 'product' as const,
-      sections: [],
+      body: blankBody as Note['body'],
     },
   ]
 
@@ -233,7 +219,23 @@ export async function seed() {
     console.log(`Skipped playground seed (${existingPlayground.docs.length} items already exist)`)
   }
 
+  const usesRemoteDb = /^(postgres|postgresql):\/\//i.test(
+    process.env.POSTGRES_URL || process.env.DATABASE_URL || '',
+  )
+  const hasBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
+  // Never write local disk files into a remote DB — Vercel cannot serve cms/media/*.
+  const canSeedMediaFiles = hasBlob || !usesRemoteDb
+
+  if (usesRemoteDb && !hasBlob) {
+    console.warn(
+      'Skipping media file seed: Postgres is remote but BLOB_READ_WRITE_TOKEN is unset. ' +
+        'Add the Vercel Blob token, then re-run seed — otherwise /api/media 500s in production.',
+    )
+  }
+
   async function upsertMediaFromRepo(alt: string, ...fileParts: string[]) {
+    if (!canSeedMediaFiles) return null
+
     const filePath = path.join(repoRoot, ...fileParts)
     const existing = await payload.find({
       collection: 'media',
@@ -274,31 +276,55 @@ export async function seed() {
   const loopHealthLogo = await upsertMediaFromRepo('Loop Health', 'assets/logos/loop-health.png')
   const olaElectricLogo = await upsertMediaFromRepo('Ola Electric', 'assets/logos/ola-electric.png')
 
+  // Detach + remove local-disk media when Blob is unavailable so Vercel /api/media
+  // stops 500ing on rows that only exist as files under cms/media/.
+  if (usesRemoteDb && !hasBlob) {
+    const withLogos = await payload.find({ collection: 'testimonials', limit: 100, depth: 0 })
+    for (const doc of withLogos.docs) {
+      if (doc.logo) {
+        await payload.update({
+          collection: 'testimonials',
+          id: doc.id,
+          data: { logo: null },
+        })
+        console.log(`Cleared broken logo on testimonial: ${doc.name}`)
+      }
+    }
+
+    const mediaDocs = await payload.find({ collection: 'media', limit: 200, depth: 0 })
+    for (const doc of mediaDocs.docs) {
+      const onBlob =
+        Boolean(doc && typeof doc === 'object' && '_objectKey' in doc && doc._objectKey) ||
+        (typeof doc.url === 'string' && doc.url.includes('blob.vercel-storage.com'))
+      if (onBlob) continue
+      await payload.delete({ collection: 'media', id: doc.id })
+      console.log(`Deleted non-Blob media: ${doc.alt || doc.filename || doc.id}`)
+    }
+  }
+
   const testimonials = [
     {
       name: 'Niteesh Yadav',
       role: 'AVP of design Pocket FM | Ex',
-      logo: metaLogo.id,
-      logoAlt: 'Meta',
-      logoLayout: 'mark' as const,
+      ...(metaLogo ? { logo: metaLogo.id, logoAlt: 'Meta', logoLayout: 'mark' as const } : { logoAlt: 'Meta', logoLayout: 'mark' as const }),
       quote:
         'Satyam’s exceptional contributions to the design system have truly set him apart. Satyam’s proactive collaboration with developers to resolve issues, along with his independent initiatives to enhance the quality of design within our team, demonstrate his commitment to excellence. He consistently upholds visual and overall experience benchmarks across all his work, making a significant impact on our projects.',
     },
     {
       name: 'Neeru Yadav',
       role: 'Senior product designer Pocket FM | Ex',
-      logo: loopHealthLogo.id,
-      logoAlt: 'Loop Health',
-      logoLayout: 'wordmark' as const,
+      ...(loopHealthLogo
+        ? { logo: loopHealthLogo.id, logoAlt: 'Loop Health', logoLayout: 'wordmark' as const }
+        : { logoAlt: 'Loop Health', logoLayout: 'wordmark' as const }),
       quote:
         'Satyam played a key role in the Android revamp, showing strong ownership and proactive problem-solving across both flow-level and system-level issues. He was highly responsive, often joining calls to unblock teams in real time. His ability to quickly align context and drive solutions improved both execution speed and overall quality.',
     },
     {
       name: 'Divya Bhatia',
       role: 'Lead product designer Pocket FM | Ex',
-      logo: olaElectricLogo.id,
-      logoAlt: 'Ola Electric',
-      logoLayout: 'wordmark' as const,
+      ...(olaElectricLogo
+        ? { logo: olaElectricLogo.id, logoAlt: 'Ola Electric', logoLayout: 'wordmark' as const }
+        : { logoAlt: 'Ola Electric', logoLayout: 'wordmark' as const }),
       quote:
         'Kudos to Satyam for handling stuff proactively and getting up-to-speed so quickly. It feels so amazing to have been surrounded by such enthusiastic designers.',
     },

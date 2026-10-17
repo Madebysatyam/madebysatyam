@@ -1,19 +1,46 @@
+import { useLivePreview } from "@payloadcms/live-preview-react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
 import BeliefNotesStack from "../components/BeliefNotesStack";
 import AwardCard from "../components/AwardCard/index.js";
 import ExperienceTile from "../components/ExperienceTile/ExperienceTile.jsx";
 import ListingPageHero from "../components/ListingPageHero/index.js";
 import { DEFAULT_ABOUT } from "../data/aboutDefaults.js";
-import useCmsResource from "../hooks/useCmsResource.js";
 import { fetchAbout, mapCmsAbout } from "../lib/cms.js";
+import { getLivePreviewServerURL, LIVE_PREVIEW_DEPTH } from "../lib/livePreview.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function AboutPage() {
   const reduced = useReducedMotion();
-  const about = useCmsResource(async () => {
-    const doc = await fetchAbout();
-    return mapCmsAbout(doc);
-  }, DEFAULT_ABOUT);
+  const [cmsDoc, setCmsDoc] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchAbout()
+      .then((doc) => {
+        if (!cancelled && doc) setCmsDoc(doc);
+      })
+      .catch(() => {
+        // Keep DEFAULT_ABOUT when CMS is offline.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const { data: liveDoc } = useLivePreview({
+    serverURL: getLivePreviewServerURL(),
+    depth: LIVE_PREVIEW_DEPTH,
+    initialData: cmsDoc || {},
+  });
+
+  const about = useMemo(() => {
+    const source =
+      liveDoc && (liveDoc.story || liveDoc.beliefs || liveDoc.experience || liveDoc.id)
+        ? liveDoc
+        : cmsDoc;
+    return mapCmsAbout(source) || DEFAULT_ABOUT;
+  }, [liveDoc, cmsDoc]);
 
   const story = about.story?.length ? about.story : DEFAULT_ABOUT.story;
   const beliefs = about.beliefs?.length ? about.beliefs : DEFAULT_ABOUT.beliefs;

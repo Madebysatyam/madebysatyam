@@ -18,8 +18,11 @@ export default function useCmsResource(load, fallback) {
         if (mapped == null || emptyArray) return;
         setData(mapped);
       })
-      .catch(() => {
-        // Keep local fallback when CMS is offline.
+      .catch((error) => {
+        // Keep local fallback when CMS is offline / misconfigured.
+        if (import.meta.env.DEV) {
+          console.warn("[cms] resource load failed; using local fallback", error);
+        }
       });
 
     return () => {

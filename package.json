@@ -12,6 +12,7 @@
     "cms:install": "npm --prefix cms install"
   },
   "dependencies": {
+    "@payloadcms/live-preview-react": "^3.91.0",
     "framer-motion": "^12.38.0",
     "ios-vibrator-pro-max": "^2.0.2",
     "marked": "^18.0.5",

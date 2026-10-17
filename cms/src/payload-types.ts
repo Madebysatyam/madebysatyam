@@ -294,21 +294,24 @@ export interface Note {
    */
   date: string;
   category: 'essay' | 'systems' | 'process' | 'research' | 'product';
-  sections?:
-    | {
-        type: 'p' | 'h2' | 'image';
-        /**
-         * Heading or body copy
-         */
-        text?: string | null;
-        image?: (number | null) | Media;
-        /**
-         * Shown under the image on the site
-         */
-        caption?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Write the note as a document. Headings, paragraphs, and images map to site text styles.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -588,15 +591,7 @@ export interface NotesSelect<T extends boolean = true> {
   summary?: T;
   date?: T;
   category?: T;
-  sections?:
-    | T
-    | {
-        type?: T;
-        text?: T;
-        image?: T;
-        caption?: T;
-        id?: T;
-      };
+  body?: T;
   updatedAt?: T;
   createdAt?: T;
 }

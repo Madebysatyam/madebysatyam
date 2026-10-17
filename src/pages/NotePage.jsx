@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useLivePreview } from "@payloadcms/live-preview-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ContentFigure from "../components/ContentFigure";
 import NoteCategoryTag from "../components/NoteItem/NoteCategoryTag.jsx";
 import { getNoteArticle } from "../components/NoteItem/notes.js";
+import RichText from "../components/RichText";
 import { fetchNoteBySlug, mapCmsNote } from "../lib/cms.js";
+import { lexicalBodyHasContent } from "../lib/lexicalBody.js";
+import { getLivePreviewServerURL, LIVE_PREVIEW_DEPTH } from "../lib/livePreview.js";
 
 const MEASURE_MIN = 20;
 const MEASURE_MAX = 100;
@@ -16,8 +19,9 @@ function clampMeasure(value) {
 
 export default function NotePage() {
   const { slug } = useParams();
-  const [article, setArticle] = useState(() => getNoteArticle(slug));
-  const [status, setStatus] = useState(article ? "ready" : "loading");
+  const local = useMemo(() => getNoteArticle(slug), [slug]);
+  const [cmsDoc, setCmsDoc] = useState(null);
+  const [status, setStatus] = useState(local ? "ready" : "loading");
   const stageRef = useRef(null);
   const rulerRef = useRef(null);
   const sampleRef = useRef(null);
@@ -25,16 +29,14 @@ export default function NotePage() {
 
   useEffect(() => {
     let cancelled = false;
-    const local = getNoteArticle(slug);
-    setArticle(local);
+    setCmsDoc(null);
     setStatus(local ? "ready" : "loading");
 
     fetchNoteBySlug(slug)
       .then((doc) => {
         if (cancelled) return;
-        const mapped = mapCmsNote(doc);
-        if (mapped) {
-          setArticle(mapped);
+        if (doc) {
+          setCmsDoc(doc);
           setStatus("ready");
         } else if (!local) {
           setStatus("missing");
@@ -48,7 +50,32 @@ export default function NotePage() {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [slug, local]);
+
+  const { data: liveDoc } = useLivePreview({
+    serverURL: getLivePreviewServerURL(),
+    depth: LIVE_PREVIEW_DEPTH,
+    initialData: cmsDoc || {},
+  });
+
+  const article = useMemo(() => {
+    // Prefer live preview payload when it carries fields; keep the richest body available.
+    const liveHasDoc = Boolean(liveDoc && (liveDoc.slug || liveDoc.title || liveDoc.body));
+    const source = liveHasDoc ? liveDoc : cmsDoc;
+    const mapped = mapCmsNote(source);
+    if (mapped) {
+      const liveBody = liveHasDoc ? liveDoc.body : null;
+      const bestBody = lexicalBodyHasContent(liveBody)
+        ? liveBody
+        : lexicalBodyHasContent(mapped.body)
+          ? mapped.body
+          : lexicalBodyHasContent(cmsDoc?.body)
+            ? cmsDoc.body
+            : local?.body;
+      return bestBody && bestBody !== mapped.body ? { ...mapped, body: bestBody } : mapped;
+    }
+    return local;
+  }, [liveDoc, cmsDoc, local]);
 
   useEffect(() => {
     document.title = article ? `${article.title} — Madebysatyam` : "Madebysatyam";
@@ -187,32 +214,7 @@ export default function NotePage() {
             <p className="note-page__dek text-style-paragraph-large">{article.summary}</p>
           </header>
           <div className="note-page__prose">
-            {article.sections.map((section, index) => {
-              const key = section.id || `${section.type}-${index}`;
-              if (section.type === "image") {
-                return (
-                  <ContentFigure
-                    key={key}
-                    className="note-page__figure"
-                    src={section.src}
-                    alt={section.alt}
-                    caption={section.caption}
-                  />
-                );
-              }
-              if (section.type === "h2") {
-                return (
-                  <h2 key={key} className="text-style-heading-4">
-                    {section.text}
-                  </h2>
-                );
-              }
-              return (
-                <p key={key} className="text-style-paragraph-large">
-                  {section.text}
-                </p>
-              );
-            })}
+            <RichText data={article.body} />
           </div>
 
           <div

@@ -27,7 +27,10 @@ function parseOrigins(value: string | undefined, fallback: string): string[] {
     .filter(Boolean)
 }
 
-const frontendOrigins = parseOrigins(process.env.FRONTEND_URL, 'http://localhost:5173')
+const frontendOrigins = parseOrigins(
+  process.env.FRONTEND_URL,
+  'http://localhost:5173,https://madebysatyam.vercel.app,https://madebysatyam.com,https://www.madebysatyam.com',
+)
 const serverURL = process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 // Admin runs on the CMS origin — must be trusted for cookies/CSRF or uploads hang on "Submitting…"
@@ -68,11 +71,36 @@ export default buildConfig({
   csrf: trustedOrigins,
   admin: {
     user: Users.slug,
+    // Match portfolio: Space Grey dark only (see custom.css)
+    theme: 'dark',
     importMap: {
       baseDir: path.resolve(dirname),
     },
     meta: {
       titleSuffix: '— Madebysatyam CMS',
+    },
+    livePreview: {
+      collections: ['notes', 'projects'],
+      globals: ['about'],
+      breakpoints: [
+        { name: 'mobile', label: 'Mobile', width: 375, height: 667 },
+        { name: 'tablet', label: 'Tablet', width: 768, height: 1024 },
+        { name: 'desktop', label: 'Desktop', width: 1440, height: 900 },
+      ],
+      url: ({ data, collectionConfig, globalConfig }) => {
+        const frontend =
+          process.env.FRONTEND_URL?.split(',')[0]?.trim() || 'http://localhost:5173'
+        if (collectionConfig?.slug === 'notes' && data?.slug) {
+          return `${frontend}/notes/${data.slug}`
+        }
+        if (collectionConfig?.slug === 'projects' && data?.slug) {
+          return `${frontend}/projects/${data.slug}`
+        }
+        if (globalConfig?.slug === 'about') {
+          return `${frontend}/about`
+        }
+        return frontend
+      },
     },
   },
   collections: [Users, Media, Projects, Notes, Playground, Testimonials],

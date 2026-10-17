@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone, authenticated } from '../access'
+import { notesBodyField } from '../fields/notesBody'
 
 export const Notes: CollectionConfig = {
   slug: 'notes',
@@ -52,62 +53,6 @@ export const Notes: CollectionConfig = {
         { label: 'Product', value: 'product' },
       ],
     },
-    {
-      name: 'sections',
-      type: 'array',
-      label: 'Article sections',
-      labels: {
-        singular: 'Section',
-        plural: 'Sections',
-      },
-      fields: [
-        {
-          name: 'type',
-          type: 'select',
-          required: true,
-          defaultValue: 'p',
-          options: [
-            { label: 'Paragraph (body)', value: 'p' },
-            { label: 'Heading', value: 'h2' },
-            { label: 'Image', value: 'image' },
-          ],
-        },
-        {
-          name: 'text',
-          type: 'textarea',
-          admin: {
-            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type !== 'image',
-            description: 'Heading or body copy',
-          },
-          validate: (value: unknown, { siblingData }: { siblingData?: { type?: string } }) => {
-            if (siblingData?.type === 'image') return true
-            if (!value || !String(value).trim()) return 'Text is required'
-            return true
-          },
-        },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type === 'image',
-          },
-          validate: (value: unknown, { siblingData }: { siblingData?: { type?: string } }) => {
-            if (siblingData?.type !== 'image') return true
-            if (!value) return 'Image is required'
-            return true
-          },
-        },
-        {
-          name: 'caption',
-          type: 'text',
-          label: 'Caption',
-          admin: {
-            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type === 'image',
-            description: 'Shown under the image on the site',
-          },
-        },
-      ],
-    },
+    notesBodyField,
   ],
 }
