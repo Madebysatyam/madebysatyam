@@ -9,3 +9,6 @@ cms/*.db
 cms/*.db-*
 cms/media/
 cms/AGENTS.md
+
+.vercel/
+.env.local
