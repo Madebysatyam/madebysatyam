@@ -138,10 +138,17 @@ body,
 }
 
 /* Hide forgot-password link (feature disabled) */
+.login__form > a,
 a[href$="/forgot"],
-a[href*="/forgot?"],
-.login__form a[href*="forgot"] {
+a[href*="/forgot"],
+a[href*="forgot"] {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }
 
 .forgot-password-disabled {
