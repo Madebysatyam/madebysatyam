@@ -278,6 +278,55 @@ div.nav__link:hover,
 }
 
 /* -------------------------------------------------------------------------- */
+/* Dashboard collection / global cards                                        */
+/* -------------------------------------------------------------------------- */
+
+.card {
+  background: var(--linear-surface-raised);
+  border: 1px solid var(--linear-border);
+  border-radius: var(--admin-radius);
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+}
+
+.card__title {
+  color: var(--linear-text-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+/* Payload default hover keeps the same bg — make it visible on dark Linear theme */
+.card--has-onclick:hover,
+.card--has-onclick:focus-within {
+  background: rgb(255 255 255 / 0.08) !important;
+  border-color: var(--theme-elevation-450) !important;
+  box-shadow: none !important;
+}
+
+.card--has-onclick:hover .card__title,
+.card--has-onclick:focus-within .card__title {
+  color: #ffffff;
+}
+
+.card__actions .btn__icon {
+  border-color: var(--linear-border);
+  border-radius: var(--admin-radius);
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+}
+
+.card__actions .btn__icon:hover,
+.card__actions .btn__icon:focus-visible {
+  background-color: var(--linear-surface-overlay) !important;
+  border-color: var(--theme-elevation-500) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.card--has-onclick:focus-within {
+  outline: 2px solid var(--linear-accent);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
 /* Chrome — radius, inputs, buttons                                           */
 /* -------------------------------------------------------------------------- */
 
