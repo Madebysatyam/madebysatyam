@@ -76,6 +76,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     components: {
+      beforeLogin: ['/components/HideForgotPassword.tsx'],
       graphics: {
         Logo: '/components/graphics/Logo.tsx',
         Icon: '/components/graphics/Icon.tsx',

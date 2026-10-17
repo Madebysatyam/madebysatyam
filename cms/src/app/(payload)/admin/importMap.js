@@ -13,6 +13,7 @@ import { ParagraphFeatureClient as ParagraphFeatureClient_e70f5e05f09f93e00b997e
 import { default as default_7df4e781a8e9d75966d65251fdc65407 } from '../../../components/graphics/Icon.tsx'
 import { default as default_8f85548e925cd8f9e8306f2cfa84fe8b } from '../../../components/graphics/Logo.tsx'
 import { default as default_forgotPasswordDisabled } from '../../../components/ForgotPasswordDisabled.tsx'
+import { default as default_hideForgotPassword } from '../../../components/HideForgotPassword.tsx'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
@@ -33,6 +34,7 @@ export const importMap = {
   "/components/graphics/Icon.tsx#default": default_7df4e781a8e9d75966d65251fdc65407,
   "/components/graphics/Logo.tsx#default": default_8f85548e925cd8f9e8306f2cfa84fe8b,
   "/components/ForgotPasswordDisabled.tsx#default": default_forgotPasswordDisabled,
+  "/components/HideForgotPassword.tsx#default": default_hideForgotPassword,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }
