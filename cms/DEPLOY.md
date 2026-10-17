@@ -44,8 +44,13 @@ In **Settings → Environment Variables**, set:
 | `FRONTEND_URL` | Your live portfolio URL, e.g. `https://madebysatyam.com` (comma-separate previews if needed) |
 | `POSTGRES_URL` | From step 2 (usually auto) |
 | `BLOB_READ_WRITE_TOKEN` | From step 3 (usually auto) |
+| `RESEND_API_KEY` | From [resend.com](https://resend.com) → API Keys (required for forgot-password emails) |
+| `EMAIL_FROM_ADDRESS` | Verified sender, e.g. `noreply@yourdomain.com` (or `onboarding@resend.dev` for Resend testing) |
+| `EMAIL_FROM_NAME` | `Madebysatyam CMS` |
 
 Also set these for **Production** and **Preview**.
+
+> Without `RESEND_API_KEY`, Payload accepts forgot-password requests but **does not send email** (it only logs to the server).
 
 ### 5. Deploy
 
