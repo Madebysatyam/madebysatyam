@@ -8,7 +8,9 @@ export const Users: CollectionConfig = {
   auth: {
     forgotPassword: {
       generateEmailSubject: () => 'Reset your Madebysatyam CMS password',
-      generateEmailHTML: ({ token, user }) => {
+      generateEmailHTML: (args) => {
+        const token = args?.token || ''
+        const user = args?.user
         const serverURL =
           process.env.PAYLOAD_PUBLIC_SERVER_URL?.replace(/\/$/, '') || 'http://localhost:3000'
         const resetURL = `${serverURL}/admin/reset/${token}`
