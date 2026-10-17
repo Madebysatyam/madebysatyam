@@ -1,6 +1,5 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
-import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
@@ -51,7 +50,6 @@ const trustedOrigins = Array.from(
 const postgresUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || ''
 const usesPostgres = /^(postgres|postgresql):\/\//i.test(postgresUrl)
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN || ''
-const resendApiKey = process.env.RESEND_API_KEY || ''
 
 const db = usesPostgres
   ? vercelPostgresAdapter({
@@ -71,19 +69,6 @@ export default buildConfig({
   serverURL,
   cors: trustedOrigins,
   csrf: trustedOrigins,
-  ...(resendApiKey
-    ? {
-        email: resendAdapter({
-          apiKey: resendApiKey,
-          // Without a verified domain, Resend only allows onboarding@resend.dev
-          // (delivers to the Resend account owner). Override via EMAIL_FROM_ADDRESS
-          // once mail.madebysatyam.com (or another domain) is verified.
-          defaultFromAddress:
-            process.env.EMAIL_FROM_ADDRESS || 'onboarding@resend.dev',
-          defaultFromName: process.env.EMAIL_FROM_NAME || 'Madebysatyam CMS',
-        }),
-      }
-    : {}),
   admin: {
     user: Users.slug,
     theme: 'dark',
@@ -94,6 +79,11 @@ export default buildConfig({
       graphics: {
         Logo: '/components/graphics/Logo.tsx',
         Icon: '/components/graphics/Icon.tsx',
+      },
+      views: {
+        forgot: {
+          Component: '/components/ForgotPasswordDisabled.tsx',
+        },
       },
     },
     meta: {

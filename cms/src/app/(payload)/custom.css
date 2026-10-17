@@ -137,6 +137,29 @@ body,
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Hide forgot-password link (feature disabled) */
+a[href$="/forgot"],
+a[href*="/forgot?"],
+.login__form a[href*="forgot"] {
+  display: none !important;
+}
+
+.forgot-password-disabled {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 28rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: center;
+  color: var(--theme-elevation-800);
+}
+
+.forgot-password-disabled__link {
+  color: var(--theme-text);
+  text-decoration: underline;
+}
+
 /* Brand graphics (login + nav) */
 .madebysatyam-logo {
   display: block;
