@@ -38,12 +38,12 @@ function preprocessFigurePlaceholders(markdown) {
     const safeCaption = escapeHtml(caption);
 
     output.push(
-      `<figure class="case-study__figure">` +
-        `<div class="case-study__figure-placeholder" role="img" aria-label="Image placeholder: ${safeCaption}">` +
-        `<span class="case-study__figure-label text-style-label-small">Image</span>` +
+      `<figure class="case-study__figure content-figure">` +
+        `<div class="case-study__figure-placeholder content-figure__placeholder" role="img" aria-label="Image placeholder: ${safeCaption}">` +
+        `<span class="case-study__figure-label content-figure__label text-style-label-small">Image</span>` +
         `</div>` +
         (caption
-          ? `<figcaption class="case-study__figure-caption text-style-label-small">${safeCaption}</figcaption>`
+          ? `<figcaption class="case-study__figure-caption content-figure__caption text-style-label-small">${safeCaption}</figcaption>`
           : "") +
         `</figure>`
     );

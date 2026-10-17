@@ -2,14 +2,20 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import NoteItem, { NOTES_PAGE } from "../components/NoteItem";
-import { staggerContainer, staggerItem } from "../motion/presets.js";
 import ListingPageHero from "../components/ListingPageHero/index.js";
 import PageHeader from "../components/PageHeader";
+import useCmsResource from "../hooks/useCmsResource.js";
+import { fetchNotes, mapCmsNotes } from "../lib/cms.js";
+import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function NotesPage() {
   const { reduced } = useOutletContext();
   const notesListRef = useRef(null);
   const notesInView = useInView(notesListRef, { once: true, margin: "-8% 0px" });
+  const notes = useCmsResource(async () => {
+    const docs = await fetchNotes();
+    return mapCmsNotes(docs);
+  }, NOTES_PAGE);
 
   return (
     <main id="main" className="page-listing page-listing--with-hero">
@@ -38,7 +44,7 @@ export default function NotesPage() {
           animate={notesInView || reduced ? "visible" : "hidden"}
           variants={staggerContainer(reduced, { stagger: 0.06, delayChildren: 0.04 })}
         >
-          {NOTES_PAGE.map((note) => (
+          {notes.map((note) => (
             <motion.li key={note.id} variants={staggerItem(reduced, { y: 12 })}>
               <NoteItem {...note} />
             </motion.li>

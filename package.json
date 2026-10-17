@@ -6,7 +6,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "heroes:variants": "node scripts/generate-listing-hero-variants.mjs"
+    "heroes:variants": "node scripts/generate-listing-hero-variants.mjs",
+    "cms:dev": "npm --prefix cms run dev",
+    "cms:seed": "npm --prefix cms run seed",
+    "cms:install": "npm --prefix cms install"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

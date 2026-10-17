@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import NoteItem, { NOTES_PAGE } from "../components/NoteItem";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
+import useCmsResource from "../hooks/useCmsResource.js";
+import { fetchNotes, mapCmsNotes } from "../lib/cms.js";
 import useHorizontalRowFade from "../lib/useHorizontalRowFade.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
@@ -11,7 +13,11 @@ const NOTES_ROW_LIMIT = 8;
 
 export default function NotesSection({ reduced }) {
   const rowRef = useRef(null);
-  const notes = NOTES_PAGE.slice(0, NOTES_ROW_LIMIT);
+  const allNotes = useCmsResource(async () => {
+    const docs = await fetchNotes();
+    return mapCmsNotes(docs);
+  }, NOTES_PAGE);
+  const notes = allNotes.slice(0, NOTES_ROW_LIMIT);
   useHorizontalRowFade(rowRef);
 
   return (

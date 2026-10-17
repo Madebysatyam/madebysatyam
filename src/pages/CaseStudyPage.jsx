@@ -1,14 +1,43 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import CaseStudyContent from "../components/CaseStudyContent";
 import { getProjectBySlug } from "../data/projects/index.js";
+import { fetchProjectBySlug, mapCmsProject } from "../lib/cms.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function CaseStudyPage() {
   const { reduced } = useOutletContext();
   const { slug } = useParams();
-  const project = getProjectBySlug(slug);
+  const [project, setProject] = useState(() => getProjectBySlug(slug));
+  const [status, setStatus] = useState(project ? "ready" : "loading");
+
+  useEffect(() => {
+    let cancelled = false;
+    const local = getProjectBySlug(slug);
+    setProject(local);
+    setStatus(local ? "ready" : "loading");
+
+    fetchProjectBySlug(slug)
+      .then((doc) => {
+        if (cancelled) return;
+        const mapped = mapCmsProject(doc);
+        if (mapped) {
+          setProject(mapped);
+          setStatus("ready");
+        } else if (!local) {
+          setStatus("missing");
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        if (!local) setStatus("missing");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
 
   useEffect(() => {
     if (project) {
@@ -19,7 +48,19 @@ export default function CaseStudyPage() {
     };
   }, [project]);
 
-  if (!project) {
+  if (status === "loading") {
+    return (
+      <main id="main" className="page-case-study">
+        <article className="case-study-page container-site grid-12">
+          <div className="case-study-page__inner case-study-page__body--missing">
+            <p className="case-study-page__missing text-style-paragraph-large">Loading project…</p>
+          </div>
+        </article>
+      </main>
+    );
+  }
+
+  if (!project || status === "missing") {
     return (
       <main id="main" className="page-case-study">
         <article className="case-study-page container-site grid-12">
@@ -36,7 +77,7 @@ export default function CaseStudyPage() {
     );
   }
 
-  const { page, markdown, card } = project;
+  const { page, markdown, card, layout } = project;
 
   return (
     <main id="main" className="page-case-study">
@@ -90,7 +131,7 @@ export default function CaseStudyPage() {
           animate="visible"
           variants={staggerItem(reduced, { y: 16 })}
         >
-          <CaseStudyContent markdown={markdown} lead={page.lead} />
+          <CaseStudyContent markdown={markdown} lead={page.lead} layout={layout} />
         </motion.div>
         </div>
       </article>

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import PlaygroundTile, { PLAYGROUND_TILES_PAGE } from "../components/PlaygroundTile";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
+import useCmsResource from "../hooks/useCmsResource.js";
+import { fetchPlayground, mapCmsPlayground } from "../lib/cms.js";
 import useHorizontalRowFade from "../lib/useHorizontalRowFade.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
@@ -11,7 +13,11 @@ const PLAYGROUND_ROW_LIMIT = 8;
 
 export default function PlaygroundSection({ reduced }) {
   const rowRef = useRef(null);
-  const tiles = PLAYGROUND_TILES_PAGE.slice(0, PLAYGROUND_ROW_LIMIT);
+  const allTiles = useCmsResource(async () => {
+    const docs = await fetchPlayground();
+    return mapCmsPlayground(docs);
+  }, PLAYGROUND_TILES_PAGE);
+  const tiles = allTiles.slice(0, PLAYGROUND_ROW_LIMIT);
   useHorizontalRowFade(rowRef);
 
   return (

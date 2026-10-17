@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import ContentFigure from "../components/ContentFigure";
 import NoteCategoryTag from "../components/NoteItem/NoteCategoryTag.jsx";
 import { getNoteArticle } from "../components/NoteItem/notes.js";
+import { fetchNoteBySlug, mapCmsNote } from "../lib/cms.js";
 
 const MEASURE_MIN = 20;
 const MEASURE_MAX = 100;
@@ -14,11 +16,39 @@ function clampMeasure(value) {
 
 export default function NotePage() {
   const { slug } = useParams();
-  const article = getNoteArticle(slug);
+  const [article, setArticle] = useState(() => getNoteArticle(slug));
+  const [status, setStatus] = useState(article ? "ready" : "loading");
   const stageRef = useRef(null);
   const rulerRef = useRef(null);
   const sampleRef = useRef(null);
   const [measure, setMeasure] = useState(MEASURE_DEFAULT);
+
+  useEffect(() => {
+    let cancelled = false;
+    const local = getNoteArticle(slug);
+    setArticle(local);
+    setStatus(local ? "ready" : "loading");
+
+    fetchNoteBySlug(slug)
+      .then((doc) => {
+        if (cancelled) return;
+        const mapped = mapCmsNote(doc);
+        if (mapped) {
+          setArticle(mapped);
+          setStatus("ready");
+        } else if (!local) {
+          setStatus("missing");
+        }
+      })
+      .catch(() => {
+        if (cancelled) return;
+        if (!local) setStatus("missing");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
 
   useEffect(() => {
     document.title = article ? `${article.title} — Madebysatyam` : "Madebysatyam";
@@ -93,7 +123,17 @@ export default function NotePage() {
     }
   };
 
-  if (!article) {
+  if (status === "loading") {
+    return (
+      <main id="main" className="note-page">
+        <div className="note-page__stage container-site">
+          <p className="note-page__missing text-style-paragraph-large">Loading note…</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!article || status === "missing") {
     return (
       <main id="main" className="note-page">
         <div className="note-page__stage container-site">
@@ -147,17 +187,32 @@ export default function NotePage() {
             <p className="note-page__dek text-style-paragraph-large">{article.summary}</p>
           </header>
           <div className="note-page__prose">
-            {article.sections.map((section) =>
-              section.type === "h2" ? (
-                <h2 key={section.text} className="text-style-heading-4">
-                  {section.text}
-                </h2>
-              ) : (
-                <p key={section.text} className="text-style-paragraph-large">
+            {article.sections.map((section, index) => {
+              const key = section.id || `${section.type}-${index}`;
+              if (section.type === "image") {
+                return (
+                  <ContentFigure
+                    key={key}
+                    className="note-page__figure"
+                    src={section.src}
+                    alt={section.alt}
+                    caption={section.caption}
+                  />
+                );
+              }
+              if (section.type === "h2") {
+                return (
+                  <h2 key={key} className="text-style-heading-4">
+                    {section.text}
+                  </h2>
+                );
+              }
+              return (
+                <p key={key} className="text-style-paragraph-large">
                   {section.text}
                 </p>
-              ),
-            )}
+              );
+            })}
           </div>
 
           <div

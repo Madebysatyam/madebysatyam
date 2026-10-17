@@ -15,6 +15,8 @@ main > article.section-reveal,
 .note-measure.section-reveal,
 .note-page__prose > p.section-reveal,
 .note-page__prose > h2.section-reveal,
+.note-page__prose > .content-figure.section-reveal,
+.note-page__prose > .note-page__figure.section-reveal,
 .page-home > .site-footer.section-reveal {
   opacity: 0;
 }
@@ -32,6 +34,8 @@ main > article.section-reveal.is-revealed,
 .note-page__dek.section-reveal.is-revealed,
 .note-page__prose > p.section-reveal.is-revealed,
 .note-page__prose > h2.section-reveal.is-revealed,
+.note-page__prose > .content-figure.section-reveal.is-revealed,
+.note-page__prose > .note-page__figure.section-reveal.is-revealed,
 .page-home > .site-footer.section-reveal.is-revealed,
 .section-reveal--blur.is-revealed {
   opacity: 1;

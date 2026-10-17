@@ -11,6 +11,18 @@ npm run build
 npm run preview
 ```
 
+## CMS (Payload)
+
+Content is editable via Payload in `cms/`.
+
+```bash
+npm run cms:install
+npm run cms:dev      # http://localhost:3000/admin
+npm run cms:seed     # load Aural + sample note
+```
+
+Set `VITE_CMS_URL=http://localhost:3000` in `.env` (see `.env.example`). The site falls back to local content if the CMS is offline. See `cms/README.md`.
+
 ## Structure
 
 ```
