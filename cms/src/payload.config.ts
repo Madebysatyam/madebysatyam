@@ -71,10 +71,15 @@ export default buildConfig({
   csrf: trustedOrigins,
   admin: {
     user: Users.slug,
-    // Match portfolio: Space Grey dark only (see custom.css)
     theme: 'dark',
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    components: {
+      graphics: {
+        Logo: '/components/graphics/Logo.tsx',
+        Icon: '/components/graphics/Icon.tsx',
+      },
     },
     meta: {
       titleSuffix: '— Madebysatyam CMS',

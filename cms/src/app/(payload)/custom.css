@@ -137,6 +137,22 @@ body,
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Brand graphics (login + nav) */
+.madebysatyam-logo {
+  display: block;
+  width: min(220px, 70vw);
+  height: auto;
+  margin-inline: auto;
+}
+
+.madebysatyam-icon {
+  display: block;
+  height: 25px;
+  width: 25px;
+  object-fit: cover;
+  object-position: left center;
+}
+
 /* Headings — Inter, text-balance */
 h1,
 h2,
