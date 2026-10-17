@@ -75,6 +75,9 @@ export default buildConfig({
     ? {
         email: resendAdapter({
           apiKey: resendApiKey,
+          // Without a verified domain, Resend only allows onboarding@resend.dev
+          // (delivers to the Resend account owner). Override via EMAIL_FROM_ADDRESS
+          // once mail.madebysatyam.com (or another domain) is verified.
           defaultFromAddress:
             process.env.EMAIL_FROM_ADDRESS || 'onboarding@resend.dev',
           defaultFromName: process.env.EMAIL_FROM_NAME || 'Madebysatyam CMS',
