@@ -36,12 +36,14 @@ Notes body: sections can be **Paragraph**, **Heading**, or **Image** (with optio
 
 ## Env
 
-Copy `.env.example` if needed. Defaults:
+Copy `.env.example` if needed. Defaults for local:
 
-- `DATABASE_URL=file:./payload.db` (SQLite, local file)
+- `DATABASE_URL=file:./payload.db` (SQLite)
 - `PAYLOAD_SECRET` — random secret
 - `PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3000`
 - `FRONTEND_URL=http://localhost:5173` (CORS for the Vite app)
+
+For production on Vercel, set Postgres (`POSTGRES_URL`) and Blob (`BLOB_READ_WRITE_TOKEN`). See **[DEPLOY.md](./DEPLOY.md)**.
 
 ## Run with the website
 
@@ -49,3 +51,7 @@ Terminal 1: `cd cms && npm run dev`
 Terminal 2: from repo root `npm run dev`
 
 The site reads `VITE_CMS_URL` (default `http://localhost:3000`) and falls back to local hardcoded content if the CMS is offline.
+
+## Public internet
+
+Follow **[DEPLOY.md](./DEPLOY.md)** to host this CMS on Vercel with Neon Postgres + Vercel Blob. Local SQLite remains for development when those env vars are absent.

@@ -1,5 +1,7 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -17,13 +19,39 @@ import { SiteSettings } from './globals/SiteSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173'
+function parseOrigins(value: string | undefined, fallback: string): string[] {
+  const raw = value?.trim() || fallback
+  return raw
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean)
+}
+
+const frontendOrigins = parseOrigins(process.env.FRONTEND_URL, 'http://localhost:5173')
 const serverURL = process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000'
+
+const postgresUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || ''
+const usesPostgres = /^(postgres|postgresql):\/\//i.test(postgresUrl)
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN || ''
+
+const db = usesPostgres
+  ? vercelPostgresAdapter({
+      pool: {
+        connectionString: postgresUrl,
+      },
+      // On Vercel production, prefer migrations; push stays on for first deploys / preview.
+      push: process.env.PAYLOAD_DATABASE_PUSH !== 'false',
+    })
+  : sqliteAdapter({
+      client: {
+        url: process.env.DATABASE_URL || 'file:./payload.db',
+      },
+    })
 
 export default buildConfig({
   serverURL,
-  cors: [frontendURL],
-  csrf: [frontendURL],
+  cors: frontendOrigins,
+  csrf: frontendOrigins,
   admin: {
     user: Users.slug,
     importMap: {
@@ -40,10 +68,17 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URL || 'file:./payload.db',
-    },
-  }),
+  db,
   sharp,
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(blobToken),
+      collections: {
+        media: true,
+      },
+      token: blobToken,
+      // Bypass Vercel’s ~4.5MB serverless upload limit for larger images.
+      clientUploads: true,
+    }),
+  ],
 })

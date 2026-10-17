@@ -23,6 +23,8 @@ npm run cms:seed     # load Aural + sample note
 
 Set `VITE_CMS_URL=http://localhost:3000` in `.env` (see `.env.example`). The site falls back to local content if the CMS is offline. See `cms/README.md`.
 
+To put the CMS on the public internet (Vercel + Postgres + Blob), see [`cms/DEPLOY.md`](cms/DEPLOY.md).
+
 ## Structure
 
 ```
