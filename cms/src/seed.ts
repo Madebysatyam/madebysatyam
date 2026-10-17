@@ -5,7 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { getPayload } from 'payload'
 
-import config from './payload.config.ts'
+import config from './payload.config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

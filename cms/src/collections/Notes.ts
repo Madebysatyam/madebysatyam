@@ -76,10 +76,10 @@ export const Notes: CollectionConfig = {
           name: 'text',
           type: 'textarea',
           admin: {
-            condition: (_, siblingData) => siblingData?.type !== 'image',
+            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type !== 'image',
             description: 'Heading or body copy',
           },
-          validate: (value, { siblingData }) => {
+          validate: (value: unknown, { siblingData }: { siblingData?: { type?: string } }) => {
             if (siblingData?.type === 'image') return true
             if (!value || !String(value).trim()) return 'Text is required'
             return true
@@ -90,9 +90,9 @@ export const Notes: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
           admin: {
-            condition: (_, siblingData) => siblingData?.type === 'image',
+            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type === 'image',
           },
-          validate: (value, { siblingData }) => {
+          validate: (value: unknown, { siblingData }: { siblingData?: { type?: string } }) => {
             if (siblingData?.type !== 'image') return true
             if (!value) return 'Image is required'
             return true
@@ -103,7 +103,7 @@ export const Notes: CollectionConfig = {
           type: 'text',
           label: 'Caption',
           admin: {
-            condition: (_, siblingData) => siblingData?.type === 'image',
+            condition: (_: unknown, siblingData: { type?: string }) => siblingData?.type === 'image',
             description: 'Shown under the image on the site',
           },
         },

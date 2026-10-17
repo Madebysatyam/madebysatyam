@@ -34,4 +34,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false, agentRules: false })
+export default withPayload(nextConfig, { devBundleServerPackages: false })
