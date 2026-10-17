@@ -30,6 +30,20 @@ function parseOrigins(value: string | undefined, fallback: string): string[] {
 const frontendOrigins = parseOrigins(process.env.FRONTEND_URL, 'http://localhost:5173')
 const serverURL = process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
+// Admin runs on the CMS origin — must be trusted for cookies/CSRF or uploads hang on "Submitting…"
+const trustedOrigins = Array.from(
+  new Set(
+    [
+      ...frontendOrigins,
+      serverURL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : '',
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
+    ].filter(Boolean),
+  ),
+)
+
 const postgresUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || ''
 const usesPostgres = /^(postgres|postgresql):\/\//i.test(postgresUrl)
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN || ''
@@ -50,8 +64,8 @@ const db = usesPostgres
 
 export default buildConfig({
   serverURL,
-  cors: frontendOrigins,
-  csrf: frontendOrigins,
+  cors: trustedOrigins,
+  csrf: trustedOrigins,
   admin: {
     user: Users.slug,
     importMap: {
