@@ -1,13 +1,16 @@
-/* Kind words section — header in container, ticker full bleed */
+/* Kind words section — header + ticker share the site column */
 
 .kind-words-section .container-site {
   margin-bottom: var(--space-10);
 }
 
-/* Horizontal ticker — edge fade + infinite scroll */
+/* Horizontal ticker — edge fade + infinite scroll, boxed to --content-max */
 
 .kind-words-ticker {
   width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
   overflow: hidden;
 }
 

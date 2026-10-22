@@ -289,6 +289,19 @@
   }
 }
 
+/* Large displays — wider copy column; type comes from typography tokens */
+@media (min-width: 1728px) {
+  .hero__copy {
+    width: min(88%, 72rem);
+  }
+}
+
+@media (min-width: 2560px) {
+  .hero__copy {
+    width: min(84%, 84rem);
+  }
+}
+
 /* Section rhythm */
 
 .work-section,

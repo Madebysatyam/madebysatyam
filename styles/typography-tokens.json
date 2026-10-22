@@ -4,7 +4,10 @@
       "base": "2.84rem",
       "md": "2.84rem",
       "lg": "4.8rem",
-      "xl": "6rem"
+      "xl": "6rem",
+      "1728": "7.2rem",
+      "2560": "8.5rem",
+      "3840": "10rem"
     },
     "lineHeight": "1.22",
     "path": "/Display/Display Large",
@@ -14,7 +17,10 @@
     "sizes": {
       "base": "2.5rem",
       "lg": "2rem",
-      "md": "1.8rem"
+      "md": "1.8rem",
+      "1728": "2.4rem",
+      "2560": "2.9rem",
+      "3840": "3.4rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 1",
@@ -24,7 +30,10 @@
     "sizes": {
       "base": "1.13rem",
       "xl": "1rem",
-      "md": "1rem"
+      "md": "1rem",
+      "1728": "1.125rem",
+      "2560": "1.25rem",
+      "3840": "1.375rem"
     },
     "lineHeight": "1.15",
     "path": "/Label/Label Large",
@@ -34,7 +43,10 @@
     "sizes": {
       "base": "1.91rem",
       "lg": "2.625rem",
-      "xl": "3.25rem"
+      "xl": "3.25rem",
+      "1728": "3.9rem",
+      "2560": "4.7rem",
+      "3840": "5.5rem"
     },
     "lineHeight": "1.44",
     "path": "/Display/Display Medium",
@@ -44,7 +56,10 @@
     "sizes": {
       "base": "2.25rem",
       "xl": "1.8rem",
-      "md": "1.44rem"
+      "md": "1.44rem",
+      "1728": "2.16rem",
+      "2560": "2.61rem",
+      "3840": "3.06rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 2",
@@ -54,7 +69,10 @@
     "sizes": {
       "base": "1rem",
       "xl": "0.875rem",
-      "md": "0.875rem"
+      "md": "0.875rem",
+      "1728": "1rem",
+      "2560": "1.125rem",
+      "3840": "1.25rem"
     },
     "lineHeight": "1.15",
     "path": "/Label/Label Medium",
@@ -65,7 +83,10 @@
       "base": "1.76rem",
       "md": "1.76rem",
       "lg": "2.2rem",
-      "xl": "2.75rem"
+      "xl": "2.75rem",
+      "1728": "3.3rem",
+      "2560": "4rem",
+      "3840": "4.675rem"
     },
     "lineHeight": "1.42",
     "path": "/Display/Display Small",
@@ -76,7 +97,10 @@
       "base": "1.76rem",
       "md": "1.76rem",
       "lg": "2.2rem",
-      "xl": "2.75rem"
+      "xl": "2.75rem",
+      "1728": "3.3rem",
+      "2560": "4rem",
+      "3840": "4.675rem"
     },
     "lineHeight": "1.42",
     "path": "/Display/Display X Small",
@@ -87,7 +111,10 @@
       "base": "1.28rem",
       "md": "1.125rem",
       "lg": "1.28rem",
-      "xl": "1.2rem"
+      "xl": "1.2rem",
+      "1728": "1.44rem",
+      "2560": "1.74rem",
+      "3840": "2.04rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading Medium",
@@ -98,7 +125,10 @@
       "base": "1.44rem",
       "md": "1.25rem",
       "lg": "1.44rem",
-      "xl": "1.35rem"
+      "xl": "1.35rem",
+      "1728": "1.62rem",
+      "2560": "1.96rem",
+      "3840": "2.3rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading Large",
@@ -109,7 +139,10 @@
       "base": "2rem",
       "md": "1.28rem",
       "lg": "1.6rem",
-      "xl": "1.8rem"
+      "xl": "1.8rem",
+      "1728": "2.16rem",
+      "2560": "2.5rem",
+      "3840": "2.9rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading X Large",
@@ -119,7 +152,10 @@
     "sizes": {
       "base": "2rem",
       "xl": "1.6rem",
-      "md": "1.28rem"
+      "md": "1.28rem",
+      "1728": "1.92rem",
+      "2560": "2.32rem",
+      "3840": "2.72rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 3",
@@ -129,7 +165,10 @@
     "sizes": {
       "base": "0.88rem",
       "xl": "0.813rem",
-      "md": "0.813rem"
+      "md": "0.813rem",
+      "1728": "0.875rem",
+      "2560": "1rem",
+      "3840": "1.125rem"
     },
     "lineHeight": "1.15",
     "path": "/Label/Label Small",
@@ -139,7 +178,10 @@
     "sizes": {
       "base": "1.75rem",
       "xl": "1.4rem",
-      "md": "1.12rem"
+      "md": "1.12rem",
+      "1728": "1.68rem",
+      "2560": "2.03rem",
+      "3840": "2.38rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 4",
@@ -149,7 +191,10 @@
     "sizes": {
       "base": "0.75rem",
       "xl": "0.75rem",
-      "md": "0.75rem"
+      "md": "0.75rem",
+      "1728": "0.813rem",
+      "2560": "0.875rem",
+      "3840": "1rem"
     },
     "lineHeight": "1.15",
     "path": "/Label/Label X Small",
@@ -159,7 +204,10 @@
     "sizes": {
       "base": "1.5rem",
       "xl": "1.2rem",
-      "md": "1rem"
+      "md": "1rem",
+      "1728": "1.44rem",
+      "2560": "1.74rem",
+      "3840": "2.04rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 5",
@@ -169,7 +217,10 @@
     "sizes": {
       "base": "1.25rem",
       "xl": "1rem",
-      "md": "0.875rem"
+      "md": "0.875rem",
+      "1728": "1.2rem",
+      "2560": "1.45rem",
+      "3840": "1.7rem"
     },
     "lineHeight": "1.2",
     "path": "/Headings/Heading 6",
@@ -179,7 +230,10 @@
     "sizes": {
       "base": "0.75rem",
       "xl": "0.75rem",
-      "md": "0.75rem"
+      "md": "0.75rem",
+      "1728": "0.813rem",
+      "2560": "0.875rem",
+      "3840": "1rem"
     },
     "lineHeight": "1.4",
     "path": "/Paragraph/Paragraph X Small",
@@ -189,7 +243,10 @@
     "sizes": {
       "base": "0.88rem",
       "xl": "0.813rem",
-      "md": "0.813rem"
+      "md": "0.813rem",
+      "1728": "0.875rem",
+      "2560": "1rem",
+      "3840": "1.125rem"
     },
     "lineHeight": "1.4",
     "path": "/Paragraph/Paragraph Small",
@@ -199,7 +256,10 @@
     "sizes": {
       "base": "1rem",
       "xl": "0.875rem",
-      "md": "0.875rem"
+      "md": "0.875rem",
+      "1728": "1rem",
+      "2560": "1.125rem",
+      "3840": "1.25rem"
     },
     "lineHeight": "1.4",
     "path": "/Paragraph/Paragraph Medium",
@@ -209,7 +269,10 @@
     "sizes": {
       "base": "1.13rem",
       "xl": "1rem",
-      "md": "1rem"
+      "md": "1rem",
+      "1728": "1.125rem",
+      "2560": "1.25rem",
+      "3840": "1.375rem"
     },
     "lineHeight": "1.4",
     "path": "/Paragraph/Paragraph Large",

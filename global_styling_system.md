@@ -1,7 +1,7 @@
 # Global Styling System
 
 **Status:** Locked  
-**Last updated:** 2026-05-17  
+**Last updated:** 2026-10-21  
 **Aesthetic:** Terminal — Space Grey base, sharp corners, monospace labels  
 
 ---
@@ -60,6 +60,9 @@ This file is the **single source of truth** for all design tokens and styling ru
 | lg | 1200px | `lg:` | Desktop type |
 | xl | 1440px | `xl:` | Design canvas / max content |
 | 2xl | 1536px | `2xl:` | Tailwind default (available) |
+| 16" | 1728px | — | Type scale for large laptops |
+| QHD | 2560px | — | Type scale for wide / 4K windows |
+| 4K | 3840px | — | Type scale for 4K displays |
 
 ---
 
@@ -162,44 +165,45 @@ Full step values are defined in `tailwind.config.js`.
 
 ### Type scale (responsive)
 
-Base = mobile (0px+). Larger breakpoints override via CSS variables in `styles/typography-tokens.css`.
+Base = mobile (0px+). Larger breakpoints override via CSS variables in `styles/typography-tokens.css`. Steps after 1440 scale type only (not spacing or `html` font-size).
 
 #### Display
 
-| Style | Class | Font | Base | @810 md | @1200 lg | @1440 xl | Line height |
-|-------|-------|------|------|---------|----------|----------|-------------|
-| Display Large | `text-style-display-large` | display | 2.84rem | 2.84rem | 4.8rem | 6rem | 1.22 |
-| Display Medium | `text-style-display-medium` | display | 1.91rem | — | 2.625rem | 3.25rem | 1.44 |
-| Display Small | `text-style-display-small` | display | 1.76rem | 1.76rem | 2.2rem | 2.75rem | 1.42 |
+| Style | Class | Font | Base | @810 md | @1200 lg | @1440 xl | @1728 | @2560 | @3840 | Line height |
+|-------|-------|------|------|---------|----------|----------|-------|-------|-------|-------------|
+| Display Large | `text-style-display-large` | display | 2.84rem | 2.84rem | 4.8rem | 6rem | 7.2rem | 8.5rem | 10rem | 1.22 |
+| Display Medium | `text-style-display-medium` | display | 1.91rem | — | 2.625rem | 3.25rem | 3.9rem | 4.7rem | 5.5rem | 1.44 |
+| Display Small | `text-style-display-small` | display | 1.76rem | 1.76rem | 2.2rem | 2.75rem | 3.3rem | 4rem | 4.675rem | 1.42 |
 
 #### Headings
 
-| Style | Class | Font | Base | @810 md | @1200 lg | @1440 xl | Line height |
-|-------|-------|------|------|---------|----------|----------|-------------|
-| Heading 1 | `text-style-heading-1` | heading | 2.5rem | 1.8rem | 2rem | — | 1.2 |
-| Heading 2 | `text-style-heading-2` | heading | 2.25rem | 1.44rem | — | 1.8rem | 1.2 |
-| Heading 3 | `text-style-heading-3` | heading | 2rem | 1.28rem | — | 1.6rem | 1.2 |
-| Heading 4 | `text-style-heading-4` | heading | 1.75rem | 1.12rem | — | 1.4rem | 1.2 |
-| Heading 5 | `text-style-heading-5` | heading | 1.5rem | 1rem | — | 1.2rem | 1.2 |
-| Heading 6 | `text-style-heading-6` | heading | 1.25rem | 0.875rem | — | 1rem | 1.2 |
+| Style | Class | Font | Base | @810 md | @1200 lg | @1440 xl | @1728 | @2560 | @3840 | Line height |
+|-------|-------|------|------|---------|----------|----------|-------|-------|-------|-------------|
+| Heading 1 | `text-style-heading-1` | heading | 2.5rem | 1.8rem | 2rem | — | 2.4rem | 2.9rem | 3.4rem | 1.2 |
+| Heading 2 | `text-style-heading-2` | heading | 2.25rem | 1.44rem | — | 1.8rem | 2.16rem | 2.61rem | 3.06rem | 1.2 |
+| Heading 3 | `text-style-heading-3` | heading | 2rem | 1.28rem | — | 1.6rem | 1.92rem | 2.32rem | 2.72rem | 1.2 |
+| Heading 4 | `text-style-heading-4` | heading | 1.75rem | 1.12rem | — | 1.4rem | 1.68rem | 2.03rem | 2.38rem | 1.2 |
+| Heading 5 | `text-style-heading-5` | heading | 1.5rem | 1rem | — | 1.2rem | 1.44rem | 1.74rem | 2.04rem | 1.2 |
+| Heading 6 | `text-style-heading-6` | heading | 1.25rem | 0.875rem | — | 1rem | 1.2rem | 1.45rem | 1.7rem | 1.2 |
+| Heading X Large | `text-style-heading-x-large` | heading | 2rem | 1.28rem | 1.6rem | 1.8rem | 2.16rem | 2.5rem | 2.9rem | 1.2 |
 
 #### Labels
 
-| Style | Class | Font | Base | @810 md | @1440 xl | Line height |
-|-------|-------|------|------|---------|----------|-------------|
-| Label Large | `text-style-label-large` | label | 1.13rem | 1rem | 1rem | 1.15 |
-| Label Medium | `text-style-label-medium` | label | 1rem | 0.875rem | 0.875rem | 1.15 |
-| Label Small | `text-style-label-small` | label | 0.88rem | 0.813rem | 0.813rem | 1.15 |
-| Label X Small | `text-style-label-x-small` | label | 0.75rem | 0.75rem | 0.75rem | 1.15 |
+| Style | Class | Font | Base | @810 md | @1440 xl | @1728 | @2560 | @3840 | Line height |
+|-------|-------|------|------|---------|----------|-------|-------|-------|-------------|
+| Label Large | `text-style-label-large` | label | 1.13rem | 1rem | 1rem | 1.125rem | 1.25rem | 1.375rem | 1.15 |
+| Label Medium | `text-style-label-medium` | label | 1rem | 0.875rem | 0.875rem | 1rem | 1.125rem | 1.25rem | 1.15 |
+| Label Small | `text-style-label-small` | label | 0.88rem | 0.813rem | 0.813rem | 0.875rem | 1rem | 1.125rem | 1.15 |
+| Label X Small | `text-style-label-x-small` | label | 0.75rem | 0.75rem | 0.75rem | 0.813rem | 0.875rem | 1rem | 1.15 |
 
 #### Paragraphs
 
-| Style | Class | Font | Base | @810 md | @1440 xl | Line height |
-|-------|-------|------|------|---------|----------|-------------|
-| Paragraph Large | `text-style-paragraph-large` | sans | 1.13rem | 1rem | 1rem | 1.4 |
-| Paragraph Medium | `text-style-paragraph-medium` | sans | 1rem | 0.875rem | 0.875rem | 1.4 |
-| Paragraph Small | `text-style-paragraph-small` | sans | 0.88rem | 0.813rem | 0.813rem | 1.4 |
-| Paragraph X Small | `text-style-paragraph-x-small` | sans | 0.75rem | 0.75rem | 0.75rem | 1.4 |
+| Style | Class | Font | Base | @810 md | @1440 xl | @1728 | @2560 | @3840 | Line height |
+|-------|-------|------|------|---------|----------|-------|-------|-------|-------------|
+| Paragraph Large | `text-style-paragraph-large` | sans | 1.13rem | 1rem | 1rem | 1.125rem | 1.25rem | 1.375rem | 1.4 |
+| Paragraph Medium | `text-style-paragraph-medium` | sans | 1rem | 0.875rem | 0.875rem | 1rem | 1.125rem | 1.25rem | 1.4 |
+| Paragraph Small | `text-style-paragraph-small` | sans | 0.88rem | 0.813rem | 0.813rem | 0.875rem | 1rem | 1.125rem | 1.4 |
+| Paragraph X Small | `text-style-paragraph-x-small` | sans | 0.75rem | 0.75rem | 0.75rem | 0.813rem | 0.875rem | 1rem | 1.4 |
 
 ### Size-only utilities
 
@@ -244,7 +248,7 @@ Base = mobile (0px+). Larger breakpoints override via CSS variables in `styles/t
 | Columns | 12 | `.grid-12` |
 | `--grid-gutter` | 16px → 24px → 32px | `gap-gutter` |
 | `--grid-margin` | 16px → 24px → 32px → 48px | `px-gutter`, `padding-gutter` |
-| `--content-max` | 90rem (1440px) | `max-w-content`, `.container-site` |
+| `--content-max` | 90rem → 108rem → 150rem → 200rem | `max-w-content`, `.container-site` |
 | `--content-narrow` | 48rem (768px) | `max-w-narrow`, `.container-narrow` |
 | `--content-wide` | 72rem (1152px) | `max-w-wide` |
 
@@ -256,12 +260,24 @@ Base = mobile (0px+). Larger breakpoints override via CSS variables in `styles/t
 | @810px md | `--space-6` (24px) | `--space-6` (24px) |
 | @1200px lg | `--space-6` (24px) | `--space-8` (32px) |
 | @1440px xl | `--space-8` (32px) | `--space-12` (48px) |
+| @1728px | `--space-8` (32px) | `--space-12` (48px) |
+| @2560px | `--space-8` (32px) | `--space-16` (64px) |
+| @3840px | `--space-8` (32px) | `--space-20` (80px) |
+
+### Content max by breakpoint
+
+| Breakpoint | `--content-max` |
+|------------|-----------------|
+| Default–xl | `90rem` (1440px) |
+| @1728px | `108rem` (1728px) |
+| @2560px | `150rem` (2400px) |
+| @3840px | `200rem` (3200px) |
 
 ### Layout classes
 
 | Class | Purpose |
 |-------|---------|
-| `.container-site` | Main wrapper — max 1440px, horizontal padding |
+| `.container-site` | Main wrapper — max `--content-max`, horizontal padding |
 | `.container-narrow` | Reading column — max 768px |
 | `.grid-12` | 12-column grid with gutter |
 

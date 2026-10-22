@@ -54,3 +54,23 @@
     --grid-margin: var(--space-12);
   }
 }
+
+@media (min-width: 1728px) {
+  :root {
+    --content-max: 108rem; /* 1728px */
+  }
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --content-max: 150rem; /* 2400px */
+    --grid-margin: var(--space-16);
+  }
+}
+
+@media (min-width: 3840px) {
+  :root {
+    --content-max: 200rem; /* 3200px */
+    --grid-margin: var(--space-20);
+  }
+}

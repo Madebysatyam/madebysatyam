@@ -15,7 +15,7 @@ const DESKTOP_STICKER_SCALE = 1.2;
 /** Desktop magnets grow with mat width relative to the 1440 design canvas. */
 const STICKER_DESIGN_WIDTH = 1440;
 const VIEWPORT_SCALE_MIN = 1;
-const VIEWPORT_SCALE_MAX = 1.45;
+const VIEWPORT_SCALE_MAX = 2;
 
 /** Entrance starts once the mat fill has settled, then each sticker follows. */
 const STICKER_ENTER_DELAY = 0.28;
