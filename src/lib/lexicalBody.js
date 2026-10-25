@@ -1,6 +1,6 @@
 /**
- * Build Payload Lexical editor JSON from plain paragraph / heading sections.
- * Shared by local note fallbacks and CMS seed (via equivalent helpers).
+ * Build Lexical editor JSON from plain paragraph / heading sections.
+ * Used by local note articles.
  */
 
 function textNode(text) {

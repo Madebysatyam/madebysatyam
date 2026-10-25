@@ -1,6 +1,4 @@
 import logo from "../../../assets/logo.svg";
-import useCmsResource from "../../hooks/useCmsResource.js";
-import { fetchSiteSettings, mapCmsFooterMeta } from "../../lib/cms.js";
 import FooterBuiltWith from "./FooterBuiltWith.jsx";
 import FooterMetaRow from "./FooterMetaRow.jsx";
 import FooterRoleLine from "./FooterRoleLine.jsx";
@@ -11,10 +9,7 @@ import useFooterRoleCycle from "./useFooterRoleCycle.js";
 export default function Footer() {
   const { label: dateLabel, dateTime } = useFooterDate();
   const role = useFooterRoleCycle();
-  const footerMeta = useCmsResource(async () => {
-    const doc = await fetchSiteSettings();
-    return mapCmsFooterMeta(doc, null);
-  }, FOOTER_META);
+  const footerMeta = FOOTER_META;
 
   return (
     <footer className="site-footer" aria-label="Site footer">

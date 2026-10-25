@@ -6,13 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "heroes:variants": "node scripts/generate-listing-hero-variants.mjs",
-    "cms:dev": "npm --prefix cms run dev",
-    "cms:seed": "npm --prefix cms run seed",
-    "cms:install": "npm --prefix cms install"
+    "heroes:variants": "node scripts/generate-listing-hero-variants.mjs"
   },
   "dependencies": {
-    "@payloadcms/live-preview-react": "^3.91.0",
     "framer-motion": "^12.38.0",
     "ios-vibrator-pro-max": "^2.0.2",
     "marked": "^18.0.5",

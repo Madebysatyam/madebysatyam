@@ -1,27 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
-    {
-      "source": "/admin",
-      "destination": "https://madebysatyam-cms.vercel.app/admin",
-      "permanent": false
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "https://madebysatyam-cms.vercel.app/admin/:path*",
-      "permanent": false
-    }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "frame-ancestors 'self' https://madebysatyam-cms.vercel.app http://localhost:3000"
-        }
-      ]
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

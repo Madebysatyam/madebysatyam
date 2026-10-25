@@ -1,12 +1,8 @@
-import { useLivePreview } from "@payloadcms/live-preview-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import NoteCategoryTag from "../components/NoteItem/NoteCategoryTag.jsx";
 import { getNoteArticle } from "../components/NoteItem/notes.js";
 import RichText from "../components/RichText";
-import { fetchNoteBySlug, mapCmsNote } from "../lib/cms.js";
-import { lexicalBodyHasContent } from "../lib/lexicalBody.js";
-import { getLivePreviewServerURL, LIVE_PREVIEW_DEPTH } from "../lib/livePreview.js";
 
 const MEASURE_MIN = 20;
 const MEASURE_MAX = 100;
@@ -19,63 +15,11 @@ function clampMeasure(value) {
 
 export default function NotePage() {
   const { slug } = useParams();
-  const local = useMemo(() => getNoteArticle(slug), [slug]);
-  const [cmsDoc, setCmsDoc] = useState(null);
-  const [status, setStatus] = useState(local ? "ready" : "loading");
+  const article = useMemo(() => getNoteArticle(slug), [slug]);
   const stageRef = useRef(null);
   const rulerRef = useRef(null);
   const sampleRef = useRef(null);
   const [measure, setMeasure] = useState(MEASURE_DEFAULT);
-
-  useEffect(() => {
-    let cancelled = false;
-    setCmsDoc(null);
-    setStatus(local ? "ready" : "loading");
-
-    fetchNoteBySlug(slug)
-      .then((doc) => {
-        if (cancelled) return;
-        if (doc) {
-          setCmsDoc(doc);
-          setStatus("ready");
-        } else if (!local) {
-          setStatus("missing");
-        }
-      })
-      .catch(() => {
-        if (cancelled) return;
-        if (!local) setStatus("missing");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [slug, local]);
-
-  const { data: liveDoc } = useLivePreview({
-    serverURL: getLivePreviewServerURL(),
-    depth: LIVE_PREVIEW_DEPTH,
-    initialData: cmsDoc || {},
-  });
-
-  const article = useMemo(() => {
-    // Prefer live preview payload when it carries fields; keep the richest body available.
-    const liveHasDoc = Boolean(liveDoc && (liveDoc.slug || liveDoc.title || liveDoc.body));
-    const source = liveHasDoc ? liveDoc : cmsDoc;
-    const mapped = mapCmsNote(source);
-    if (mapped) {
-      const liveBody = liveHasDoc ? liveDoc.body : null;
-      const bestBody = lexicalBodyHasContent(liveBody)
-        ? liveBody
-        : lexicalBodyHasContent(mapped.body)
-          ? mapped.body
-          : lexicalBodyHasContent(cmsDoc?.body)
-            ? cmsDoc.body
-            : local?.body;
-      return bestBody && bestBody !== mapped.body ? { ...mapped, body: bestBody } : mapped;
-    }
-    return local;
-  }, [liveDoc, cmsDoc, local]);
 
   useEffect(() => {
     document.title = article ? `${article.title} — Madebysatyam` : "Madebysatyam";
@@ -150,17 +94,7 @@ export default function NotePage() {
     }
   };
 
-  if (status === "loading") {
-    return (
-      <main id="main" className="note-page">
-        <div className="note-page__stage container-site">
-          <p className="note-page__missing text-style-paragraph-large">Loading note…</p>
-        </div>
-      </main>
-    );
-  }
-
-  if (!article || status === "missing") {
+  if (!article) {
     return (
       <main id="main" className="note-page">
         <div className="note-page__stage container-site">

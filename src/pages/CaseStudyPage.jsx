@@ -1,55 +1,14 @@
-import { useLivePreview } from "@payloadcms/live-preview-react";
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
 import CaseStudyContent from "../components/CaseStudyContent";
 import { getProjectBySlug } from "../data/projects/index.js";
-import { fetchProjectBySlug, mapCmsProject } from "../lib/cms.js";
-import { getLivePreviewServerURL, LIVE_PREVIEW_DEPTH } from "../lib/livePreview.js";
 import { staggerContainer, staggerItem } from "../motion/presets.js";
 
 export default function CaseStudyPage() {
   const { reduced } = useOutletContext();
   const { slug } = useParams();
-  const local = useMemo(() => getProjectBySlug(slug), [slug]);
-  const [cmsDoc, setCmsDoc] = useState(null);
-  const [status, setStatus] = useState(local ? "ready" : "loading");
-
-  useEffect(() => {
-    let cancelled = false;
-    setCmsDoc(null);
-    setStatus(local ? "ready" : "loading");
-
-    fetchProjectBySlug(slug)
-      .then((doc) => {
-        if (cancelled) return;
-        if (doc) {
-          setCmsDoc(doc);
-          setStatus("ready");
-        } else if (!local) {
-          setStatus("missing");
-        }
-      })
-      .catch(() => {
-        if (cancelled) return;
-        if (!local) setStatus("missing");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [slug, local]);
-
-  const { data: liveDoc } = useLivePreview({
-    serverURL: getLivePreviewServerURL(),
-    depth: LIVE_PREVIEW_DEPTH,
-    initialData: cmsDoc || {},
-  });
-
-  const project = useMemo(() => {
-    const source = liveDoc?.slug || liveDoc?.shortTitle ? liveDoc : cmsDoc;
-    return mapCmsProject(source) || local;
-  }, [liveDoc, cmsDoc, local]);
+  const project = useMemo(() => getProjectBySlug(slug), [slug]);
 
   useEffect(() => {
     if (project) {
@@ -60,19 +19,7 @@ export default function CaseStudyPage() {
     };
   }, [project]);
 
-  if (status === "loading") {
-    return (
-      <main id="main" className="page-case-study">
-        <article className="case-study-page container-site grid-12">
-          <div className="case-study-page__inner case-study-page__body--missing">
-            <p className="case-study-page__missing text-style-paragraph-large">Loading project…</p>
-          </div>
-        </article>
-      </main>
-    );
-  }
-
-  if (!project || status === "missing") {
+  if (!project) {
     return (
       <main id="main" className="page-case-study">
         <article className="case-study-page container-site grid-12">

@@ -1,5 +1,5 @@
 import ContentFigure from "../ContentFigure";
-import { cmsMediaUrl } from "../../lib/cms.js";
+import { mediaUrl } from "../../lib/mediaUrl.js";
 
 /** Lexical text format bit flags */
 const IS_BOLD = 1;
@@ -72,7 +72,7 @@ function renderNode(node, key) {
     }
     case "upload": {
       const value = typeof node.value === "object" ? node.value : null;
-      const src = cmsMediaUrl(value);
+      const src = mediaUrl(value);
       const caption = node.fields?.caption || "";
       const alt = value?.alt || caption || "";
       return (
@@ -112,7 +112,7 @@ function renderNode(node, key) {
 }
 
 /**
- * Renders Payload Lexical rich text JSON with site text styles.
+ * Renders Lexical rich text JSON with site text styles.
  * No wrapper by default so note prose child selectors (scroll reveal) keep working.
  * @param {{ data?: { root?: { children?: unknown[] } }, className?: string }} props
  */

@@ -38,22 +38,6 @@ export default function SiteLayout() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Payload Live Preview loads the site in an iframe — scroll-reveal stays at
-    // opacity 0 there (IO / remount races), which hides note body while title shows.
-    const isLivePreview = (() => {
-      try {
-        return window.self !== window.top;
-      } catch {
-        return true;
-      }
-    })();
-    if (isLivePreview) {
-      document.documentElement.classList.add("is-live-preview");
-      return () => {
-        document.documentElement.classList.remove("is-live-preview");
-      };
-    }
-
     const notePieceSelector =
       ".note-page__title, .note-page__meta, .note-page__dek, .note-ruler, .note-measure, .note-page__prose > p, .note-page__prose > h2, .note-page__prose > .content-figure, .note-page__prose > .note-page__figure";
     const sectionSelector =
@@ -114,7 +98,7 @@ export default function SiteLayout() {
       });
     };
 
-    /** Note prose can remount from CMS after setup — never leave it stuck at opacity 0. */
+    /** Note prose can remount after setup — never leave it stuck at opacity 0. */
     const forceRevealNoteProse = () => {
       document.querySelectorAll(
         ".note-page__prose > p.section-reveal:not(.is-revealed), .note-page__prose > h2.section-reveal:not(.is-revealed), .note-page__prose > .content-figure.section-reveal:not(.is-revealed), .note-page__prose > .note-page__figure.section-reveal:not(.is-revealed)",
@@ -200,7 +184,7 @@ export default function SiteLayout() {
       else revealEntered();
     };
 
-    // CMS note body (esp. images) mount after the first setup — refresh reveal targets.
+    // Note body can remount after the first setup — refresh reveal targets.
     const onContentMutated = () => {
       window.clearTimeout(contentRefreshTimer);
       contentRefreshTimer = window.setTimeout(() => {

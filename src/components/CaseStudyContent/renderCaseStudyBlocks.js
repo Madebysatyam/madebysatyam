@@ -1,4 +1,4 @@
-import { cmsMediaUrl } from "../../lib/cms.js";
+import { mediaUrl } from "../../lib/mediaUrl.js";
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -14,7 +14,7 @@ function paragraphHtml(text) {
 
 function renderFigure(block) {
   const image = typeof block.image === "object" ? block.image : null;
-  const src = cmsMediaUrl(image);
+  const src = mediaUrl(image);
   const alt = escapeHtml(image?.alt || block.caption || "Case study image");
   const caption = block.caption ? escapeHtml(block.caption) : "";
 
@@ -48,7 +48,7 @@ function renderInsightCards(block) {
       const title = escapeHtml(item.title || "");
       const copy = escapeHtml(item.copy || "");
       const image = typeof item.image === "object" ? item.image : null;
-      const src = cmsMediaUrl(image);
+      const src = mediaUrl(image);
       const caption = item.caption ? escapeHtml(item.caption) : "";
       const mediaAlt = escapeHtml(image?.alt || item.caption || `${item.title || "Insight"} illustration`);
 

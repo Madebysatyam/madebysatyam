@@ -3,14 +3,9 @@ import TestimonialTicker from "../components/TestimonialTicker";
 import { TESTIMONIAL_TILES } from "../components/TestimonialTile";
 import Reveal from "../components/Reveal.jsx";
 import SectionHeader from "../components/SectionHeader";
-import useCmsResource from "../hooks/useCmsResource.js";
-import { fetchTestimonials, mapCmsTestimonials } from "../lib/cms.js";
 
 export default function KindWordsSection({ reduced }) {
-  const tiles = useCmsResource(async () => {
-    const docs = await fetchTestimonials();
-    return mapCmsTestimonials(docs, TESTIMONIAL_TILES);
-  }, TESTIMONIAL_TILES);
+  const tiles = TESTIMONIAL_TILES;
 
   return (
     <Reveal

@@ -56,21 +56,3 @@ main > article.section-reveal.is-revealed,
     transition: none;
   }
 }
-
-/* CMS Live Preview iframe — never hide content behind scroll-reveal. */
-html.is-live-preview .section-reveal,
-html.is-live-preview .section-reveal--blur,
-html.is-live-preview .note-page__title,
-html.is-live-preview .note-page__meta,
-html.is-live-preview .note-page__dek,
-html.is-live-preview .note-page__prose > p,
-html.is-live-preview .note-page__prose > h2,
-html.is-live-preview .note-page__prose > .content-figure,
-html.is-live-preview .note-page__prose > .note-page__figure,
-html.is-live-preview .note-ruler,
-html.is-live-preview .note-measure {
-  opacity: 1 !important;
-  -webkit-filter: none !important;
-  filter: none !important;
-  transition: none !important;
-}

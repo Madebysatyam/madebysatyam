@@ -127,7 +127,7 @@
 }
 
 /* Title/meta/prose/figures: hide-until-reveal is only via `.section-reveal` in
-   section-scroll-blur.css. Forcing opacity:0 here left CMS images invisible. */
+   section-scroll-blur.css. */
 
 .note-page__missing {
   margin: 0 0 var(--space-6);
